@@ -27,6 +27,7 @@
 
 
 <style scoped>
+
 .contenedor {
     max-width: 500px; 
     width: 500px;
