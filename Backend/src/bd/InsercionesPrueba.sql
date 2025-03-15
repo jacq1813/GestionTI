@@ -3,10 +3,9 @@ USE Gestion;
 -- Insertar datos en TipoEmpleado
 INSERT INTO TipoEmpleado (ID_TipEmp, Nombre) VALUES
 (1, 'Administrador'),
-(2, 'Profesor'),
-(3, 'Mantenimiento'),
-(4, 'Seguridad'),
-(5, 'Limpieza');
+(2, 'Usuario'),
+(3, 'Técnico'),
+(4, 'Jefe de taller');
 
 -- Insertar datos en Empleado
 INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Fecha_Nac, Num_tel, ID_TipEmp) VALUES
@@ -14,7 +13,7 @@ INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Fecha_Nac, Num_t
 (2, 'María', 'López', 'Fernández', '1990-02-20', '5552345678', 2),
 (3, 'Carlos', 'Hernández', 'Ruiz', '1978-11-30', '5553456789', 3),
 (4, 'Ana', 'Martínez', 'Díaz', '1983-07-10', '5554567890', 4),
-(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 5);
+(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 3);
 
 -- Insertar datos en TipoDepartamento
 INSERT INTO TipoDepartamento (ID_TipDpto, Nombre) VALUES
@@ -89,9 +88,9 @@ INSERT INTO Periodos (ID_Periodo, Nombre) VALUES
 (5, 'Enero - Junio 2025');
 
 -- Insertar datos en Incidencia
-INSERT INTO Incidencia (Folio, Descripcion, Fecha, Periodo, Hora, ID_Aula, ID_Periodo, ID_Emp) VALUES
-(1, 'Computadora no enciende', '2023-02-01', 'Enero - Junio 2023', '08:30:00', 1, 1, 3),
-(2, 'Proyector con imagen distorsionada', '2023-03-05', 'Enero - Junio 2023', '10:15:00', 2, 1, 3),
-(3, 'Pizarrón sin respuesta táctil', '2023-04-10', 'Enero - Junio 2023', '12:45:00', 3, 1, 3),
-(4, 'Impresora atascada', '2023-05-20', 'Enero - Junio 2023', '14:00:00', 4, 1, 3),
-(5, 'Servidor caído', '2023-06-30', 'Enero - Junio 2023', '16:30:00', 5, 1, 3);
+INSERT INTO Incidencia (Folio, Descripcion, Fecha, Periodo, Estado, Hora, ID_Aula, ID_Periodo, ID_Emi, ID_Rec) VALUES
+(1, 'Computadora no enciende', '2023-02-01', 'Enero - Junio 2023', 'Bajo', '08:30:00', 1, 1, 2, 3),
+(2, 'Proyector con imagen distorsionada', '2023-03-05', 'Enero - Junio 2023', 'Medio', '10:15:00', 2, 1, 3, 4),
+(3, 'Pizarrón sin respuesta táctil', '2023-04-10', 'Enero - Junio 2023', 'Alto', '12:45:00', 3, 1, 4, 5),
+(4, 'Impresora atascada', '2023-05-20', 'Enero - Junio 2023', 'Medio', '14:00:00', 4, 1, 5, 1),
+(5, 'Servidor caído', '2023-06-30', 'Enero - Junio 2023', 'Crítico', '16:30:00', 5, 1, 1, 2);

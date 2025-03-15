@@ -3,6 +3,11 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 
 import incidentRoutes from './routes/incidentRoutes';
+import employeeRoutes from './routes/EmployeeRoutes';
+import deviceRoutes from './routes/DeviceRoutes';
+import componentRoutes from './routes/ComponentRoutes';
+import classromRoutes from './routes/ClassromRoutes';
+import buildingRoutes from './routes/BuildingRoutes';
 
 
 const app = express();
@@ -12,6 +17,11 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 app.use('/incidents', incidentRoutes);
+app.use('/employees', employeeRoutes);
+app.use('/devices', deviceRoutes);
+app.use('/components', componentRoutes);
+app.use('/classrooms', classromRoutes);
+app.use('/buildings', buildingRoutes);
 
 app.get('/hola', (_req, res) => {
   res.send('Hello World!');
