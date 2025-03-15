@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import SignIn from '../modulos/autenticacion/SignIn.vue' 
-import Inicio from '../modulos/principal/Inicio.vue'
+import SignIn from '@/modulos/autenticacion/SignIn.vue' 
+import Inicio from '@/modulos/autenticacion/SignIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

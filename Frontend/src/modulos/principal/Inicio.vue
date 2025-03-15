@@ -61,13 +61,15 @@
 
         <table class="table table-success table-striped">
             <thead>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Departamento</th>
-                <th>Ubicacion</th>
-                <th>Descripcion</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Departamento</th>
+                    <th>Ubicacion</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -76,18 +78,18 @@
 
 
 <script>
-export default {
-    data() {
-        return {
-            seleccion: "", // Valor seleccionado
-            opciones: [
-                { value: "opcion1", text: "Opción 1" },
-                { value: "opcion2", text: "Opción 2" },
-                { value: "opcion3", text: "Opción 3" }
-            ]
-        };
-    }
-};
+    export default {
+        data() {
+            return {
+                seleccion: "", // Valor seleccionado
+                opciones: [
+                    { value: "opcion1", text: "Opción 1" },
+                    { value: "opcion2", text: "Opción 2" },
+                    { value: "opcion3", text: "Opción 3" }
+                ]
+            };
+        }
+    };
 </script>
 <style scoped>
 template {

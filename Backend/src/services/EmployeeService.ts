@@ -23,4 +23,3 @@ export const getTechEmployees = async () => {
         return { error: "no se pudo obtener los empleados tecnicos" };
     }
 }
-
