@@ -30,7 +30,16 @@
 
         <br>
 
-        <h2>Incidencias</h2>
+        <div class="opciones">
+            <h2>Incidencias</h2>
+            <label for="">Periodo</label>
+            <select v-model="seleccion" id="opcion">
+                <option v-for="opcion in opciones" :key="opcion.value" :value="opcion.value">
+                    {{ opcion.text }}
+                </option>
+            </select>
+        </div>
+
 
         <ul class="navMenu IncidMenu">
             <li class="elementoMenu">
@@ -64,6 +73,22 @@
         </table>
     </div>
 </template>
+
+
+<script>
+export default {
+    data() {
+        return {
+            seleccion: "", // Valor seleccionado
+            opciones: [
+                { value: "opcion1", text: "Opción 1" },
+                { value: "opcion2", text: "Opción 2" },
+                { value: "opcion3", text: "Opción 3" }
+            ]
+        };
+    }
+};
+</script>
 <style scoped>
 template {
     display: flex;
@@ -95,9 +120,11 @@ h3 {
 
 .table {
     width: 90%;
-
     justify-self: center;
 }
+
+
+
 
 .navMenu {
     display: flex;
@@ -141,6 +168,8 @@ h3 {
 }
 
 
+
+
 .navMenu.navMenu.IncidMenu li a:hover {
     background-color: brown;
     padding: 0.7em 1.5em;
@@ -174,5 +203,14 @@ h3 {
 
 .iconoUsuario:hover {
     color: #1abc9c;
+}
+
+.opciones {
+
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    padding: 1em;
 }
 </style>
