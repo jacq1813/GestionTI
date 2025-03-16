@@ -25,7 +25,6 @@
             <router-link to="/incidencias">Incidencias</router-link>
         </li>
     </ul>
-
     <br>
 
     <div class="opciones">
@@ -94,6 +93,7 @@
 
     //Cuando la pagina es visible y esta cargada
     onMounted(async () => {
+        console.log('Cargando incidencias')
         await getIncidents()
     })
 

@@ -3,7 +3,7 @@ export interface Incident {
     Descripcion: string;
     Fecha: string; 
     Periodo: string; 
-    Estado: "Bajo" | "Medio" | "Alto"; 
+    Estado: string; 
     Hora: string; 
     Aula: string; 
     TipoAula: string;

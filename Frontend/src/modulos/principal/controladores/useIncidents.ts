@@ -8,7 +8,8 @@ export const useIncidents = () => {
 
     const getIncidents = async () => {
         const response = await incidentsApi.get<Incident[]>('');
-        console.log(response.data);
+        incidents.value = response.data
+        console.log(response.data)
     }
 
     return {
