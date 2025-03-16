@@ -71,26 +71,54 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+
+
+                <tr v-if="incidents.length == 0">
+                    <td class="centrado" colspan="6">Sin personal registrado</td>
+                </tr>
+                <tr v-else v-for="(incident, index) in incidents" :key="incident.Folio">
+                    <td>{{ incident.Folio }}</td>
+                    <td>{{ incident.Fecha }}</td>
+                    <td>{{ incident.Aula }}</td>
+                    <td>{{ incident.Aula }}</td>
+                    <td>{{ incident.Descripcion }}</td>
+                    <td>{{ incident.Estado }}</td>
+                    <td>Accion</td>
+                </tr>
+
+            </tbody>
         </table>
     </div>
 </template>
 
 
-<script>
-    export default {
-        data() {
-            return {
-                seleccion: "", // Valor seleccionado
-                opciones: [
-                    { value: "opcion1", text: "Opción 1" },
-                    { value: "opcion2", text: "Opción 2" },
-                    { value: "opcion3", text: "Opción 3" }
-                ]
-            };
-        }
-    };
+<script setup lang="ts">
+
+import { onMounted } from 'vue'
+import { useIncidents } from '../principal/controladores/useIncidents'
+const { getIncidents, incidents } = useIncidents()
+
+//Cuando la pagina es visible y esta cargada
+onMounted(async () => {
+    await getIncidents()
+})
+
+const opciones = [
+    { value: '1', text: 'Hoy' },
+    { value: '2', text: 'Ayer' },
+    { value: '3', text: 'Esta semana' },
+    { value: '4', text: 'Este mes' },
+    { value: '5', text: 'Este año' },
+    { value: '6', text: 'Todos' }
+]
+
+
+// load <--- carga, en memoria
+// mounted <--- cargada y se ve en la pantalla
 </script>
+
+
 <style scoped>
 template {
     display: flex;

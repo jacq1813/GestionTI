@@ -1,21 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SignIn from '@/modulos/autenticacion/SignIn.vue' 
-import Inicio from '@/modulos/autenticacion/SignIn.vue'
+import SingOut from '@/modulos/autenticacion/SingOut.vue'
+import Inicio from '@/modulos/principal/InicioVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'Autenticacion',
+      path: '/validacion',
+      name: 'validacion',
       component: SignIn,
     },
-
     {
-      path: '/inicio',
+      path: '/registro',
+      name: 'registro',
+      component: SingOut,
+    },
+    {
+      path: '/Inicio',
       name: 'Inicio',
       component: Inicio,
-
     },
     {
       path: '/about',
