@@ -13,6 +13,9 @@ export const getIncidents = async () => {
 }
 
 export const getIncidentsRecandEmi = async () => {
+
+    console.log("llego a la funcion");
+
     try {
         const [rows] = await connection.query(`SELECT i.Folio,i.Descripcion,i.Fecha,i.Periodo, i.Estado,i.Hora,a.Nombre as 'Aula' , ta.Nombre as 'Tipo Aula', E.Nombre AS  'Emisor', te.Nombre as 'Puesto Emisor', e2.Nombre as 'Receptor',te2.Nombre as 'Puesto Receptor' FROM incidencia i 
                                                 inner join empleado e on i.ID_Emi = e.ID_Emp
@@ -23,7 +26,10 @@ export const getIncidentsRecandEmi = async () => {
                                                 inner join tipoempleado te2 on te2.ID_TipEmp = e2.ID_TipEmp
                                                 ORDER BY Folio`);
         return rows;
+        
+        
     } catch (error) {
         return { error: "no se pudo obtener las incidencias" };
+        
     }
 }
