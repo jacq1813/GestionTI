@@ -88,9 +88,9 @@ INSERT INTO Periodos (ID_Periodo, Nombre) VALUES
 (5, 'Enero - Junio 2025');
 
 -- Insertar datos en Incidencia
-INSERT INTO Incidencia (Folio, Descripcion, Fecha, Periodo, Estado, Hora, ID_Aula, ID_Periodo, ID_Emi, ID_Rec) VALUES
-(1, 'Computadora no enciende', '2023-02-01', 'Enero - Junio 2023', 'Bajo', '08:30:00', 1, 1, 2, 3),
-(2, 'Proyector con imagen distorsionada', '2023-03-05', 'Enero - Junio 2023', 'Medio', '10:15:00', 2, 1, 3, 4),
-(3, 'Pizarrón sin respuesta táctil', '2023-04-10', 'Enero - Junio 2023', 'Alto', '12:45:00', 3, 1, 4, 5),
-(4, 'Impresora atascada', '2023-05-20', 'Enero - Junio 2023', 'Medio', '14:00:00', 4, 1, 5, 1),
-(5, 'Servidor caído', '2023-06-30', 'Enero - Junio 2023', 'Crítico', '16:30:00', 5, 1, 1, 2);
+INSERT INTO Incidencia (Folio, Descripcion, Fecha, Periodo, Estado, Prioridad, Hora, ID_Aula, ID_Periodo, ID_Emi, ID_Rec) VALUES
+(1, 'Computadora no enciende', '2023-02-01', 'Enero - Junio 2023', 'En proceso', 'Baja', '08:30:00', 1, 1, 2, 3),
+(2, 'Proyector con imagen distorsionada', '2023-03-05', 'Enero - Junio 2023', 'Terminada', 'Mediana', '10:15:00', 2, 1, 3, 4),
+(3, 'Pizarrón sin respuesta táctil', '2023-04-10', 'Enero - Junio 2023', 'Liberada', 'Alta', '12:45:00', 3, 1, 4, 5),
+(4, 'Impresora atascada', '2023-05-20', 'Enero - Junio 2023', 'Rechazada', 'Mediana', '14:00:00', 4, 1, 5, 1),
+(5, 'Servidor caído', '2023-06-30', 'Enero - Junio 2023', 'En proceso', 'Crítico', '16:30:00', 5, 1, 1, 2);

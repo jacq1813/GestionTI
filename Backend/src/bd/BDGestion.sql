@@ -92,6 +92,7 @@ CREATE TABLE Incidencia (
     Fecha DATE NOT NULL,
     Periodo VARCHAR(50),
     Estado VARCHAR(10),
+    Prioridad VARCHAR(10),
     Hora TIME NOT NULL,
     ID_Aula INT,
     ID_Periodo INT,

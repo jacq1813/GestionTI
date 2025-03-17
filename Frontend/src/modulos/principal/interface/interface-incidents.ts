@@ -4,6 +4,7 @@ export interface Incident {
     Fecha: string; 
     Periodo: string; 
     Estado: string; 
+    Prioridad: string;
     Hora: string; 
     Aula: string; 
     TipoAula: string;
