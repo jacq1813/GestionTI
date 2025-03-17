@@ -3,6 +3,7 @@ import SignIn from '@/modulos/autenticacion/SignIn.vue'
 import SingOut from '@/modulos/autenticacion/SingOut.vue'
 import Main from '@/modulos/principal/MainVue.vue'
 import IncidentVue from '@/modulos/principal/IncidentVue.vue'
+import AssingIncidet from '@/modulos/incidents/vista/AsignarIncidencia.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,11 @@ const router = createRouter({
       name: 'Incidentes',
       component: IncidentVue,
 
+    },
+    {
+      path: '/AsignarIncidente',
+      name: 'AsignarIncidente',
+      component: AssingIncidet,
     },
     {
       path: '/about',
