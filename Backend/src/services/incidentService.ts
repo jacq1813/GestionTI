@@ -77,4 +77,33 @@ export const getIncidentsByEstadoPeriodoAnio = async (estado: string, periodo: s
     } catch (error) {
         return { error: "No se pudo obtener las incidencias" };
     }
-};
+}
+
+//obtener todas las incidencias por folio
+export const getIncidentsByFolio = async (folio: string) => {
+    try {
+        const [rows] = await connection.query(
+            `SELECT i.Folio, i.Descripcion, i.Fecha, i.Periodo, i.Estado, i.Hora,
+                     a.Nombre AS 'Aula', ta.Nombre AS 'Tipo Aula', 
+                     E.Nombre AS 'Emisor', te.Nombre AS 'Puesto Emisor',
+                     e2.Nombre AS 'Receptor', te2.Nombre AS 'Puesto Receptor'
+             FROM incidencia i 
+             INNER JOIN empleado e ON i.ID_Emi = e.ID_Emp
+             INNER JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+             INNER JOIN aula a ON i.ID_Aula = a.ID_Aul 
+             INNER JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+             INNER JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
+             INNER JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
+             WHERE i.Folio = ?
+             ORDER BY Folio`,
+            [folio]
+        );
+
+        return rows[0]; // Asegúrate de devolver solo la primera fila, ya que estás buscando por un folio único
+    } catch (error) {
+        return { error: "No se pudo obtener las incidencias" };
+    }
+}
+
+
+;

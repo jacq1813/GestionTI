@@ -24,6 +24,12 @@ router.get('/recandemi/:estado/:periodo/:anio', async (req: Request, res: Respon
     res.status(200).send(incidents);
 });
 
+//http://localhost:3001/incidents/recandemi/:folio
+router.get('/recandemi/:folio', async (req: Request, res: Response) => {
+    const folio = req.params.folio;
+    const incidents = await incidentService.getIncidentsByFolio(folio);
+    res.status(200).send(incidents);
+});
 
 
 export default router;

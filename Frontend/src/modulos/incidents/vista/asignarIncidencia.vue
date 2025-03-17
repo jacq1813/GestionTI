@@ -9,21 +9,21 @@
         <div class="top">
             <div class="grupo">
                 <label>Folio de incidencia</label>
-                <input type="text" placeholder="# Folio" disabled>
+                <input type="text" :placeholder="selectedIncident?.Folio" disabled>
             </div>
             <div class="grupo">
                 <label>Edificio</label>
-                <input type="text" placeholder="Edificio" disabled>
+                <input type="text" :placeholder="selectedIncident?.Aula" disabled>
             </div>
             <div class="grupo">
-                <label>Aula</label>
-                <input type="text" placeholder="Aula" disabled>
+                <label>Periodo</label>
+                <input type="text" :placeholder="selectedIncident?.Periodo" disabled>
             </div>
         </div>
 
         <div class="grupo">
             <label>Descripción</label>
-            <input class="desc" type="text" placeholder="Descripción" disabled>
+            <input class="desc" type="text" :placeholder="selectedIncident?.Descripcion" disabled>
         </div>
 
         <hr>
@@ -54,14 +54,28 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useTechEmployees } from '../controladores/useEmployees.ts';
+
 import { useRouter } from 'vue-router'
+import { useIncidents } from '../controladores/useIncidents';
+
+const { incidents, getIncidentsByFolio } = useIncidents();
 
 const { techemployees: techEmployees, getTechEmployees } = useTechEmployees();
 const router = useRouter()
+const selectedIncident = ref<any>(null);
 
 onMounted(async () => {
+
+    const folio = router.currentRoute.value.query.folio as string;  // Asumimos que el folio se pasa como parámetro de la URL
+    if (folio) {
+
+        selectedIncident.value = await getIncidentsByFolio(folio);
+        console.log(selectedIncident.value);
+
+
+    }
     await getTechEmployees();
 });
 

@@ -26,11 +26,23 @@ export const useIncidents = () => {
         incidents.value = response.data
     }
 
+    const getIncidentsByFolio = async (folio: string) => {
+        try {
+            const response = await incidentsApi.get<Incident>(`/recandemi/` + folio);
+            return response.data; // Deberías retornar un solo objeto, no un arreglo
+        } catch (error) {
+            console.error(error);
+            return { error: "No se pudo obtener la incidencia" };
+        }
+    }
+    
+
     return {
         incidents,
         getIncidents,
         getIncidentsRecandEmi,
         getIncidentsByEstado,
-        getIncidentsByEstadoPeriodoAnio
+        getIncidentsByEstadoPeriodoAnio,
+        getIncidentsByFolio
     }
 }

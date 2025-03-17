@@ -103,8 +103,9 @@
                     <td>
 
                         <button class="btn btn-primary btn-sm"
-                            @click="navigateToRoles('ActualizarIncidente')">Actualizar</button>
-                        <button class="btn btn-danger btn-sm" @click="navigateToRoles('AsignarIncidente')">Asignar</button>
+                            @click="navigateToActualizar(incident.Folio)">Actualizar</button>
+
+                        <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)">Asignar</button>
                     </td>
                 </tr>
             </tbody>
@@ -124,6 +125,15 @@ const periodSelected = ref('Selecciona periodo')
 const yearSelected = ref('Selecciona año')
 const router = useRouter()
 
+const navigateToActualizar = (folio: number) => {
+    // Navegar a la ruta 'ActualizarIncidente' y pasar el 'folio' como parámetro de ruta
+    router.push({ name: 'ActualizarIncidente', query: { folio } });
+};
+
+const navigateToAsignar = (folio: number) => {
+    // Navegar a la ruta 'AsignarIncidente' y pasar el 'folio' como parámetro de ruta
+    router.push({ name: 'AsignarIncidente', query: { folio } });
+};
 onMounted(async () => {
     await getIncidentsRecandEmi()
     periodSelected.value = 'Enero - Junio'
