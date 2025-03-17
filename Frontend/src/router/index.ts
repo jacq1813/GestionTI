@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import SignIn from '@/modulos/autenticacion/SignIn.vue' 
 import SingOut from '@/modulos/autenticacion/SingOut.vue'
 import Main from '@/modulos/principal/MainVue.vue'
+import IncidentVue from '@/modulos/principal/IncidentVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,13 @@ const router = createRouter({
       path: '/Inicio',
       name: 'Inicio',
       component: Main,
+    },
+    {
+
+      path: '/Incidentes',
+      name: 'Incidentes',
+      component: IncidentVue,
+
     },
     {
       path: '/about',
