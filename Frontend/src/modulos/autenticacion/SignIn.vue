@@ -17,8 +17,8 @@
             <div class="error" v-if="error">
                 {{ error }}
             </div>
-            <button type="submit">
-                Ingresar
+            <button type="submit" :disabled="loading">
+                {{ loading ? 'Ingresando...' : 'Ingresar' }}
             </button>
             <p class="registro">
                 ¿No tienes cuenta? <router-link to="/registro">Regístrate</router-link>
@@ -28,25 +28,46 @@
 </template>
 <script setup lang="ts">
     import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+    import { getFirestore, doc, getDoc } from 'firebase/firestore';
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
     import "../../firebase/config.js";
 
     const email = ref('');
-    const password = ref();
-    const error = ref(null);
+    const password = ref('');
+    const error = ref<string | null>(null);
+    const loading = ref(false);
     const router = useRouter();
 
     const signIn = async () => {
-        const error = ref<string | null>(null);
-        console.log(error);
+        error.value = null;
+        loading.value = true;
+        
         try {
             const auth = getAuth();
-            const user = await signInWithEmailAndPassword(auth, email.value, password.value);
-            console.log(user);
-            error.value = null;
-            router.push({name: 'Inicio'});
-        } catch (err:any) {
+            const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+            const user = userCredential.user;
+            
+            // Obtener datos del usuario desde Firestore
+            const db = getFirestore();
+            const userDocRef = doc(db, 'usuarios', user.uid);
+            const userDoc = await getDoc(userDocRef);
+            
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                
+                // Redirigir según el rol
+                if (userData.role === 'admin') {
+                    router.push({ name: 'Admin' }); // O la ruta que tengas para administradores
+                } else {
+                    router.push({ name: 'Inicio' }); // Ruta para usuarios regulares
+                }
+            } else {
+                // Si no existe el documento en Firestore, crear uno con rol predeterminado
+                // Nota: Esto podrías implementarlo si quieres, pero mejor hacerlo en el registro
+                router.push({ name: 'Inicio' }); // Asumimos rol de usuario regular
+            }
+        } catch (err: any) {
             switch (err.code) {
                 case 'auth/user-not-found':
                     error.value = 'Usuario no encontrado';
@@ -54,11 +75,19 @@
                 case 'auth/wrong-password':
                     error.value = 'Contraseña incorrecta';
                     break;
+                case 'auth/invalid-email':
+                    error.value = 'Correo electrónico inválido';
+                    break;
+                case 'auth/too-many-requests':
+                    error.value = 'Demasiados intentos fallidos. Intenta más tarde';
+                    break;
                 default:
-                    console.log(err);
+                    console.error(err);
                     error.value = 'Error al iniciar sesión';
                     break;
             }
+        } finally {
+            loading.value = false;
         }
     }
 </script>
@@ -120,6 +149,11 @@
         cursor: pointer;
         align-self: center;
         width: 100%;
+    }
+
+    button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
     }
 
     .error {

@@ -23,8 +23,8 @@
 
         <div class="grupo">
             <select>
-                <option v-for="opcion in techEmployees" :key="opcion.ID_Tecnico" :value="opcion.ID_Tecnico">
-                    {{ opcion.Nombre }}
+                <option v-for="opcion in techEmployees" :key="opcion.ID_Emp" :value="opcion.ID_Emp">
+                    {{ opcion.Nombre + ' ' + opcion.ApellidoPat + ' ' + opcion.ApellidoMat }}
                 </option>
             </select>
         </div>
@@ -39,7 +39,7 @@
 
 import { onMounted, ref, computed } from 'vue'
 import { useTechEmployees } from '../controladores/useEmployees.ts';
-const { techemployees, getTechEmployees } = useTechEmployees();
+const { techemployees: techEmployees, getTechEmployees } = useTechEmployees();
 
 onMounted(async () => {
     await getTechEmployees();

@@ -3,7 +3,8 @@ import SignIn from '@/modulos/autenticacion/SignIn.vue'
 import SingOut from '@/modulos/autenticacion/SingOut.vue'
 import Main from '@/modulos/principal/MainVue.vue'
 import IncidentVue from '@/modulos/principal/IncidentVue.vue'
-import AssingIncidet from '@/modulos/incidents/vista/AsignarIncidencia.vue'
+import AssingIncidet from '@/modulos/incidents/vista/asignarIncidencia.vue'
+import NotFound from '@/modulos/autenticacion/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/registro',
       name: 'registro',
       component: SingOut,
+    },
+    {
+      path: '/AccessDen',
+      name: 'AccessDen',
+      component: NotFound,
     },
     {
       path: '/Inicio',
