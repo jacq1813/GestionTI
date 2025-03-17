@@ -3,7 +3,11 @@
 
         <h2>Reportar incidencia</h2>
 
-        <!-- Realizar repirte de una incidencia -->
+         <div class="classboton">
+            <button class="btn btn-secondary" @click="home">Regresar</button>
+            <button class="btn btn-danger" @click="logout">Cerrar Sesión</button>
+
+         </div>
 
         <form class="formulario">
 
@@ -41,7 +45,7 @@
 
 
 
-            <button type="button">Enviar</button>
+            <button type="button" class="btn btn-primary">Enviar</button>
         </form>
 
     </div>
@@ -49,26 +53,38 @@
 
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
-import { useClassroom } from '../controladores/useClassroom';
-import { useBuilding } from '../controladores/useBuilding';
+    import { onMounted, ref, computed } from 'vue'
+    import { useClassroom } from '../controladores/useClassroom';
+    import { useBuilding } from '../controladores/useBuilding';
+    import { useRouter } from 'vue-router'
 
-const { buildings, getBuilding } = useBuilding();
-const { classrooms, getClassroom } = useClassroom();
+    const { buildings, getBuilding } = useBuilding();
+    const { classrooms, getClassroom } = useClassroom();
 
-const selectedBuilding = ref<number | null>(null);
+    const selectedBuilding = ref<number | null>(null);
+    const router = useRouter()
 
-// Filtrar aulas basadas en el edificio seleccionado
-const filteredClassrooms = computed(() => {
-    return classrooms.value.filter(aula => aula.ID_Edif === selectedBuilding.value);
-});
+    // Filtrar aulas basadas en el edificio seleccionado
+    const filteredClassrooms = computed(() => {
+        return classrooms.value.filter(aula => aula.ID_Edif === selectedBuilding.value);
+    });
 
-// Cargar los datos cuando la página se monte
-onMounted(async () => {
-    await getBuilding();
-    await getClassroom();
-});
+    // Cargar los datos cuando la página se monte
+    onMounted(async () => {
+        await getBuilding();
+        await getClassroom();
+    });
 
+    //cerrar sesion
+    const logout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        router.push({name:'validacion'})
+    }
+
+    const home = () => {
+        router.push({name:'Inicio'})
+    }
 
 </script>
 
@@ -126,9 +142,14 @@ h2 {
     width: 100%;
     height: 100px;
 }
+.classboton{
+    margin-bottom: -20px;
+    display: flex;
+    justify-content: space-between;
+}
 
-button {
-    width: 100%;
+/* button {
+    /* width: 100%;
     padding: .5em;
     background-color: #007bff;
     color: white;
@@ -137,6 +158,6 @@ button {
     cursor: pointer;
     font-size: 1em;
     font-weight: bold;
-    transition: background-color 0.3s;
-}
+    transition: background-color 0.3s; 
+}  */
 </style>

@@ -2,6 +2,7 @@
     <div class="Contenedor">
 
     <div class="menuPresentacion">
+        <button class="salir" @click="logout">Cerrar Sesión</button>
         <span class="nombreUsuario">Usuario</span>
         <i class="fa fa-user user-icon"></i>
     </div>
@@ -12,20 +13,23 @@
     </div>
 
     <ul class="navMenu">
-        <li class="elementoMenu">
+        <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">
             Principal
         </li>
-        <li class="elementoMenu">
+        <li class="elementoMenu" @click="navigateToRoles('')">
             Solicitudes
         </li>
-        <li class="elementoMenu">
+        <li class="elementoMenu" @click="navigateToRoles('')">
             Reportes
         </li>
-        <li class="elementoMenu">
+        <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
             Incidencias
         </li>
-        <li class="elementoMenu">
+        <li class="elementoMenu" @click="navigateToRoles('RolesA')">
             Roles
+        </li>
+        <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
+            AsignarIncidencias
         </li>
     </ul>
     <br>
@@ -71,6 +75,7 @@
         <li class="elementoMenu" @click="fetchData('Rechazadas')">
             Rechazadas
         </li>
+        
     </ul>
 
     <table class="table table-success table-striped">
@@ -109,18 +114,31 @@
     import { onMounted, ref } from 'vue'
     import { useIncidents } from '../controladores/useIncidents'
     import { useEmployees } from '../controladores/useEmployee'
+    import { useRouter } from 'vue-router'
     const { employees, getEmployees,getTechEmployees} = useEmployees()
     const { incidents,getIncidents,getIncidentsRecandEmi,getIncidentsByEstado,getIncidentsByEstadoPeriodoAnio } = useIncidents()
 
-    const periodSelected = ref('Selecciona periodo') // Default value or initial period
-    const yearSelected = ref('Selecciona año') // Default value or initial year
+    const periodSelected = ref('Selecciona periodo') 
+    const yearSelected = ref('Selecciona año') 
+    const router = useRouter()
 
-    //Cuando la pagina es visible y esta cargada
     onMounted(async () => {
         await getIncidents()
         periodSelected.value = 'Enero - Junio'
         yearSelected.value = '2021'
     })
+
+    //cerrar sesion
+    const logout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        router.push({name:'validacion'})
+    }
+
+    const navigateToRoles = (direction:string) => {
+        console.log(direction)
+        router.push({name:direction})
+    };
 
     //se actualiza la tabla de incidencias dependiendo de la opcion seleccionada
     const logSeleccion = () => {
@@ -171,6 +189,28 @@
         display: flex;
     }
 
+    
+    h2,h3 {
+        text-align: center;
+        color: black;
+    }
+
+    tr {
+        text-align: center;
+        font-size: 1.1em;
+        transition: all 0.3s;
+    }
+
+    tr:hover {
+        background-color: #9afaa2;
+        transition: all 0.3s;
+    }
+
+    td {
+        padding: 2px;
+        font-size: 0.9em;
+    }
+
     .headerPrincipal {
         width: 100%;
         background-color: rgb(255, 255, 255);
@@ -178,11 +218,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }
-
-    h2,h3 {
-        text-align: center;
-        color: black;
     }
 
     .Contenedor {
@@ -194,6 +229,7 @@
     .table {
         width: 90%;
         justify-self: center;
+        border-radius: 5px;
     }
 
     .navMenu {
@@ -314,5 +350,19 @@
     .caja2 {
         display: flex;
         flex-flow: column wrap;
+    }
+
+    .salir {
+        background-color: #b91300;
+        color: white;
+        border: none;
+        padding: 0.5em 1em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+    .salir:hover{
+        background-color: #7a0796;
+        transition: 0.5s;
     }
 </style>

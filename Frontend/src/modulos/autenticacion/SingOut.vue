@@ -121,6 +121,7 @@
     .contenedor {
         max-width: 500px; 
         width: 500px;
+        margin: 0 auto;
     }
 
     .formulario {

@@ -52,6 +52,7 @@
             const db = getFirestore();
             const userDocRef = doc(db, 'usuarios', user.uid);
 
+            //pendiente por ver
             console.log(db);
             console.log(userDocRef, 'usuarios', user.uid);
             console.log(user.uid);
@@ -104,6 +105,7 @@
     .contenedor {
         max-width: 500px; 
         width: 500px;
+        margin: 0 auto;
     }
 
     .formulario {

@@ -2,6 +2,7 @@
     <div class="Contenedor">
 
     <div class="menuPresentacion">
+        <button class="salir" @click="logout">Cerrar Sesión</button>
         <span class="nombreUsuario">Usuario</span>
         <i class="fa fa-user user-icon"></i>
     </div>
@@ -12,16 +13,13 @@
     </div>
 
     <ul class="navMenu">
-        <li class="elementoMenu" @click="fetchData('principal')">
-            Principal
-        </li>
-        <li class="elementoMenu" @click="fetchData('solicitudes')">
+        <li class="elementoMenu" @click="navigateToRoles('Solicitu')">
             Solicitudes
         </li>
-        <li class="elementoMenu" @click="fetchData('reportes')">
+        <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
             Reportes
         </li>
-        <li class="elementoMenu" @click="fetchData('incidencias')">
+        <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
             Incidencias
         </li>
     </ul>
@@ -105,8 +103,10 @@
 <script setup lang="ts">
     import { onMounted, ref } from 'vue'
     import { useIncidents } from '../controladores/useIncidents'
-    const { incidents,getIncidents,getIncidentsRecandEmi,getIncidentsByEstado,getIncidentsByEstadoPeriodoAnio } = useIncidents()
+    import { useRouter } from 'vue-router'
 
+    const { incidents,getIncidents,getIncidentsRecandEmi,getIncidentsByEstado,getIncidentsByEstadoPeriodoAnio } = useIncidents()
+    const router = useRouter()
     const periodSelected = ref('Selecciona periodo') // Default value or initial period
     const yearSelected = ref('Selecciona año') // Default value or initial year
 
@@ -116,6 +116,18 @@
         periodSelected.value = 'Enero - Junio'
         yearSelected.value = '2021'
     })
+
+    //cerrar sesion
+    const logout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        router.push({name:'validacion'})
+    }
+
+    const navigateToRoles = (direction:string) => {
+        console.log(direction)
+        router.push({name:direction})
+    };
 
     //se actualiza la tabla de incidencias dependiendo de la opcion seleccionada
     const logSeleccion = () => {
@@ -309,5 +321,19 @@
     .caja2 {
         display: flex;
         flex-flow: column wrap;
+    }
+
+    .salir {
+        background-color: #b91300;
+        color: white;
+        border: none;
+        padding: 0.5em 1em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+    .salir:hover{
+        background-color: #7a0796;
+        transition: 0.5s;
     }
 </style>
