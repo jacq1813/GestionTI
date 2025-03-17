@@ -113,4 +113,12 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+select {
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    font-size: 1em;
+    width: 100%;
+}
 </style>
