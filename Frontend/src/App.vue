@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView,useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 const router = useRouter();
-router.push({name: 'validacion'})
+router.push({ name: 'validacion' })
 </script>
 
 <template>
-
   <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 

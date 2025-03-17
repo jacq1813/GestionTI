@@ -1,22 +1,19 @@
 <template>
     <div class="container">
-
         <h2>Reportar incidencia</h2>
 
-         <div class="classboton">
+        <div class="classboton">
             <button class="btn btn-secondary" @click="home">Regresar</button>
             <button class="btn btn-danger" @click="logout">Cerrar Sesión</button>
-
-         </div>
+        </div>
 
         <form class="formulario">
-
-
             <div class="top">
                 <div class="grupo">
                     <input type="text" placeholder="# Folio" disabled="true">
                 </div>
 
+                <!-- Selección de Edificio -->
                 <div class="grupo">
                     <label>Edificio</label>
                     <select v-model="selectedBuilding">
@@ -26,66 +23,87 @@
                     </select>
                 </div>
 
+                <!-- Selección de Aula -->
                 <div class="grupo">
                     <label>Aula</label>
-                    <select>
-                        <option v-for="opcion in filteredClassrooms" :key="opcion.ID_Aula" :value="opcion.Nombre">
+                    <select v-model="selectedClassroom">
+                        <option v-for="opcion in filteredClassrooms" :key="opcion.ID_Aula" :value="opcion.ID_Aula">
                             {{ opcion.Nombre }}
                         </option>
                     </select>
                 </div>
 
-
+                <!-- Selección de Dispositivos -->
+                <div class="grupo">
+                    <label>Dispositivos</label>
+                    <select>
+                        <option v-for="opcion in filteredDevices" :key="opcion.ID_Dispositivo"
+                            :value="opcion.ID_Dispositivo">
+                            {{ opcion.Nombre }}
+                        </option>
+                    </select>
+                </div>
             </div>
 
             <div class="grupoD">
-                <label for="tipo">Descripcion</label>
-                <input class="desc" type="text" placeholder="Descripcion">
+                <label for="tipo">Descripción</label>
+                <input class="desc" type="text" placeholder="Descripción">
             </div>
-
-
 
             <button type="button" class="btn btn-primary">Enviar</button>
         </form>
-
     </div>
 </template>
 
-
 <script setup lang="ts">
-    import { onMounted, ref, computed } from 'vue'
-    import { useClassroom } from '../controladores/useClassroom';
-    import { useBuilding } from '../controladores/useBuilding';
-    import { useRouter } from 'vue-router'
+import { onMounted, ref, computed } from 'vue'
+import { useClassroom } from '../controladores/useClassroom';
+import { useBuilding } from '../controladores/useBuilding';
+import { useDevice } from '../controladores/useDevice';
+import { useRouter } from 'vue-router';
 
-    const { buildings, getBuilding } = useBuilding();
-    const { classrooms, getClassroom } = useClassroom();
+const { buildings, getBuilding } = useBuilding();
+const { classrooms, getClassroom } = useClassroom();
+const { devices, getDevices } = useDevice();
 
-    const selectedBuilding = ref<number | null>(null);
-    const router = useRouter()
+const router = useRouter();
 
-    // Filtrar aulas basadas en el edificio seleccionado
-    const filteredClassrooms = computed(() => {
-        return classrooms.value.filter(aula => aula.ID_Edif === selectedBuilding.value);
-    });
+// Variables reactivas
+const selectedBuilding = ref<number | null>(null);
+const selectedClassroom = ref<number | null>(null);
 
-    // Cargar los datos cuando la página se monte
-    onMounted(async () => {
-        await getBuilding();
-        await getClassroom();
-    });
+// Filtrar aulas basadas en el edificio seleccionado
+const filteredClassrooms = computed(() => {
+    return classrooms.value.filter(aula => aula.ID_Edif === selectedBuilding.value);
+});
 
-    //cerrar sesion
-    const logout = () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        router.push({name:'validacion'})
-    }
+// Filtrar dispositivos basados en el aula seleccionada
+const filteredDevices = computed(() => {
+    return devices.value.filter(device => device.ID_Aula === selectedClassroom.value);
+});
 
-    const home = () => {
-        router.push({name:'Inicio'})
-    }
+// Cargar datos
+onMounted(async () => {
+    await getBuilding();
+    await getClassroom();
+    await getDevices();
 
+    // Verificar que los datos se cargaron correctamente
+    console.log("Edificios:", buildings.value);
+    console.log("Aulas:", classrooms.value);
+    console.log("Dispositivos:", devices.value);
+});
+
+// Funciones para navegación
+const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    router.push({ name: 'validacion' });
+};
+
+const home = () => {
+    router.push({ name: 'Inicio' });
+};
 </script>
 
 
@@ -142,7 +160,8 @@ h2 {
     width: 100%;
     height: 100px;
 }
-.classboton{
+
+.classboton {
     margin-bottom: -20px;
     display: flex;
     justify-content: space-between;

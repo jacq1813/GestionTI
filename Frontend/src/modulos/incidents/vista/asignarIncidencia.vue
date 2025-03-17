@@ -4,7 +4,7 @@
         <div class="classboton">
             <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
             <button class="btn btn-danger btn-sm" @click="logout">Cerrar Sesión</button>
-         </div>
+        </div>
         <label class="subT">Datos de la incidencia</label>
         <div class="top">
             <div class="grupo">
@@ -35,33 +35,46 @@
                     {{ opcion.Nombre + ' ' + opcion.ApellidoPat + ' ' + opcion.ApellidoMat }}
                 </option>
             </select>
+
+            <div class="aux">
+
+                <label>Prioridad</label>
+                <select>
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                </select>
+            </div>
+
             <button class="btn btn-primary">Asignar</button>
         </div>
+
+
     </div>
 </template>
 
 <script setup lang="ts">
-    import { onMounted } from 'vue';
-    import { useTechEmployees } from '../controladores/useEmployees.ts';
-    import { useRouter } from 'vue-router'
+import { onMounted } from 'vue';
+import { useTechEmployees } from '../controladores/useEmployees.ts';
+import { useRouter } from 'vue-router'
 
-    const { techemployees: techEmployees, getTechEmployees } = useTechEmployees();
-    const router = useRouter()
+const { techemployees: techEmployees, getTechEmployees } = useTechEmployees();
+const router = useRouter()
 
-    onMounted(async () => {
-        await getTechEmployees();
-    });
+onMounted(async () => {
+    await getTechEmployees();
+});
 
-    //cerrar sesion
-    const logout = () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        router.push({name:'validacion'})
-    }
+//cerrar sesion
+const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    router.push({ name: 'validacion' })
+}
 
-    const home = () => {
-        router.push({name:'InicioAdmin'})
-    }
+const home = () => {
+    router.push({ name: 'InicioAdmin' })
+}
 </script>
 
 <style scoped>
@@ -80,6 +93,12 @@
 h2 {
     text-align: center;
     margin-bottom: 1.5em;
+}
+
+.aux {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
 }
 
 .subT {
@@ -135,10 +154,10 @@ select {
     border-radius: 5px;
     border: 1px solid #ced4da;
     font-size: 1em;
-    width: 100%;
+    width: 70%;
 }
 
-.classboton{
+.classboton {
     display: flex;
     justify-content: space-between;
 }

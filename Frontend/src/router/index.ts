@@ -10,6 +10,7 @@ import IncidentVue from '@/modulos/principal/views/IncidentVue.vue'
 import AssingIncidet from '@/modulos/incidents/vista/asignarIncidencia.vue'
 import NotFound from '@/modulos/autenticacion/NotFound.vue'
 import RolesAdminVue from '@/modulos/principal/views/RolesAdminVue.vue'
+import UpdateIncident from '@/modulos/incidents/vista/actualizarIncidencia.vue' 
 
 const requireAuth = (to:any, from:any, next:any) => {
   const auth = getAuth()
@@ -97,6 +98,12 @@ const router = createRouter({
       name: 'AsignarIncidente',
       component: AssingIncidet,
 
+    },
+    {
+
+      path: '/ActualizarIncidente',
+      name: 'ActualizarIncidente',
+      component: UpdateIncident,
     },
     {
       path: '/about',
