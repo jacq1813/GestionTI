@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SignIn from '@/modulos/autenticacion/SignIn.vue' 
 import SingOut from '@/modulos/autenticacion/SingOut.vue'
-import Inicio from '@/modulos/principal/InicioVue.vue'
+import Main from '@/modulos/principal/MainVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/Inicio',
       name: 'Inicio',
-      component: Inicio,
+      component: Main,
     },
     {
       path: '/about',

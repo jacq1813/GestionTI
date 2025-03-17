@@ -90,7 +90,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useIncidents } from '../principal/controladores/useIncidents'
+import { useIncidents } from './controladores/useIncidents'
 const { incidents,getIncidents,getIncidentsLiberada,getIncidentsRecandEmi,getIncidentsProceso,getIncidentsRechazada,getIncidentsTerminada } = useIncidents()
 
 const seleccion = ref('1')
