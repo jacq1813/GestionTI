@@ -9,47 +9,28 @@ export const useIncidents = () => {
     const getIncidents = async () => {
         const response = await incidentsApi.get<Incident[]>('');
         incidents.value = response.data
-        console.log(response.data)
     }
 
     const getIncidentsRecandEmi = async () => {
         const response = await incidentsApi.get<Incident[]>('/recandemi');
         incidents.value = response.data
-        console.log(response.data)
     }
 
-    const getIncidentsProceso = async () => {
-        const response = await incidentsApi.get<Incident[]>('/proceso');
+    const getIncidentsByEstado = async (estado: string) => {
+        const response = await incidentsApi.get<Incident[]>(`/recandemi/`+estado);
         incidents.value = response.data
-        console.log(response.data)
     }
 
-    const getIncidentsTerminada = async () => {
-        const response = await incidentsApi.get<Incident[]>('/terminada');
+    const getIncidentsByEstadoPeriodoAnio = async (estado: string, periodo: string, anio: string) => {
+        const response = await incidentsApi.get<Incident[]>(`/recandemi/`+estado+`/`+periodo+`/`+anio);
         incidents.value = response.data
-        console.log(response.data)
     }
-
-    const getIncidentsLiberada = async () => {
-        const response = await incidentsApi.get<Incident[]>('/liberada');
-        incidents.value = response.data
-        console.log(response.data)
-    }
-
-    const getIncidentsRechazada = async () => {
-        const response = await incidentsApi.get<Incident[]>('/rechazada');
-        incidents.value = response.data
-        console.log(response.data)
-    }
-    
 
     return {
         incidents,
         getIncidents,
         getIncidentsRecandEmi,
-        getIncidentsProceso,
-        getIncidentsTerminada,
-        getIncidentsLiberada,
-        getIncidentsRechazada
+        getIncidentsByEstado,
+        getIncidentsByEstadoPeriodoAnio
     }
 }

@@ -15,27 +15,12 @@ router.get('/recandemi', async (_req: Request, res: Response) => {
     res.status(200).send(incidents);
 });
 
-//http://localhost:3001/incidents/proceso
-router.get('/proceso', async (_req: Request, res: Response) => {
-    const incidents = await incidentService.getIncidentsProceso();
-    res.status(200).send(incidents);
-});
-
-//http://localhost:3001/incidents/terminada
-router.get('/terminada', async (_req: Request, res: Response) => {
-    const incidents = await incidentService.getIncidentsTerminada();
-    res.status(200).send(incidents);
-});
-
-//http://localhost:3001/incidents/liberada
-router.get('/liberada', async (_req: Request, res: Response) => {
-    const incidents = await incidentService.getIncidentsLiberada();
-    res.status(200).send(incidents);
-});
-
-//http://localhost:3001/incidents/rechazada
-router.get('/rechazada', async (_req: Request, res: Response) => {
-    const incidents = await incidentService.getIncidentsRechazada();
+//http://localhost:3001/incidents/recandemi/:estado:periodo:anio
+router.get('/recandemi/:estado/:periodo/:anio', async (req: Request, res: Response) => {
+    const estado = req.params.estado;
+    const periodo = req.params.periodo;
+    const anio = req.params.anio;
+    const incidents = await incidentService.getIncidentsByEstadoPeriodoAnio(estado, periodo, anio);
     res.status(200).send(incidents);
 });
 

@@ -28,13 +28,27 @@
     <br>
 
     <div class="opciones">
-        <h2>Incidencias</h2>
-        <label for="">Periodo</label>
-        <select v-model="seleccion" id="opcion">
-            <option v-for="opcion in opciones" :key="opcion.value" :value="opcion.value">
-                {{ opcion.text }}
-            </option>
-        </select>
+        <section class="Incidencias">
+            <h2>Incidencias</h2>
+        </section>
+        <section class="periodoYano">
+            <section class="caja1">
+                <label class="periodo">Periodo</label>
+                <select v-model="periodSelected" id="opcion" @change="logSeleccion">
+                    <option v-for="opcion in opciones" :key="opcion.value" :value="opcion.value">
+                        {{ opcion.value }}
+                    </option>
+                </select>
+            </section>
+            <section class="caja2">
+                <label class="periodo">Año</label>
+                <select v-model="yearSelected" id="anio" @change="logAnio">
+                    <option v-for="anio in aniosDisponibles" :key="anio" :value="anio">
+                        {{ anio }}
+                    </option>
+                </select>
+            </section>
+        </section>
     </div>
 
 
@@ -89,161 +103,211 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useIncidents } from './controladores/useIncidents'
-const { incidents,getIncidents,getIncidentsLiberada,getIncidentsRecandEmi,getIncidentsProceso,getIncidentsRechazada,getIncidentsTerminada } = useIncidents()
+    import { onMounted, ref } from 'vue'
+    import { useIncidents } from './controladores/useIncidents'
+    const { incidents,getIncidents,getIncidentsRecandEmi,getIncidentsByEstado,getIncidentsByEstadoPeriodoAnio } = useIncidents()
 
-const seleccion = ref('1')
+    const periodSelected = ref('Selecciona periodo') // Default value or initial period
+    const yearSelected = ref('Selecciona año') // Default value or initial year
 
-//Cuando la pagina es visible y esta cargada
-onMounted(async () => {
-    await getIncidents()
-})
+    //Cuando la pagina es visible y esta cargada
+    onMounted(async () => {
+        await getIncidents()
+        periodSelected.value = 'Enero - Junio'
+        yearSelected.value = '2021'
+    })
 
-const opciones = [
-    { value: '1', text: 'Hoy' },
-    { value: '2', text: 'Ayer' },
-    { value: '3', text: 'Esta semana' },
-    { value: '4', text: 'Este mes' },
-    { value: '5', text: 'Este año' },
-    { value: '6', text: 'Todos' }
-]
-
-const fetchData = async (type: string) => {
-    switch (type) {
-        case 'Todas':
-            await getIncidents()
-            break
-        case 'En proceso':
-            await getIncidentsProceso()
-            break
-        case 'Terminadas':
-            await getIncidentsTerminada()
-            break
-        case 'Liberadas':
-            await getIncidentsLiberada()
-            break
-        case 'Rechazadas':
-            await getIncidentsRechazada()
-            break
+    //se actualiza la tabla de incidencias dependiendo de la opcion seleccionada
+    const logSeleccion = () => {
+        periodSelected.value
     }
-}
+    const logAnio = () => {
+        yearSelected.value
+    }
+
+    const opciones = [
+        { value: 'Enero - Junio'},
+        { value: 'Verano'},
+        { value: 'Agosto - Diciembre'},
+
+    ]
+
+    const aniosDisponibles = [
+        '2021',
+        '2022',
+        '2023',
+        '2024',
+        '2025',
+    ]
+
+    const fetchData = async (type: string) => {
+        switch (type) {
+            case 'Todas':
+                await getIncidentsRecandEmi()
+                break
+            case 'En proceso':
+                await getIncidentsByEstadoPeriodoAnio('En proceso',periodSelected.value,yearSelected.value)
+                break
+            case 'Terminadas':
+                await getIncidentsByEstadoPeriodoAnio('Terminada',periodSelected.value,yearSelected.value)
+                break
+            case 'Liberadas':
+                await getIncidentsByEstadoPeriodoAnio('Liberada',periodSelected.value,yearSelected.value)
+                break
+            case 'Rechazadas':
+                await getIncidentsByEstadoPeriodoAnio('Rechazada',periodSelected.value,yearSelected.value)
+                break
+        }
+    }
 </script>
 
 <style scoped>
-template {
-    display: flex;
-}
+    template {
+        display: flex;
+    }
 
-.headerPrincipal {
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    padding: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+    .headerPrincipal {
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        padding: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-h2,h3 {
-    text-align: center;
-    color: black;
-}
+    h2,h3 {
+        text-align: center;
+        color: black;
+    }
 
-.Contenedor {
-    max-width: 100%;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-}
+    .Contenedor {
+        max-width: 100%;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+    }
 
-.table {
-    width: 90%;
-    justify-self: center;
-}
+    .table {
+        width: 90%;
+        justify-self: center;
+    }
 
-.navMenu {
-    display: flex;
-    justify-content: center;
-    background-color: #424951;
-    padding: 0.8em;
-    border-radius: 8px;
-    width: 90%;
-    margin: 0 auto;
-    gap: 1em;
-}
+    .navMenu {
+        display: flex;
+        justify-content: center;
+        background-color: #424951;
+        padding: 0.8em;
+        border-radius: 8px;
+        width: 90%;
+        margin: 0 auto;
+        gap: 1em;
+    }
 
-.navMenu.IncidMenu {
-    background-color: #6c757d;
-    font-size: small;
-    margin-top: 1em;
-    padding: 0.5em;
-    border-radius: 8px 8px 0 0;
-}
+    .navMenu.IncidMenu {
+        background-color: #6c757d;
+        font-size: small;
+        margin-top: 1em;
+        padding: 0.5em;
+        border-radius: 8px 8px 0 0;
+    }
 
-.navMenu li {
-    list-style: none;
-}
+    .navMenu li {
+        list-style: none;
+    }
 
-.navMenu li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 0.8em 1.5em;
-    transition: background-color 0.3s ease-in-out;
-}
+    .navMenu li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 0.8em 1.5em;
+        transition: background-color 0.3s ease-in-out;
+    }
 
-.navMenu li a:hover {
-    background-color: #1abc9c;
-}
+    .navMenu li a:hover {
+        background-color: #1abc9c;
+    }
 
-.navMenu.navMenu.IncidMenu li a:hover {
-    background-color: brown;
-    padding: 0.7em 1.5em;
-}
+    .navMenu.navMenu.IncidMenu li a:hover {
+        background-color: brown;
+        padding: 0.7em 1.5em;
+    }
 
-/* Barra superior con usuario e icono */
-.menuPresentacion {
-    width: 100%;
-    background-color: #2c3e50;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0.8em 1.5em;
-    font-weight: bold;
-    gap: 0.7em;
-}
+    /* Barra superior con usuario e icono */
+    .menuPresentacion {
+        width: 100%;
+        background-color: #2c3e50;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0.8em 1.5em;
+        font-weight: bold;
+        gap: 0.7em;
+    }
 
-.nombreUsuario {
-    font-size: 1rem;
-}
+    .nombreUsuario {
+        font-size: 1rem;
+    }
 
-.iconoUsuario {
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+    .iconoUsuario {
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
 
-.iconoUsuario:hover {
-    color: #1abc9c;
-}
+    .iconoUsuario:hover {
+        color: #1abc9c;
+    }
 
-.opciones {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    margin: 0 auto;
-    padding: 1em;
-}
+    .opciones {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: 0 auto;
+        padding: 1em;
+    }
 
-.elementoMenu {
-    background-color: #424951;
-    border-radius: 8px;
-    padding: 0.24em 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
+    .elementoMenu {
+        background-color: #424951;
+        border-radius: 8px;
+        padding: 0.24em 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
 
-.elementoMenu:hover {
-    background-color: #1abc9c;
-    transition: background-color 0.3s ease-in-out;
-}
+    .elementoMenu:hover {
+        background-color: #1abc9c;
+        transition: background-color 0.3s ease-in-out;
+    }
+    .Incidencias {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+
+    .periodo {
+        display: flex;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: black;
+        align-items: self-end;
+        justify-content: center;
+    }
+
+    .periodoYano {
+        display: grid;
+        flex-flow: row wrap;
+        width: 50%;
+        justify-content: flex-end;
+    }
+
+    .caja1 {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 0.5em;
+        justify-content: space-between;
+    }
+
+    .caja2 {
+        display: flex;
+        flex-flow: column wrap;
+    }
 </style>
