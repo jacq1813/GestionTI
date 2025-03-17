@@ -104,7 +104,7 @@
 
 <script setup lang="ts">
     import { onMounted, ref } from 'vue'
-    import { useIncidents } from './controladores/useIncidents'
+    import { useIncidents } from '../controladores/useIncidents'
     const { incidents,getIncidents,getIncidentsRecandEmi,getIncidentsByEstado,getIncidentsByEstadoPeriodoAnio } = useIncidents()
 
     const periodSelected = ref('Selecciona periodo') // Default value or initial period

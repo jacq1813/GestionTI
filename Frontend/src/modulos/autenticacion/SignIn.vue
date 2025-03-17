@@ -28,7 +28,7 @@
 </template>
 <script setup lang="ts">
     import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-    import { getFirestore, doc, getDoc } from 'firebase/firestore';
+    import { getFirestore, doc, getDoc,updateDoc } from 'firebase/firestore';
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
     import "../../firebase/config.js";
@@ -51,14 +51,22 @@
             // Obtener datos del usuario desde Firestore
             const db = getFirestore();
             const userDocRef = doc(db, 'usuarios', user.uid);
+
+            console.log(db);
+            console.log(userDocRef, 'usuarios', user.uid);
+            console.log(user.uid);
+            console.log(user);
             const userDoc = await getDoc(userDocRef);
+            await updateDoc(userDocRef, {
+                ultimoLogin: new Date()
+            });
             
             if (userDoc.exists()) {
                 const userData = userDoc.data();
                 
                 // Redirigir según el rol
-                if (userData.role === 'admin') {
-                    router.push({ name: 'Admin' }); // O la ruta que tengas para administradores
+                if (userData.Rol === 'admin') {
+                    router.push({ name: 'InicioAdmin' }); 
                 } else {
                     router.push({ name: 'Inicio' }); // Ruta para usuarios regulares
                 }

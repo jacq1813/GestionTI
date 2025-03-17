@@ -50,8 +50,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
-import { useClassroom } from './controladores/useClassroom';
-import { useBuilding } from './controladores/useBuilding';
+import { useClassroom } from '../controladores/useClassroom';
+import { useBuilding } from '../controladores/useBuilding';
 
 const { buildings, getBuilding } = useBuilding();
 const { classrooms, getClassroom } = useClassroom();

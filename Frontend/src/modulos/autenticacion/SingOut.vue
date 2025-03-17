@@ -1,72 +1,121 @@
 <template>
-    <div class="contenedor">  
-        <form class="formulario" @submit.prevent="signUp">
-            <section class="logo-tec">
-                <img src="../../img/LOGO_TEC_PNG_OK.png" alt="Instituto Tecnológico de Culiacán">
-            </section>
-            <h2>Registrate!</h2>
-           
-            <div class="grupo">
-                <label>Correo</label>
-                <input type="email" required v-model="email">
-            </div>
-            <div class="grupo">
-                <label>Contraseña</label>
-                <input type="password" required v-model="password">
-            </div>
-            <div class="grupo">
-                <label>Confirmar contraseña</label>
-                <input type="password" required v-model="password">
-            </div>
-            <div class="error" v-if="error">
-                {{ error }}
-            </div>
-            <button type="submit">
-                Registrarse
-            </button>
-            <p class="registro">
-                ¿Ya tienes una cuenta? <router-link to="/validacion">Inicia sesion aqui</router-link>
-            </p>
-        </form>
+    <div class="contenedor">
+      <form class="formulario" @submit.prevent="register">
+        <section class="logo-tec">
+          <img src="../../img/LOGO_TEC_PNG_OK.png" alt="Instituto Tecnológico de Culiacán">
+        </section>
+        <h2>Registro de Usuario</h2>
+        
+        <div class="grupo">
+          <label>Correo</label>
+          <input type="email" required v-model="email">
+        </div>
+        <div class="grupo">
+          <label>Contraseña</label>
+          <input type="password" required v-model="password" minlength="6">
+        </div>
+        <div class="grupo">
+          <label>Confirmar Contraseña</label>
+          <input type="password" required v-model="confirmPassword" minlength="6">
+        </div>
+        <div class="error" v-if="error">
+          {{ error }}
+        </div>
+        <button type="submit" :disabled="loading">
+          {{ loading ? 'Registrando...' : 'Registrarse' }}
+        </button>
+        <p class="login">
+          ¿Ya tienes cuenta? <router-link to="/validacion">Inicia sesión</router-link>
+        </p>
+      </form>
     </div>
-</template>
-
-<script setup lang="ts">
-    import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+  </template>
+  
+  <script setup lang="ts">
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+    import { getFirestore, doc, setDoc,getDoc } from 'firebase/firestore';
     import "../../firebase/config.js";
-
+    
     const email = ref('');
-    const password = ref();
-    const error = ref(null);
+    const password = ref('');
+    const confirmPassword = ref('');
+    const error = ref<string | null>(null);
+    const loading = ref(false);
     const router = useRouter();
-
-    const signUp = async () => {
-        const error = ref<string | null>(null);
-        console.log(error);
+    
+    const register = async () => {
+        error.value = null;
+        loading.value = true;
+    
+        // Validación de contraseñas
+        if (password.value !== confirmPassword.value) {
+        error.value = 'Las contraseñas no coinciden';
+        loading.value = false;
+        return;
+        }
+    
         try {
             const auth = getAuth();
-            const user = await createUserWithEmailAndPassword(auth, email.value, password.value);
-            console.log(user);
-            error.value = null;
-            router.push({name: 'validacion'});
-        } catch (err:any) {
-            switch (err.code) {
-                case 'auth/email-already-in-use':
-                    error.value = 'Correo ya en uso';
-                    break;
-                case 'auth/weak-password':
-                    error.value = 'Contraseña débil';
-                    break;
-                default:
-                    console.log(err);
-                    error.value = 'Error al registrarse';
-                    break;
-            }
+            console.log(auth);
+            console.log(email.value);
+            console.log(password.value);
+            const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email.value,
+            password.value
+        );
+        const user = userCredential.user;
+        console.log(user);
+        // Guardar información adicional en Firestore
+        // Utilizamos el UID como ID del documento
+        const db = getFirestore();
+        console.log(userCredential);
+        console.log(user.uid);
+        console.log(db.app.name);
+        const usuariosRef = doc(db, 'usuarios', user.uid);
+        const usuariosSnapshot = await setDoc(doc(db, 'usuarios', 'metadata'), {}, { merge: true });
+        const metadataRef = doc(db, 'usuarios', 'metadata');
+        const metadataSnapshot = await getDoc(metadataRef);
+
+        let rol = 'usuario';
+        if (!metadataSnapshot.exists() || !metadataSnapshot.data().adminCreated) {
+            rol = 'admin';
+            await setDoc(metadataRef, { adminCreated: true }, { merge: true });
         }
-    }
-</script>
+
+        await setDoc(usuariosRef, {
+            Correo: user.email,
+            Rol: rol,
+            Activo: true,
+            Uid: user.uid,
+            UltimoLogin: new Date()
+        });
+    
+        // Redirigir al usuario a la página de inicio
+        router.push({ name: 'validacion' });
+        } catch (err: any) {
+        switch (err.code) {
+            case 'auth/email-already-in-use':
+            error.value = 'Este correo ya está registrado';
+            break;
+            case 'auth/invalid-email':
+            error.value = 'Correo electrónico inválido';
+            break;
+            case 'auth/weak-password':
+            error.value = 'La contraseña debe tener al menos 6 caracteres';
+            break;
+            default:
+            console.error(err);
+            error.value = 'Error al registrar usuario';
+            break;
+        }
+        } finally {
+        loading.value = false;
+        }
+    };
+  </script>
 
 <style scoped>
     .contenedor {
@@ -147,6 +196,11 @@
     }
 
     .registro{
+        text-align: center;
+        color: #7a0796;
+    }
+
+    .login {
         text-align: center;
         color: #7a0796;
     }
