@@ -106,4 +106,4 @@ export const getIncidentsByFolio = async (folio: string) => {
 }
 
 
-;
+

@@ -9,4 +9,10 @@ router.get('/', async (_req: Request, res: Response) => {
     res.status(200).send(classrooms);
 });
 
+//http://localhost:3001/classrooms/Detail
+router.get('/Detail', async (_req: Request, res: Response) => {
+    const incidents = await classroomService.getClassroomsDetail();
+    res.status(200).send(incidents);
+});
+
 export default router;

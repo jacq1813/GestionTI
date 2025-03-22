@@ -10,9 +10,9 @@
                 <i class="fa fa-user user-icon"></i>
 
                 <div v-if="menuOpen" class="dropdown-menu">
-                    <a href="#" @click="navigate('usuarios')">Usuarios</a>
+                    <a href="#" @click="navigate('RolesA')">Usuarios</a>
                     <a href="#" @click="navigate('Edificios')">Edificios</a>
-                    <a href="#" @click="navigate('aulas')">Aulas</a>
+                    <a href="#" @click="navigate('Salones')">Aulas</a>
                     <a href="#" @click="navigate('equipos')">Equipos</a>
                     <hr>
                     <a href="#" @click="logout">Cerrar Sesión</a>

@@ -12,6 +12,8 @@ import NotFound from '@/modulos/autenticacion/NotFound.vue'
 import RolesAdminVue from '@/modulos/principal/views/RolesAdminVue.vue'
 import UpdateIncident from '@/modulos/incidents/vista/actualizarIncidencia.vue' 
 import BuildingsVue from '@/modulos/principal/views/BuildingsVue.vue'
+import ClassroomVue from '@/modulos/principal/views/ClassroomVue.vue'
+
 const requireAuth = (to:any, from:any, next:any) => {
   const auth = getAuth()
   const user = auth.currentUser
@@ -109,6 +111,12 @@ const router = createRouter({
       path: '/Edificios',
       name: 'Edificios',
       component: BuildingsVue,
+    },
+    {
+      path: '/Salones',
+      name: 'Salones',
+      component: ClassroomVue,
+
     },
     {
       path: '/about',

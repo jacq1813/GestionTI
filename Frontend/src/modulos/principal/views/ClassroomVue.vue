@@ -11,19 +11,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID edificio</th>
+                        <th>ID aula</th>
                         <th>Nombre</th>
                         <th>Empleado</th>
-                        <th>Departamento</th>
+                        <th>Edificio</th>
+                        <th>Tipo de aula</th>
+
+
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="building in buildings" :key="building.ID_Edif">
-                        <td>{{ building.ID_Edif }}</td>
-                        <td>{{ building.Nombre }}</td>
-                        <td>{{ building.ID_Emp }}</td>
-                        <td>{{ building.Nombre_Departamento }}</td>
+                    <tr v-for="classroom in classrooms" :key="classroom.ID_Aula">
+                        <td>{{ classroom.ID_Aul }}</td>
+                        <td>{{ classroom.Nombre }}</td>
+                        <td>{{ classroom.Empleado_Nombre }}</td>
+                        <td>{{ classroom.Edificio_Nombre }}</td>
+                        <td>{{ classroom.TipoAula_Nombre }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -36,15 +40,16 @@
 <script setup lang="ts">
 import TopBar from '../layouts/TopBar.vue'
 import { onMounted, ref, computed } from 'vue'
-import { useBuilding } from '../controladores/useBuilding';
+import { useClassroom } from '../controladores/useClassroom';
+
 import { useRouter } from 'vue-router'
 
-const { buildings, getBuilding } = useBuilding();
+const { classrooms, getClassroomsDetail } = useClassroom();
 
 const router = useRouter();
 
 onMounted(() => {
-    getBuilding();
+    getClassroomsDetail();
 })
 
 const home = () => {

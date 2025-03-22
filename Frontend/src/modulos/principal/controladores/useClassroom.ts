@@ -12,8 +12,17 @@ export const useClassroom = () => {
         console.log(response.data)
     }
 
+    const getClassroomsDetail = async () => {
+        const response = await classroom.get<Classroom[]>('/Detail');
+        classrooms.value = response.data
+        console.log(response.data)
+    }
+
+
+
     return {
         classrooms,
-        getClassroom
+        getClassroom,
+        getClassroomsDetail
     }
 }

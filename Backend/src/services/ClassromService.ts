@@ -12,3 +12,14 @@ export const getClassrooms = async () => {
         return { error: "no se pudo obtener los salones" };
     }
 }
+
+// obtener salones detallado
+export const getClassroomsDetail = async () => {
+    try {
+        const [rows] = await connection.query('SELECT Aula.ID_Aul, Aula.Nombre, Edificio.Nombre AS Edificio_Nombre, TipoAula.Nombre AS TipoAula_Nombre, Empleado.Nombre AS Empleado_Nombre FROM Aula JOIN Edificio ON Aula.ID_Edif = Edificio.ID_Edif JOIN TipoAula ON Aula.ID_TipoAula = TipoAula.ID_TipoAula JOIN Empleado ON Aula.ID_Emp = Empleado.ID_Emp; ');
+        return rows;
+
+    } catch (error) {
+        return { error: "no se pudo obtener los salones" };
+    }
+}
