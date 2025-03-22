@@ -13,9 +13,16 @@ export const useDevice = () => {
         console.log(response.data)
     }
 
+    const getDevicesDetail = async () => {
+        const response = await device.get<Device[]>('/Detail');
+        devices.value = response.data
+        console.log(response.data)
+    }
+
     return {
         devices,
-        getDevices
+        getDevices,
+        getDevicesDetail
     }
 }
 

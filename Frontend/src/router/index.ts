@@ -13,6 +13,7 @@ import RolesAdminVue from '@/modulos/principal/views/RolesAdminVue.vue'
 import UpdateIncident from '@/modulos/incidents/vista/actualizarIncidencia.vue' 
 import BuildingsVue from '@/modulos/principal/views/BuildingsVue.vue'
 import ClassroomVue from '@/modulos/principal/views/ClassroomVue.vue'
+import DevicesVue from '@/modulos/principal/views/DevicesVue.vue'
 
 const requireAuth = (to:any, from:any, next:any) => {
   const auth = getAuth()
@@ -117,6 +118,11 @@ const router = createRouter({
       name: 'Salones',
       component: ClassroomVue,
 
+    },
+    {
+      path: '/Dispositivos',
+      name: 'Dispositivos',
+      component: DevicesVue,
     },
     {
       path: '/about',

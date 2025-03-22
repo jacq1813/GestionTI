@@ -22,7 +22,7 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="classroom in classrooms" :key="classroom.ID_Aula">
+                    <tr v-for="classroom in classrooms" :key="classroom.ID_Aul">
                         <td>{{ classroom.ID_Aul }}</td>
                         <td>{{ classroom.Nombre }}</td>
                         <td>{{ classroom.Empleado_Nombre }}</td>

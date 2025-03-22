@@ -1,5 +1,5 @@
 export interface Classroom {
-    ID_Aula: number;
+    ID_Aul: number;
     Nombre: string;
     ID_TipoAula: number;
     ID_Edif: number;
@@ -8,5 +8,5 @@ export interface Classroom {
     Edificio_Nombre: string;
     TipoAula_Nombre: string;
     Empleado_Nombre: string;
-    
+
 }

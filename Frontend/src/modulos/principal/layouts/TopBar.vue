@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <div class="menuPresentacion">
 
 
@@ -13,7 +14,7 @@
                     <a href="#" @click="navigate('RolesA')">Usuarios</a>
                     <a href="#" @click="navigate('Edificios')">Edificios</a>
                     <a href="#" @click="navigate('Salones')">Aulas</a>
-                    <a href="#" @click="navigate('equipos')">Equipos</a>
+                    <a href="#" @click="navigate('Dispositivos')">Equipos</a>
                     <hr>
                     <a href="#" @click="logout">Cerrar Sesión</a>
                 </div>
@@ -27,6 +28,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
 
 const router = useRouter()
 const menuOpen = ref(false) // Estado del menú desplegable
