@@ -3,4 +3,5 @@ export interface Building {
     Nombre: string;
     ID_Emp: number;
     ID_TipDpto: number;
+    Nombre_Departamento: string;
 }

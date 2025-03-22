@@ -1,24 +1,110 @@
 <template>
     <div class="Container">
-        <TopBar> </TopBar>
-        <h2>Edificios</h2>
+        <TopBar></TopBar>
+
+        <div class="Cont">
+            <h2>Edificios</h2>
+
+            <div class="classboton">
+                <button class="btn btn-secondary" @click="home">Regresar</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID edificio</th>
+                        <th>Nombre</th>
+                        <th>Empleado</th>
+                        <th>Departamento</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="building in buildings" :key="building.ID_Edif">
+                        <td>{{ building.ID_Edif }}</td>
+                        <td>{{ building.Nombre }}</td>
+                        <td>{{ building.ID_Emp }}</td>
+                        <td>{{ building.Nombre_Departamento }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
-
 import TopBar from '../layouts/TopBar.vue'
+import { onMounted, ref, computed } from 'vue'
+import { useBuilding } from '../controladores/useBuilding';
+import { useRouter } from 'vue-router'
 
+const { buildings, getBuilding } = useBuilding();
+
+const router = useRouter();
+
+onMounted(() => {
+    getBuilding();
+})
+
+const home = () => {
+    router.push({ name: 'Inicio' });
+}
 </script>
-
 
 <style scoped>
 .container {
     max-width: 100%;
     width: 100%;
-    height: 100vw;
+    height: 100vh;
     background-color: rgb(255, 255, 255);
     color: black;
+}
 
+.Cont {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 2em;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    margin: 2em 3em;
+    background-color: #F9F9F9;
+}
+
+h2 {
+    text-align: center;
+    padding: 1em;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    border-radius: 8px;
+    /* Borde redondeado en la tabla */
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+th {
+    background-color: #daadff;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
 }
 </style>
