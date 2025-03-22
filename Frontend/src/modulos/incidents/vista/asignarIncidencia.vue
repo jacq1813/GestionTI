@@ -1,59 +1,62 @@
 <template>
-    <TopBar></TopBar>
     <div class="container">
 
-
+        <TopBar></TopBar>
 
         <h2>Asignar incidencia</h2>
-        <div class="classboton">
-            <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
-            <button class="btn btn-danger btn-sm" @click="logout">Cerrar Sesión</button>
-        </div>
-        <label class="subT">Datos de la incidencia</label>
-        <div class="top">
-            <div class="grupo">
-                <label>Folio de incidencia</label>
-                <input type="text" :placeholder="selectedIncident?.Folio" disabled>
+
+        <div class="containerForm">
+
+
+            <div class="classboton">
+                <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
+                <button class="btn btn-danger btn-sm" @click="logout">Cerrar Sesión</button>
             </div>
-            <div class="grupo">
-                <label>Edificio</label>
-                <input type="text" :placeholder="selectedIncident?.Aula" disabled>
+            <label class="subT">Datos de la incidencia</label>
+            <div class="top">
+                <div class="grupo">
+                    <label>Folio de incidencia</label>
+                    <input type="text" :placeholder="selectedIncident?.Folio" disabled>
+                </div>
+                <div class="grupo">
+                    <label>Edificio</label>
+                    <input type="text" :placeholder="selectedIncident?.Aula" disabled>
+                </div>
+                <div class="grupo">
+                    <label>Periodo</label>
+                    <input type="text" :placeholder="selectedIncident?.Periodo" disabled>
+                </div>
             </div>
+
             <div class="grupo">
-                <label>Periodo</label>
-                <input type="text" :placeholder="selectedIncident?.Periodo" disabled>
+                <label>Descripción</label>
+                <input class="desc" type="text" :placeholder="selectedIncident?.Descripcion" disabled>
             </div>
-        </div>
 
-        <div class="grupo">
-            <label>Descripción</label>
-            <input class="desc" type="text" :placeholder="selectedIncident?.Descripcion" disabled>
-        </div>
+            <hr>
 
-        <hr>
-
-        <label class="subT">Seleccionar técnico</label>
-        <div class="grupoB">
-            <select>
-                <option v-for="opcion in techEmployees" :key="opcion.ID_Emp" :value="opcion.ID_Emp">
-                    {{ opcion.Nombre + ' ' + opcion.ApellidoPat + ' ' + opcion.ApellidoMat }}
-                </option>
-            </select>
-
-            <div class="aux">
-
-                <label>Prioridad</label>
+            <label class="subT">Seleccionar técnico</label>
+            <div class="grupoB">
                 <select>
-                    <option value="Baja">Baja</option>
-                    <option value="Media">Media</option>
-                    <option value="Alta">Alta</option>
+                    <option v-for="opcion in techEmployees" :key="opcion.ID_Emp" :value="opcion.ID_Emp">
+                        {{ opcion.Nombre + ' ' + opcion.ApellidoPat + ' ' + opcion.ApellidoMat }}
+                    </option>
                 </select>
+
+                <div class="aux">
+
+                    <label>Prioridad</label>
+                    <select>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary">Asignar</button>
             </div>
 
-            <button class="btn btn-primary">Asignar</button>
         </div>
-
-
     </div>
 </template>
 
@@ -108,7 +111,12 @@ const home = () => {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-    margin-top: 3em;
+}
+
+.containerForm {
+    padding: 5em;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -134,6 +142,7 @@ h2 {
     display: flex;
     gap: 1.5em;
     justify-content: space-between;
+
 }
 
 .grupo {
@@ -182,5 +191,6 @@ select {
 .classboton {
     display: flex;
     justify-content: space-between;
+
 }
 </style>
