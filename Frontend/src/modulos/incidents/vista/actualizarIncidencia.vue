@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+
+        <TopBar></TopBar>
+
         <h2>Actualizar Incidencia</h2>
 
         <div class="classboton">
@@ -56,6 +59,7 @@ import { useRouter } from 'vue-router'
 
 // Simulación de la API de incidencias
 import { useIncidents } from '../controladores/useIncidents';
+import TopBar from '../../principal/layouts/TopBar.vue';
 
 const { incidents, getIncidentsByFolio } = useIncidents();
 
@@ -120,11 +124,14 @@ const home = () => {
 
 <style scoped>
 .container {
-    max-width: 80%;
-    width: 80%;
+    max-width: 100%;
+    width: 100%;
+    height: 100vw;
     background-color: rgb(255, 255, 255);
     color: black;
-    padding: 2em;
+    padding-right: 0;
+    padding-left: 0;
+
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -132,6 +139,7 @@ const home = () => {
 h2 {
     text-align: center;
     margin-bottom: 1.5em;
+    padding: 1em;
     color: black;
 }
 
@@ -155,7 +163,7 @@ h2 {
     padding: 2em;
     border: 1px solid #DDD;
     border-radius: 5px;
-    margin: 2em auto;
+    margin: 2em 3em;
     background-color: #F9F9F9;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
@@ -178,6 +186,7 @@ h2 {
 
 .classboton {
     margin-bottom: 1em;
+    margin: 0em 3em;
     display: flex;
     justify-content: space-between;
 }

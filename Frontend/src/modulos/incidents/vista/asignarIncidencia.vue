@@ -1,5 +1,9 @@
 <template>
+    <TopBar></TopBar>
     <div class="container">
+
+
+
         <h2>Asignar incidencia</h2>
         <div class="classboton">
             <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
@@ -59,6 +63,7 @@ import { useTechEmployees } from '../controladores/useEmployees.ts';
 
 import { useRouter } from 'vue-router'
 import { useIncidents } from '../controladores/useIncidents';
+import TopBar from '../../principal/layouts/TopBar.vue';
 
 const { incidents, getIncidentsByFolio } = useIncidents();
 
@@ -93,20 +98,23 @@ const home = () => {
 
 <style scoped>
 .container {
-    max-width: 80%;
-    width: 80%;
-    height: auto;
+    max-width: 100%;
+    width: 100%;
+    height: 100vw;
     background-color: #fff;
     color: black;
-    padding: 2em;
+    padding-right: 0;
+    padding-left: 0;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 2em;
+
+    margin-top: 3em;
 }
 
 h2 {
     text-align: center;
     margin-bottom: 1.5em;
+    padding: 1em;
 }
 
 .aux {

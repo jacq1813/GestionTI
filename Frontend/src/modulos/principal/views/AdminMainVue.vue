@@ -1,115 +1,113 @@
 <template>
     <div class="Contenedor">
 
-        <div class="menuPresentacion">
-            <button class="salir" @click="logout">Cerrar Sesión</button>
-            <span class="nombreUsuario">Usuario</span>
-            <i class="fa fa-user user-icon"></i>
-        </div>
+        <TopBar>
 
-        <div class=" headerPrincipal">
-            <h2>Mantenimiento y servicios ADMIIIIIN</h2>
-            <h3>Instituto tecnologico de Culiacán</h3>
-        </div>
+            <div class=" headerPrincipal">
+                <h2>Mantenimiento y servicios</h2>
+                <h3>Instituto tecnologico de Culiacán</h3>
+            </div>
 
-        <ul class="navMenu">
-            <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">
-                Principal
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('')">
-                Solicitudes
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
-                Incidencias
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('RolesA')">
-                Roles
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
-                AsignarIncidencias
-            </li>
-        </ul>
-        <br>
+            <ul class="navMenu">
+                <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">
+                    Principal
+                </li>
+                <li class="elementoMenu" @click="navigateToRoles('')">
+                    Solicitudes
+                </li>
+                <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
+                    Incidencias
+                </li>
+                <li class="elementoMenu" @click="navigateToRoles('RolesA')">
+                    Roles
+                </li>
+                <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
+                    AsignarIncidencias
+                </li>
+            </ul>
+            <br>
 
-        <div class="opciones">
-            <section class="Incidencias">
-                <h2>Incidencias</h2>
-            </section>
-            <section class="periodoYano">
-                <section class="caja1">
-                    <label class="periodo">Periodo</label>
-                    <select v-model="periodSelected" id="opcion" @change="logSeleccion">
-                        <option v-for="opcion in opciones" :key="opcion.value" :value="opcion.value">
-                            {{ opcion.value }}
-                        </option>
-                    </select>
+            <div class="opciones">
+                <section class="Incidencias">
+                    <h2>Incidencias</h2>
                 </section>
-                <section class="caja2">
-                    <label class="periodo">Año</label>
-                    <select v-model="yearSelected" id="anio" @change="logAnio">
-                        <option v-for="anio in aniosDisponibles" :key="anio" :value="anio">
-                            {{ anio }}
-                        </option>
-                    </select>
+                <section class="periodoYano">
+                    <section class="caja1">
+                        <label class="periodo">Periodo</label>
+                        <select v-model="periodSelected" id="opcion" @change="logSeleccion">
+                            <option v-for="opcion in opciones" :key="opcion.value" :value="opcion.value">
+                                {{ opcion.value }}
+                            </option>
+                        </select>
+                    </section>
+                    <section class="caja2">
+                        <label class="periodo">Año</label>
+                        <select v-model="yearSelected" id="anio" @change="logAnio">
+                            <option v-for="anio in aniosDisponibles" :key="anio" :value="anio">
+                                {{ anio }}
+                            </option>
+                        </select>
+                    </section>
                 </section>
-            </section>
-        </div>
+            </div>
 
 
-        <ul class="navMenu IncidMenu">
-            <li class="elementoMenu" @click="fetchData('Todas')">
-                Todas
-            </li>
-            <li class="elementoMenu" @click="fetchData('En proceso')">
-                En proceso
-            </li>
-            <li class="elementoMenu" @click="fetchData('Terminadas')">
-                Terminadas
-            </li>
-            <li class="elementoMenu" @click="fetchData('Liberadas')">
-                Liberadas
-            </li>
-            <li class="elementoMenu" @click="fetchData('Rechazadas')">
-                Rechazadas
-            </li>
+            <ul class="navMenu IncidMenu">
+                <li class="elementoMenu" @click="fetchData('Todas')">
+                    Todas
+                </li>
+                <li class="elementoMenu" @click="fetchData('En proceso')">
+                    En proceso
+                </li>
+                <li class="elementoMenu" @click="fetchData('Terminadas')">
+                    Terminadas
+                </li>
+                <li class="elementoMenu" @click="fetchData('Liberadas')">
+                    Liberadas
+                </li>
+                <li class="elementoMenu" @click="fetchData('Rechazadas')">
+                    Rechazadas
+                </li>
 
-        </ul>
+            </ul>
 
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Periodo</th>
-                    <th>Hora</th>
-                    <th>Aula</th>
-                    <th>Descripcion</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="incidents.length == 0">
-                    <td class="centrado" colspan="6">Sin personal registrado</td>
-                </tr>
-                <tr v-else v-for="(incident, index) in incidents" :key="incident.Folio">
-                    <td>{{ incident.Folio }}</td>
-                    <td>{{ incident.Fecha.split('T')[0] }}</td>
-                    <td>{{ incident.Periodo }}</td>
-                    <td>{{ incident.Hora }}</td>
-                    <td>{{ incident.Aula }}</td>
-                    <td>{{ incident.Descripcion }}</td>
-                    <td>{{ incident.Estado }}</td>
-                    <td>
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Periodo</th>
+                        <th>Hora</th>
+                        <th>Aula</th>
+                        <th>Descripcion</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="incidents.length == 0">
+                        <td class="centrado" colspan="6">Sin personal registrado</td>
+                    </tr>
+                    <tr v-else v-for="(incident, index) in incidents" :key="incident.Folio">
+                        <td>{{ incident.Folio }}</td>
+                        <td>{{ incident.Fecha.split('T')[0] }}</td>
+                        <td>{{ incident.Periodo }}</td>
+                        <td>{{ incident.Hora }}</td>
+                        <td>{{ incident.Aula }}</td>
+                        <td>{{ incident.Descripcion }}</td>
+                        <td>{{ incident.Estado }}</td>
+                        <td>
 
-                        <button class="btn btn-primary btn-sm"
-                            @click="navigateToActualizar(incident.Folio)">Actualizar</button>
+                            <button class="btn btn-primary btn-sm"
+                                @click="navigateToActualizar(incident.Folio)">Actualizar</button>
 
-                        <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)">Asignar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                            <button class="btn btn-danger btn-sm"
+                                @click="navigateToAsignar(incident.Folio)">Asignar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </TopBar>
     </div>
 </template>
 
@@ -118,6 +116,7 @@ import { onMounted, ref } from 'vue'
 import { useIncidents } from '../controladores/useIncidents'
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
+import TopBar from '../layouts/TopBar.vue'
 const { employees, getEmployees, getTechEmployees } = useEmployees()
 const { incidents, getIncidents, getIncidentsRecandEmi, getIncidentsByEstado, getIncidentsByEstadoPeriodoAnio } = useIncidents()
 

@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <TopBar></TopBar>
         <h2>Reportar incidencia</h2>
 
         <div class="classboton">
@@ -61,7 +62,7 @@ import { useClassroom } from '../controladores/useClassroom';
 import { useBuilding } from '../controladores/useBuilding';
 import { useDevice } from '../controladores/useDevice';
 import { useRouter } from 'vue-router';
-
+import TopBar from '../layouts/TopBar.vue'
 const { buildings, getBuilding } = useBuilding();
 const { classrooms, getClassroom } = useClassroom();
 const { devices, getDevices } = useDevice();
@@ -109,9 +110,9 @@ const home = () => {
 
 <style scoped>
 .container {
-    max-width: 80%;
-    width: 80%;
-    height: 1000px;
+    max-width: 100%;
+    width: 100%;
+    height: 100vw;
     background-color: rgb(255, 255, 255);
     color: black;
 
@@ -130,7 +131,7 @@ h2 {
     padding: 2em;
     border: 1px solid #DDD;
     border-radius: 5px;
-    margin: 2em auto;
+    margin: 3em 2em;
     background-color: #F9F9F9;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
@@ -164,6 +165,7 @@ h2 {
 .classboton {
     margin-bottom: -20px;
     display: flex;
+    padding: 0 2em;
     justify-content: space-between;
 }
 

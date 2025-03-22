@@ -1,12 +1,7 @@
 <template>
     <div class="Contenedor">
 
-        <div class="menuPresentacion">
-            <button class="salir" @click="logout">Cerrar Sesión</button>
-            <span class="nombreUsuario">Usuario</span>
-            <i class="fa fa-user user-icon"></i>
-        </div>
-
+        <TopBar></TopBar>
         <div class=" headerPrincipal">
             <h2>Mantenimiento y servicios</h2>
             <h3>Instituto tecnologico de Culiacán</h3>
@@ -104,6 +99,7 @@
 import { onMounted, ref } from 'vue'
 import { useIncidents } from '../controladores/useIncidents'
 import { useRouter } from 'vue-router'
+import TopBar from '../layouts/TopBar.vue'
 
 const { incidents, getIncidents, getIncidentsRecandEmi, getIncidentsByEstado, getIncidentsByEstadoPeriodoAnio } = useIncidents()
 const router = useRouter()
