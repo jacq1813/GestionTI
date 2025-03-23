@@ -5,5 +5,6 @@ export interface Employee{
     ApellidoMat: string;
     Fecha_Nac: string;
     Num_tel: string;
-    ID_TipEmp: Number
+    ID_TipEmp: Number;
+    Calificacion: Number
 }

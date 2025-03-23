@@ -9,11 +9,11 @@ INSERT INTO TipoEmpleado (ID_TipEmp, Nombre) VALUES
 
 -- Insertar datos en Empleado
 INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Fecha_Nac, Num_tel, ID_TipEmp) VALUES
-(1, 'Juan', 'Pérez', 'Gómez', '1985-06-15', '5551234567', 1),
-(2, 'María', 'López', 'Fernández', '1990-02-20', '5552345678', 2),
-(3, 'Carlos', 'Hernández', 'Ruiz', '1978-11-30', '5553456789', 3),
-(4, 'Ana', 'Martínez', 'Díaz', '1983-07-10', '5554567890', 4),
-(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 3);
+(1, 'Juan', 'Pérez', 'Gómez', '1985-06-15', '5551234567', 1, 8),
+(2, 'María', 'López', 'Fernández', '1990-02-20', '5552345678', 2, 9),
+(3, 'Carlos', 'Hernández', 'Ruiz', '1978-11-30', '5553456789', 3, 10),
+(4, 'Ana', 'Martínez', 'Díaz', '1983-07-10', '5554567890', 4, 10),
+(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 3, 9);
 
 -- Insertar datos en TipoDepartamento
 INSERT INTO TipoDepartamento (ID_TipDpto, Nombre) VALUES

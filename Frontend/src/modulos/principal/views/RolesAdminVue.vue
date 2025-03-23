@@ -41,12 +41,13 @@
                     <th>Edad</th>
                     <th>Telefono</th>
                     <th>Tipo Empleado</th>
+                    <th>Calificación</th>
                     <th>Descripcion</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-if="employees.length == 0">
-                    <td class="centrado" colspan="6">Sin personal registrado</td>
+                    <td class="centrado" colspan="7">Sin personal registrado</td>
                 </tr>
                 <tr v-else v-for="(employees, index) in employees" :key="employees.ID_Emp">
                     <td>{{ employees.ID_Emp }}</td>
@@ -54,6 +55,7 @@
                     <td>{{ new Date().getFullYear() - new Date(employees.Fecha_Nac).getFullYear() }}</td>
                     <td>{{ employees.Num_tel }}</td>
                     <td>{{ employees.ID_TipEmp }}</td>
+                    <td>{{ employees.Calificacion }}</td>
                     <td>Accion</td>
                 </tr>
             </tbody>

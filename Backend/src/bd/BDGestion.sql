@@ -14,6 +14,7 @@ CREATE TABLE Empleado (
     Fecha_Nac DATE NOT NULL,
     Num_tel VARCHAR(15),
     ID_TipEmp INT,
+    Calificacion INT,
     FOREIGN KEY (ID_TipEmp) REFERENCES TipoEmpleado(ID_TipEmp)
 );
 
