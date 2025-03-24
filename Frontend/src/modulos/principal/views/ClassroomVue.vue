@@ -3,10 +3,11 @@
         <TopBar></TopBar>
 
         <div class="Cont">
-            <h2>Edificios</h2>
+            <h2>Aulas</h2>
 
             <div class="classboton">
                 <button class="btn btn-secondary" @click="home">Regresar</button>
+                <button class="btn btn-secondary" @click="addClass">Añadir</button>
             </div>
             <table class="table">
                 <thead>
@@ -54,6 +55,9 @@ onMounted(() => {
 
 const home = () => {
     router.push({ name: 'Inicio' });
+}
+const addClass = () => {
+    router.push({ name: 'InsertarSalon' });
 }
 </script>
 
