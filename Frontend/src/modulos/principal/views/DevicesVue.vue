@@ -7,6 +7,7 @@
 
             <div class="classboton">
                 <button class="btn btn-secondary" @click="home">Regresar</button>
+                <button class="btn btn-secondary" @click="addDevice">Añadir</button>
             </div>
 
             <table class="table">
@@ -100,6 +101,10 @@ const toggleComponentes = (deviceId: number) => {
 
 const home = () => {
     router.push({ name: 'Inicio' }); // Redirige al inicio
+};
+
+const addDevice = () => {
+    router.push({ name: 'InsertaEquipo' }); // Redirige al inicio
 };
 </script>
   

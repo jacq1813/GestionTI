@@ -15,6 +15,7 @@ import BuildingsVue from '@/modulos/principal/views/BuildingsVue.vue'
 import ClassroomVue from '@/modulos/principal/views/ClassroomVue.vue'
 import DevicesVue from '@/modulos/principal/views/DevicesVue.vue'
 import InsertBuildings from '@/modulos/principal/views/InsertBuildingsVue.vue'
+import InsertDevice from '@/modulos/principal/views/InsertDevicesVue.vue'
 
 const requireAuth = (to:any, from:any, next:any) => {
   const auth = getAuth()
@@ -129,6 +130,10 @@ const router = createRouter({
       path: '/InsertaEdificio',
       name: 'InsertaEdificio',
       component: InsertBuildings,
+    },{
+      path: '/InsertaEquipo',
+      name: 'InsertaEquipo',
+      component: InsertDevice,
     },
     {
       path: '/about',
