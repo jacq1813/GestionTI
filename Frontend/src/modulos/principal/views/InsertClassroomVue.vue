@@ -18,6 +18,9 @@
         <div class="form-group">
           <label for="tipoAula">Tipo de Aula:</label>
           <select v-model="newAula.ID_TipoAula" id="tipoAula" required class="form-control">
+            <option v-for="tycs in tyclass" :key="tycs.ID_TipoAula" :value="tycs.ID_TipoAula">{{ tycs.Nombre }}
+            </option>
+
           </select>
         </div>
 
@@ -51,14 +54,15 @@ import { useRouter } from 'vue-router'
 //import { useAula } from '../controladores/useAula'
 import { useEmployees } from '../controladores/useEmployee'
 import { useBuilding } from '../controladores/useBuilding';
+import { useTyClassroom } from '../controladores/useTyClassroom';
 
-// NECESITO API PARA TIPO AULA
-// import { useTipoAula } from '../controladores/useTipoAula'
+const { tyclass, getTyClass } = useTyClassroom();
 
 const router = useRouter()
 
 const { employees, getEmployees } = useEmployees()
 const { buildings, getBuilding } = useBuilding();
+
 
 const newAula = ref({
   Nombre: '',
@@ -70,9 +74,13 @@ const newAula = ref({
 onMounted(async () => {
   await getEmployees()
   await getBuilding()
+  await getTyClass()
+
+
+  console.log(tyclass.value)
 })
 
-
+console.log(tyclass)
 
 const goBack = () => {
   router.push({ name: 'Inicio' })

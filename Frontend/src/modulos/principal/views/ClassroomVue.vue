@@ -43,6 +43,7 @@ import TopBar from '../layouts/TopBar.vue'
 import { onMounted, ref, computed } from 'vue'
 import { useClassroom } from '../controladores/useClassroom';
 
+
 import { useRouter } from 'vue-router'
 
 const { classrooms, getClassroomsDetail } = useClassroom();
