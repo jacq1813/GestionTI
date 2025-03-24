@@ -7,6 +7,7 @@
 
             <div class="classboton">
                 <button class="btn btn-secondary" @click="home">Regresar</button>
+                <button class="btn btn-secondary" @click="anadir">Añadir</button>
             </div>
             <table class="table">
                 <thead>
@@ -49,6 +50,10 @@ onMounted(() => {
 
 const home = () => {
     router.push({ name: 'Inicio' });
+}
+
+const anadir = () => {
+    router.push({ name: 'InsertaEdificio' })
 }
 </script>
 

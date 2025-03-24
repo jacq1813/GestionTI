@@ -14,6 +14,7 @@ import UpdateIncident from '@/modulos/incidents/vista/actualizarIncidencia.vue'
 import BuildingsVue from '@/modulos/principal/views/BuildingsVue.vue'
 import ClassroomVue from '@/modulos/principal/views/ClassroomVue.vue'
 import DevicesVue from '@/modulos/principal/views/DevicesVue.vue'
+import InsertBuildings from '@/modulos/principal/views/InsertBuildingsVue.vue'
 
 const requireAuth = (to:any, from:any, next:any) => {
   const auth = getAuth()
@@ -123,6 +124,11 @@ const router = createRouter({
       path: '/Dispositivos',
       name: 'Dispositivos',
       component: DevicesVue,
+    },
+    {
+      path: '/InsertaEdificio',
+      name: 'InsertaEdificio',
+      component: InsertBuildings,
     },
     {
       path: '/about',
