@@ -44,8 +44,8 @@ const { buildings, getBuilding } = useBuilding();
 
 const router = useRouter();
 
-onMounted(() => {
-    getBuilding();
+onMounted(async () => {
+    await getBuilding();
 })
 
 const home = () => {

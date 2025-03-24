@@ -27,7 +27,9 @@
                 <div class="form-group">
                     <label for="departamento">Departamento:</label>
                     <select v-model="newBuilding.ID_TipDpto" id="departamento" required class="form-control">
-
+                        <option v-for="departamento in departments" :key="departamento.ID_TipDpto" :value="departamento.ID_TipDpto">
+                            {{ departamento.Nombre }}
+                        </option>
                     </select>
                 </div>
 
@@ -42,12 +44,16 @@ import TopBar from '../layouts/TopBar.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmployees } from '../controladores/useEmployee'
+import { useDepartment } from '../controladores/useDepartment'
+import { useBuilding } from '../controladores/useBuilding'
 const { employees, getEmployees } = useEmployees()
+const { departments, getDepartments } = useDepartment()
+const { addBuilding } = useBuilding()
 
 
 onMounted(async () => {
     await getEmployees()
-
+    await getDepartments()
 })
 
 //const { empleados, departamentos, addBuilding } = useBuilding();
@@ -60,20 +66,17 @@ const newBuilding = ref({
     ID_TipDpto: ''
 });
 
-const submitForm = () => {
-    //addBuilding(newBuilding.value);
-    router.push({ name: 'Edificios' });
+const submitForm = async () => {
+    console.log(newBuilding.value);
+    await addBuilding(newBuilding.value);
+    await router.push({ name: 'Edificios' });
 }
 
 const home = () => {
     router.push({ name: 'Inicio' });
 }
 
-onMounted(() => {
-    // Cargar los empleados y departamentos
-    //empleados();
-    //departamentos();
-});
+
 </script>
 
 <style scoped>

@@ -2,12 +2,12 @@ CREATE DATABASE Gestion;
 USE Gestion;
 
 CREATE TABLE TipoEmpleado (
-    ID_TipEmp INT PRIMARY KEY,
+    ID_TipEmp INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Empleado (
-    ID_Emp INT PRIMARY KEY,
+    ID_Emp INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL,
     ApellidoPat VARCHAR(100) NOT NULL,
     ApellidoMat VARCHAR(100),
@@ -19,12 +19,12 @@ CREATE TABLE Empleado (
 );
 
 CREATE TABLE TipoDepartamento (
-    ID_TipDpto INT PRIMARY KEY,
+    ID_TipDpto INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Edificio (
-    ID_Edif INT PRIMARY KEY,
+    ID_Edif INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL,
     ID_Emp INT,
     ID_TipDpto INT,
@@ -33,12 +33,12 @@ CREATE TABLE Edificio (
 );
 
 CREATE TABLE TipoAula (
-    ID_TipoAula INT PRIMARY KEY,
+    ID_TipoAula INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Aula (
-    ID_Aul INT PRIMARY KEY,
+    ID_Aul INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL,
     ID_TipoAula INT,
     ID_Edif INT,
@@ -49,12 +49,12 @@ CREATE TABLE Aula (
 );
 
 CREATE TABLE TipoEquipo (
-    ID_TipEquipo INT PRIMARY KEY,
+    ID_TipEquipo INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Equipo (
-    ID_Equip INT PRIMARY KEY,
+    ID_Equip INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL,
     Fecha_Ult_Mod DATE,
     Version VARCHAR(50),
@@ -66,12 +66,12 @@ CREATE TABLE Equipo (
 );
 
 CREATE TABLE TipoComponente (
-    ID_TipComp INT PRIMARY KEY,
+    ID_TipComp INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Componente (
-    ID_Comp INT PRIMARY KEY,
+    ID_Comp INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL,
     Fecha_Ult_Mod DATE,
     Version VARCHAR(50),
@@ -83,12 +83,12 @@ CREATE TABLE Componente (
 );
 
 CREATE TABLE Periodos (
-    ID_Periodo INT PRIMARY KEY,
+    ID_Periodo INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Incidencia (
-    Folio INT PRIMARY KEY,
+    Folio INT PRIMARY KEY AUTO_INCREMENT,
     Descripcion TEXT NOT NULL,
     Fecha DATE NOT NULL,
     Periodo VARCHAR(50),
