@@ -18,7 +18,9 @@
                 <div class="form-group">
                     <label for="empleado">Empleado:</label>
                     <select v-model="newBuilding.ID_Emp" id="empleado" required class="form-control">
-
+                        <option v-for="empleado in employees" :key="empleado.ID_Emp" :value="empleado.ID_Emp">
+                            {{ empleado.Nombre }} {{ empleado.ApellidoPat }} {{ empleado.ApellidoMat }}
+                        </option>
                     </select>
                 </div>
 
@@ -38,8 +40,15 @@
 <script setup lang="ts">
 import TopBar from '../layouts/TopBar.vue'
 import { onMounted, ref } from 'vue'
-import { useBuilding } from '../controladores/useBuilding'
 import { useRouter } from 'vue-router'
+import { useEmployees } from '../controladores/useEmployee'
+const { employees, getEmployees } = useEmployees()
+
+
+onMounted(async () => {
+    await getEmployees()
+
+})
 
 //const { empleados, departamentos, addBuilding } = useBuilding();
 
