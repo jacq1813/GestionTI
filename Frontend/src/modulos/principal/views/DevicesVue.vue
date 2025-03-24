@@ -87,8 +87,8 @@ const { devices, getDevicesDetail } = useDevice(); // Usa el hook para obtener d
 const router = useRouter();
 const expandedDevices = ref<number[]>([]);
 
-onMounted(() => {
-    getDevicesDetail(); // Obtén los dispositivos al montar el componente
+onMounted(async() => {
+    await getDevicesDetail(); // Obtén los dispositivos al montar el componente
 });
 
 const toggleComponentes = (deviceId: number) => {

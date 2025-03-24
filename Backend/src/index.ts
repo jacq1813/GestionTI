@@ -9,6 +9,7 @@ import componentRoutes from './routes/ComponentRoutes';
 import classromRoutes from './routes/ClassromRoutes';
 import buildingRoutes from './routes/BuildingRoutes';
 import departmentRoutes from './routes/DepartmenRoutes';
+import devicesT from './routes/DeviceTRoutes';
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/components', componentRoutes);
 app.use('/classrooms', classromRoutes);
 app.use('/buildings', buildingRoutes);
 app.use('/departments', departmentRoutes);
+app.use('/devicesT', devicesT);
 
 app.get('/hola', (_req, res) => {
   res.send('Hello World!');

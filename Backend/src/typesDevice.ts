@@ -8,3 +8,5 @@ export interface Device {
     ID_TipEquipo: number;
 }
 
+export type NewDevice = Omit<Device, 'ID_Dispositivo'>;
+

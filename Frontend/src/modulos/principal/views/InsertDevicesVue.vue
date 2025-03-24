@@ -9,7 +9,7 @@
                 <button class="btn btn-secondary" @click="goBack">Regresar</button>
             </div>
 
-            <form>
+            <form @submit.prevent="submitForm">
                 <div class="form-group">
                     <label for="nombre">Nombre del Equipo:</label>
                     <input type="text" v-model="newEquipo.Nombre" id="nombre" required class="form-control">
@@ -36,6 +36,9 @@
                 <div class="form-group">
                     <label for="tipoEquipo">Tipo de Equipo:</label>
                     <select v-model="newEquipo.ID_TipEquipo" id="tipoEquipo" required class="form-control">
+                        <option v-for="tipoEquipo in devicesT" :key="tipoEquipo.ID_TipEquipo" :value="tipoEquipo.ID_TipEquipo">
+                            {{ tipoEquipo.Nombre }}
+                        </option>
                     </select>
                 </div>
 
@@ -51,11 +54,14 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDevice } from '../controladores/useDevice'
 import { useClassroom } from '../controladores/useClassroom'
+import { useDeviceT} from '../controladores/useDeviceT'
 //import { useTiposEquipo } from '../controladores/useTiposEquipo'
 
 const router = useRouter()
 
 //const { addEquipo } = useEquipo()
+const { devicesT, addDeviceT, getDeviceT } = useDeviceT()
+const { devices, getDevices, addDevice } = useDevice()
 const { classrooms, getClassroomsDetail } = useClassroom();
 
 // HAZ API PARA VER LOS TIPOS DE EQUIPOS
@@ -71,8 +77,14 @@ const newEquipo = ref({
 
 onMounted(async () => {
     await getClassroomsDetail();
+    await getDeviceT();
 })
 
+const submitForm = async () => {
+    console.log(newEquipo.value)
+    await addDevice(newEquipo.value)
+    await router.push({ name: 'Dispositivos' })
+}
 
 const goBack = () => {
     router.push({ name: 'Inicio' })

@@ -1,3 +1,4 @@
+import { NewDevice } from "../typesDevice";
 
 
 const connection = require('../connection/conec');
@@ -44,3 +45,13 @@ ORDER BY d.ID_Equip;
         return { error: "No se pudo obtener los equipos y componentes" };
     }
 };
+
+//agregar un equipo
+export const addDevice = async (device: NewDevice) => {
+    try {
+        const [rows] = await connection.query('INSERT INTO equipo (Nombre, Fecha_Ult_Mod, Version, Fecha_Inst, ID_Aul, ID_TipEquipo) values (?,?,?,?,?,?)', [device.Nombre, device.Fecha_Ult_Mod, device.Version, device.Fecha_Inst, device.ID_Aula, device.ID_TipEquipo]);
+        return rows;
+    } catch (error) {
+        return { error: "no se pudo agregar el equipo" };
+    }
+}
