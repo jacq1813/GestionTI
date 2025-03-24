@@ -9,11 +9,11 @@ INSERT INTO TipoEmpleado (ID_TipEmp, Nombre) VALUES
 
 -- Insertar datos en Empleado
 INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Fecha_Nac, Num_tel, ID_TipEmp) VALUES
-(1, 'Juan', 'Pérez', 'Gómez', '1985-06-15', '5551234567', 1, 8),
-(2, 'María', 'López', 'Fernández', '1990-02-20', '5552345678', 2, 9),
-(3, 'Carlos', 'Hernández', 'Ruiz', '1978-11-30', '5553456789', 3, 10),
-(4, 'Ana', 'Martínez', 'Díaz', '1983-07-10', '5554567890', 4, 10),
-(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 3, 9);
+(1, 'Juan', 'Pérez', 'Gómez', '1985-06-15', '5551234567', 1),
+(2, 'María', 'López', 'Fernández', '1990-02-20', '5552345678', 2),
+(3, 'Carlos', 'Hernández', 'Ruiz', '1978-11-30', '5553456789', 3),
+(4, 'Ana', 'Martínez', 'Díaz', '1983-07-10', '5554567890', 4),
+(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 3);
 
 -- Insertar datos en TipoDepartamento
 INSERT INTO TipoDepartamento (ID_TipDpto, Nombre) VALUES
@@ -88,9 +88,9 @@ INSERT INTO Periodos (ID_Periodo, Nombre) VALUES
 (5, 'Enero - Junio 2025');
 
 -- Insertar datos en Incidencia
-INSERT INTO Incidencia (Folio, Descripcion, Fecha, Periodo, Estado, Prioridad, Hora, ID_Aula, ID_Periodo, ID_Emi, ID_Rec) VALUES
-(1, 'Computadora no enciende', '2023-02-01', 'Enero - Junio 2023', 'En proceso', 'Baja', '08:30:00', 1, 1, 2, 3),
-(2, 'Proyector con imagen distorsionada', '2023-03-05', 'Enero - Junio 2023', 'Terminada', 'Mediana', '10:15:00', 2, 1, 3, 4),
-(3, 'Pizarrón sin respuesta táctil', '2023-04-10', 'Enero - Junio 2023', 'Liberada', 'Alta', '12:45:00', 3, 1, 4, 5),
-(4, 'Impresora atascada', '2023-05-20', 'Enero - Junio 2023', 'Rechazada', 'Mediana', '14:00:00', 4, 1, 5, 1),
-(5, 'Servidor caído', '2023-06-30', 'Enero - Junio 2023', 'En proceso', 'Crítico', '16:30:00', 5, 1, 1, 2);
+INSERT INTO Incidencia (Folio, Descripcion, Fecha, ID_Periodo, Estado, Prioridad, Hora, ID_Aula, ID_Emi, ID_Rec) VALUES
+(1, 'Computadora no enciende', '2023-02-01', 1, 'En proceso', 'Baja', '08:30:00', 1, 2, 3),
+(2, 'Proyector con imagen distorsionada', '2023-03-05', 1, 'Terminada', 'Mediana', '10:15:00', 2, 3, 4),
+(3, 'Pizarrón sin respuesta táctil', '2023-04-10', 1, 'Liberada', 'Alta', '12:45:00', 3, 4, 5),
+(4, 'Impresora atascada', '2023-05-20', 1, 'Rechazada', 'Mediana', '14:00:00', 4, 5, 1),
+(5, 'Servidor caído', '2023-06-30', 1, 'En proceso', 'Crítico', '16:30:00', 5, 1, 2);
