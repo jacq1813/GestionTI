@@ -8,3 +8,5 @@ router.get('/', async (_req: Request, res: Response) => {
     const TyClass = await classroomService.getTipoAulas();
     res.status(200).send(TyClass);
 });
+
+export default router;

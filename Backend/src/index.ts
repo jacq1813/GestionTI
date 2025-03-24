@@ -10,6 +10,7 @@ import classromRoutes from './routes/ClassromRoutes';
 import buildingRoutes from './routes/BuildingRoutes';
 import departmentRoutes from './routes/DepartmenRoutes';
 import devicesT from './routes/DeviceTRoutes';
+import tyclass from './routes/TypesClassroom';
 
 
 const app = express();
@@ -26,6 +27,8 @@ app.use('/classrooms', classromRoutes);
 app.use('/buildings', buildingRoutes);
 app.use('/departments', departmentRoutes);
 app.use('/devicesT', devicesT);
+app.use('/TyClass', tyclass)
+
 
 app.get('/hola', (_req, res) => {
   res.send('Hello World!');
