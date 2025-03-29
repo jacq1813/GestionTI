@@ -6,6 +6,7 @@ import SignIn from '@/modulos/autenticacion/SignIn.vue'
 import SingOut from '@/modulos/autenticacion/SingOut.vue'
 import Main from '@/modulos/principal/views/MainVue.vue'
 import AdminMainVue from '@/modulos/principal/views/AdminMainVue.vue'
+import JefeMainVue from '@/modulos/principal/views/JefeMainVue.vue'
 import IncidentVue from '@/modulos/principal/views/IncidentVue.vue'
 import AssingIncidet from '@/modulos/incidents/vista/asignarIncidencia.vue'
 import NotFound from '@/modulos/autenticacion/NotFound.vue'
@@ -29,7 +30,6 @@ const requireAuth = (to:any, from:any, next:any) => {
 }
 
 const requireAdmin = async (to:any, from:any, next:any) => {
-
   const auth = getAuth()
   const user = auth.currentUser
   
@@ -47,6 +47,9 @@ const requireAdmin = async (to:any, from:any, next:any) => {
       const userData = userDoc.data()
       if (userData.Rol === 'admin') {
         next({ name: 'InicioAdmin' })
+        return
+      } else if (userData.Rol === 'jefe') {
+        next({ name: 'InicioJefe' })
         return
       }
       next('/AccessDen')
@@ -88,25 +91,27 @@ const router = createRouter({
       beforeEnter: requireAdmin,
     },
     {
+      path: '/InicioJefe',
+      name: 'InicioJefe',
+      component: JefeMainVue,
+      beforeEnter: requireAdmin,
+    },
+    {
       path: '/RolesA',
       name: 'RolesA',
       component: RolesAdminVue,
     },
     {
-
       path: '/Incidentes',
       name: 'Incidentes',
       component: IncidentVue,
-
     },
     {
       path: '/AsignarIncidente',
       name: 'AsignarIncidente',
       component: AssingIncidet,
-
     },
     {
-
       path: '/ActualizarIncidente',
       name: 'ActualizarIncidente',
       component: UpdateIncident,
@@ -120,7 +125,6 @@ const router = createRouter({
       path: '/Salones',
       name: 'Salones',
       component: ClassroomVue,
-
     },
     {
       path: '/Dispositivos',
@@ -145,9 +149,6 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../modulos/autenticacion/SingOut.vue'),
     },
   ],
