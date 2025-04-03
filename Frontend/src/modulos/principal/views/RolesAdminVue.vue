@@ -56,10 +56,38 @@
                     <td>{{ employees.Num_tel }}</td>
                     <td>{{ employees.ID_TipEmp }}</td>
                     <td>{{ employees.Calificacion }}</td>
-                    <td>Accion</td>
+                    <td>
+                        <button @click="assignRole(employees.ID_Emp)" class="btn btn-primary">Asignar rol</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="modal-overlay" v-if="showModal" @click="closeModal">
+            <div class="modal-content" @click.stop>
+                <div class="modal-header">
+                    <h3>Asignar Rol al Empleado</h3>
+                    <button class="close-btn" @click="closeModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>ID de Empleado: {{ selectedEmployee }}</p>
+                    <div class="form-group">
+                        <label for="roleSelect">Seleccione Rol:</label>
+                        <select v-model="selectedRole" id="roleSelect" class="form-control">
+                            <option value="" disabled selected>Seleccione un rol</option>
+                            <option v-for="role in roles" :key="role.ID_Rol" :value="role.ID_Rol">
+                                {{ role.NombreRol }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" @click="closeModal">Cancelar</button>
+                <button class="btn btn-primary" @click="confirmAssignRole">Asignar</button>
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -68,8 +96,23 @@ import { onMounted, ref } from 'vue';
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
 import TopBar from '../layouts/TopBar.vue'
+
 const { employees, getEmployees, getTechEmployees } = useEmployees()
 const router = useRouter()
+
+
+//Estado para el modal
+const showModal = ref(false)
+const selectedEmployee = ref<number | null>(null)
+const selectedRole = ref<number | null>(null)
+
+//Roles disponibles
+const roles = ref([
+    { ID_Rol: 1, NombreRol: 'Jefe de taller' },
+    { ID_Rol: 2, NombreRol: 'Tecnico' },
+    { ID_Rol: 3, NombreRol: 'Usuario' },
+    { ID_Rol: 4, NombreRol: 'Secretaria'},
+])
 
 onMounted(async () => {
     await getEmployees()
@@ -87,6 +130,24 @@ const navigateToRoles = (direction: string) => {
     console.log(direction)
     router.push({ name: direction })
 };
+
+//abrir modal
+const assignRole = async (id: number) => {
+    selectedEmployee.value = id
+    showModal.value = true
+}
+
+//cerrar modal
+const closeModal = () => {
+    showModal.value = false
+    selectedEmployee.value = null
+    selectedRole.value = null
+}
+
+//aguardar el rol asignado
+const confirmAssignRole = async () => {
+    //pendiente
+}
 </script>
 
 <style scoped>
@@ -222,5 +283,81 @@ td {
 .salir:hover {
     background-color: #7a0796;
     transition: 0.5s;
+}
+
+/* Estilos para el modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+}
+
+/*que aparezca poco a poco el modal */
+
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0 auto;
+}
+
+.modal-body {
+    padding: 16px;
+}
+
+.modal-footer {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 </style>
