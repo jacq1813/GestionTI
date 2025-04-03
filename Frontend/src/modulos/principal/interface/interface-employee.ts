@@ -6,5 +6,7 @@ export interface Employee{
     Fecha_Nac: string;
     Num_tel: string;
     ID_TipEmp: Number;
-    Calificacion: Number
+    Calificacion: Number;
+    Correo: string;
+    Contrasena: string;
 }

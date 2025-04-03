@@ -15,6 +15,8 @@ CREATE TABLE Empleado (
     Num_tel VARCHAR(15),
     ID_TipEmp INT,
     Calificacion INT,
+    Correo VARCHAR(100) NOT NULL,
+    Contrasena VARCHAR(100) NOT NULL,
     FOREIGN KEY (ID_TipEmp) REFERENCES TipoEmpleado(ID_TipEmp)
 );
 

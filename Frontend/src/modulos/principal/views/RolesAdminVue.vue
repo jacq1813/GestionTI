@@ -43,6 +43,7 @@
                     <th>Tipo Empleado</th>
                     <th>Calificación</th>
                     <th>Descripcion</th>
+                    <th>Asignar Rol</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,26 +57,29 @@
                     <td>{{ employees.Num_tel }}</td>
                     <td>{{ employees.ID_TipEmp }}</td>
                     <td>{{ employees.Calificacion }}</td>
+                    <td>{{ employees.Correo }}</td>
                     <td>
-                        <button @click="assignRole(employees.ID_Emp)" class="btn btn-primary">Asignar rol</button>
+                        <button @click="assignRole(employees.Nombre+' '+employees.ApellidoPat+' '+employees.ApellidoMat,employees.ID_Emp,employees.Correo,employees.Contrasena)" class="btn btn-primary">Asignar rol</button>
                     </td>
+                    
                 </tr>
             </tbody>
         </table>
 
-        <div class="modal-overlay" v-if="showModal" @click="closeModal">
+        <div class="modal-overlay" v-show="showModal" @click.self="closeModal" :class="{'active': showModal }">
             <div class="modal-content" @click.stop>
                 <div class="modal-header">
                     <h3>Asignar Rol al Empleado</h3>
                     <button class="close-btn" @click="closeModal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>ID de Empleado: {{ selectedEmployee }}</p>
+                    <p>Empleado: {{ selectedEmployeeName }}</p>
+                    <p>Correo: {{ selectedCorreo }}</p>
                     <div class="form-group">
                         <label for="roleSelect">Seleccione Rol:</label>
                         <select v-model="selectedRole" id="roleSelect" class="form-control">
                             <option value="" disabled selected>Seleccione un rol</option>
-                            <option v-for="role in roles" :key="role.ID_Rol" :value="role.ID_Rol">
+                            <option v-for="role in roles" :key="role.NombreRol" :value="role.NombreRol">
                                 {{ role.NombreRol }}
                             </option>
                         </select>
@@ -95,16 +99,22 @@
 import { onMounted, ref } from 'vue';
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
+import { getFirestore, doc, setDoc,getDoc,updateDoc,collection,getDocs } from 'firebase/firestore'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import type { Employee } from '../interface/interface-employee'
 import TopBar from '../layouts/TopBar.vue'
 
 const { employees, getEmployees, getTechEmployees } = useEmployees()
 const router = useRouter()
-
+const db = getFirestore()
 
 //Estado para el modal
 const showModal = ref(false)
+const selectedEmployeeName = ref<string | null>(null)
 const selectedEmployee = ref<number | null>(null)
+const selectedCorreo = ref<string | null>(null)
 const selectedRole = ref<number | null>(null)
+const selectedContrasena = ref<string | null>(null)
 
 //Roles disponibles
 const roles = ref([
@@ -132,8 +142,11 @@ const navigateToRoles = (direction: string) => {
 };
 
 //abrir modal
-const assignRole = async (id: number) => {
+const assignRole = async (Nombre:string,id: number,correo: string,contrasena:string) => {
+    selectedEmployeeName.value = Nombre
     selectedEmployee.value = id
+    selectedCorreo.value = correo
+    selectedContrasena.value = contrasena
     showModal.value = true
 }
 
@@ -143,11 +156,96 @@ const closeModal = () => {
     selectedEmployee.value = null
     selectedRole.value = null
 }
-
-//aguardar el rol asignado
+// Asignar el rol en Firestore
 const confirmAssignRole = async () => {
-    //pendiente
+    if (!selectedRole.value || !selectedEmployee.value) {
+        alert('Seleccione un rol y un empleado');
+        return;
+    }
+
+    try {
+        const userRef = doc(collection(db, 'usuarios'));
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+            // Actualizar usuario existente
+            await updateDoc(userRef, {
+                Rol: selectedRole.value,
+                ID_Emp: selectedEmployee.value,
+                UltimoLogin: new Date(),
+            });
+            alert('Rol asignado correctamente');
+        } else {
+            // Crear nuevo usuario si no existe
+            if (selectedCorreo.value && selectedContrasena.value) {
+                const auth = getAuth();
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, selectedCorreo.value, selectedContrasena.value);
+                    const user = userCredential.user;
+
+                    await setDoc(userRef, {
+                        Uid: user.uid,
+                        Correo: selectedCorreo.value,
+                        Rol: selectedRole.value,
+                        Activo: true,
+                        ID_Emp: selectedEmployee.value,
+                        UltimoLogin: new Date(),
+                    });
+
+                    alert('Usuario creado y rol asignado correctamente');
+                } catch (err: any) {
+                    handleAuthError(err);
+                }
+            } else {
+                alert('Correo o contraseña no proporcionados');
+            }
+        }
+    } catch (error) {
+        console.error('Error al asignar rol:', error);
+        alert('Ocurrió un error al asignar el rol');
+    } finally {
+        closeModal();
+    }
+};
+
+// Manejar errores de autenticación
+const handleAuthError = (err: any) => {
+    switch (err.code) {
+        case 'auth/email-already-in-use':
+            alert('El correo ya está en uso');
+            break;
+        case 'auth/invalid-email':
+            alert('Correo electrónico inválido');
+            break;
+        case 'auth/weak-password':
+            alert('La contraseña es demasiado débil');
+            break;
+        default:
+            alert('Error al crear el usuario: ' + err.message);
+            break;
+    }
+};
+
+const getUsersFromFireStore = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, 'usuarios'));
+        const userList = querySnapshot.docs.map(doc => ({
+            ID_Emp: doc.data().ID_Emp,
+            Nombre: doc.data().Nombre,
+            ApellidoPat: doc.data().ApellidoPat,
+            ApellidoMat: doc.data().ApellidoMat,
+            Fecha_Nac: doc.data().Fecha_Nac,
+            Num_tel: doc.data().Num_tel,
+            ID_TipEmp: doc.data().ID_TipEmp,
+            Calificacion: doc.data().Calificacion,
+            Correo: doc.data().Correo
+        }));
+        employees.value = userList as Employee[]
+    } catch (error) {
+        console.error("Error al obtener usuarios de Firestore: ", error);
+    }
 }
+
 </script>
 
 <style scoped>
@@ -299,8 +397,18 @@ td {
     align-items: center;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: 0.5s;
+    transition: background-color 0.3s ease;  /* Transición solo para el fondo */
+    pointer-events: auto;
 }
+
+/* .model-overlay.active{
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+} */
+
+
+
+
 
 /*que aparezca poco a poco el modal */
 
@@ -313,8 +421,18 @@ td {
     max-height: 90%;
     overflow-y: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);  /* Comienza ligeramente más pequeño */
+    opacity: 1;  /* Comienza invisible */
+    transition: transform 0.3s ease, opacity 1s ease;  /* Transición para escala y opacidad */
     color: black;
+    pointer-events: auto;
 }
+/* 
+.modal-content.active {
+    transform: scale(1);  /* Escala normal al abrir 
+    opacity: 1;  /* Totalmente visible al abrir 
+    pointer-events: auto;  /* Permitir interacciones 
+} */
 
 .modal-header {
     display: flex;
