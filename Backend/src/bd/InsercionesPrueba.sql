@@ -8,12 +8,12 @@ INSERT INTO TipoEmpleado (ID_TipEmp, Nombre) VALUES
 (4, 'Jefe de taller');
 
 -- Insertar datos en Empleado
-INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Fecha_Nac, Num_tel, Correo, ID_TipEmp, Calificacion, Contrasena) VALUES
-(1, 'Juan', 'Pérez', 'Gómez', '1985-06-15', '5551234567', 'juan.perez@example.com', 1, 95, 'password123'),
-(2, 'María', 'López', 'Fernández', '1990-02-20', '5552345678', 'maria.lopez@example.com', 2, 88, 'securepass456'),
-(3, 'Carlos', 'Hernández', 'Ruiz', '1978-11-30', '5553456789', 'carlos.hernandez@example.com', 3, 92, 'mypassword789'),
-(4, 'Ana', 'Martínez', 'Díaz', '1983-07-10', '5554567890', 'ana.martinez@example.com', 4, 85, 'passkey321'),
-(5, 'Pedro', 'García', 'Sánchez', '1995-03-25', '5555678901', 'pedro.garcia@example.com', 3, 90, 'qwerty654');
+INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Num_tel, Correo, ID_TipEmp, Calificacion, Contrasena) VALUES
+(1, 'Juan', 'Pérez', 'Gómez', '5551234567', 'juan.perez@example.com', 1, 95, 'password123'),
+(2, 'María', 'López', 'Fernández', '5552345678', 'maria.lopez@example.com', 2, 88, 'securepass456'),
+(3, 'Carlos', 'Hernández', 'Ruiz', '5553456789', 'carlos.hernandez@example.com', 3, 92, 'mypassword789'),
+(4, 'Ana', 'Martínez', 'Díaz', '5554567890', 'ana.martinez@example.com', 4, 85, 'passkey321'),
+(5, 'Pedro', 'García', 'Sánchez', '5555678901', 'pedro.garcia@example.com', 3, 90, 'qwerty654');
 
 -- Insertar datos en TipoDepartamento
 INSERT INTO TipoDepartamento (ID_TipDpto, Nombre) VALUES

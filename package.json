@@ -1,0 +1,13 @@
+{
+    "name": "gestionti",
+    "version": "1.0.0",
+    "description": "Proyecto de Gestión TI",
+    "scripts": {
+        "start:backend": "cd Backend && npm run dev",
+        "start:frontend": "cd Frontend && npm run dev",
+        "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

@@ -38,7 +38,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Edad</th>
                     <th>Telefono</th>
                     <th>Tipo Empleado</th>
                     <th>Calificación</th>
@@ -53,7 +52,6 @@
                 <tr v-else v-for="(employees, index) in employees" :key="employees.ID_Emp">
                     <td>{{ employees.ID_Emp }}</td>
                     <td>{{ employees.Nombre + ' ' + employees.ApellidoPat + ' ' + employees.ApellidoMat }}</td>
-                    <td>{{ new Date().getFullYear() - new Date(employees.Fecha_Nac).getFullYear() }}</td>
                     <td>{{ employees.Num_tel }}</td>
                     <td>{{ employees.ID_TipEmp }}</td>
                     <td>{{ employees.Calificacion }}</td>
@@ -234,7 +232,6 @@ const getUsersFromFireStore = async () => {
             Nombre: doc.data().Nombre,
             ApellidoPat: doc.data().ApellidoPat,
             ApellidoMat: doc.data().ApellidoMat,
-            Fecha_Nac: doc.data().Fecha_Nac,
             Num_tel: doc.data().Num_tel,
             ID_TipEmp: doc.data().ID_TipEmp,
             Calificacion: doc.data().Calificacion,

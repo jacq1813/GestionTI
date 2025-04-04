@@ -11,7 +11,6 @@ CREATE TABLE Empleado (
     Nombre VARCHAR(100) NOT NULL,
     ApellidoPat VARCHAR(100) NOT NULL,
     ApellidoMat VARCHAR(100),
-    Fecha_Nac DATE NOT NULL,
     Num_tel VARCHAR(15),
     ID_TipEmp INT,
     Calificacion INT,
