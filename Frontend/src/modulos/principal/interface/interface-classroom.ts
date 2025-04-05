@@ -10,3 +10,6 @@ export interface Classroom {
     Empleado_Nombre: string;
 
 }
+
+
+export type ClassroomNew = Omit<Classroom, 'ID_Aula'>;

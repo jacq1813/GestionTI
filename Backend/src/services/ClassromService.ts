@@ -1,5 +1,6 @@
 
 
+import { ClassroomNew } from '../typesClassrom';
 const connection = require('../connection/conec');
 
 //obtener todos los salones
@@ -21,5 +22,15 @@ export const getClassroomsDetail = async () => {
 
     } catch (error) {
         return { error: "no se pudo obtener los salones" };
+    }
+}
+
+// añadir un aula
+export const addClassroom = async (classroom: ClassroomNew) => {
+    try{
+        const [rows] = await connection.query('INSERT INTO Aula (Nombre, ID_TipoAula, ID_Edif, ID_Emp) values (?,?,?,?)', [classroom.Nombre, classroom.ID_TipoAula, classroom.ID_Edif, classroom.ID_Emp]);
+        return rows;
+    }catch (error) {
+        return { error: "no se pudo agregar el salon" };
     }
 }

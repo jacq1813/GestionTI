@@ -36,7 +36,8 @@
                 <div class="form-group">
                     <label for="tipoEquipo">Tipo de Equipo:</label>
                     <select v-model="newEquipo.ID_TipEquipo" id="tipoEquipo" required class="form-control">
-                        <option v-for="tipoEquipo in devicesT" :key="tipoEquipo.ID_TipEquipo" :value="tipoEquipo.ID_TipEquipo">
+                        <option v-for="tipoEquipo in devicesT" :key="tipoEquipo.ID_TipEquipo"
+                            :value="tipoEquipo.ID_TipEquipo">
                             {{ tipoEquipo.Nombre }}
                         </option>
                     </select>
@@ -47,14 +48,14 @@
         </div>
     </div>
 </template>
-  
+
 <script setup lang="ts">
 import TopBar from '../layouts/TopBar.vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDevice } from '../controladores/useDevice'
 import { useClassroom } from '../controladores/useClassroom'
-import { useDeviceT} from '../controladores/useDeviceT'
+import { useDeviceT } from '../controladores/useDeviceT'
 //import { useTiposEquipo } from '../controladores/useTiposEquipo'
 
 const router = useRouter()

@@ -15,4 +15,17 @@ router.get('/Detail', async (_req: Request, res: Response) => {
     res.status(200).send(incidents);
 });
 
+
+router.post('/', async (req: Request, res: Response) => {
+    try {
+        const  { Nombre, ID_TipoAula, ID_Edif, ID_Emp } = req.body;
+        const newBuilding = await classroomService.addClassroom({ Nombre, ID_TipoAula, ID_Edif, ID_Emp})
+        res.send(newBuilding);
+    } catch (e) {
+        res.send({ error: "no se pudo agregar el edificio" });
+    }
+});
+
+
+
 export default router;

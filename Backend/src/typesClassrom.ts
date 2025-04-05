@@ -5,3 +5,5 @@ export interface Classroom {
     ID_Edif: number;
     ID_Emp: number;
 }
+
+export type ClassroomNew = Omit<Classroom, 'ID_Aula'>;

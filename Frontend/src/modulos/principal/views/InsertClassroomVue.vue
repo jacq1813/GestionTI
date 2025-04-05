@@ -9,7 +9,7 @@
         <button class="btn btn-secondary" @click="goBack">Regresar</button>
       </div>
 
-      <form>
+      <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="nombre">Nombre del Aula:</label>
           <input type="text" v-model="newAula.Nombre" id="nombre" required class="form-control">
@@ -55,8 +55,10 @@ import { useRouter } from 'vue-router'
 import { useEmployees } from '../controladores/useEmployee'
 import { useBuilding } from '../controladores/useBuilding';
 import { useTyClassroom } from '../controladores/useTyClassroom';
-
+import { useClassroom } from '../controladores/useClassroom';
+const { addClassroom } = useClassroom()
 const { tyclass, getTyClass } = useTyClassroom();
+
 
 const router = useRouter()
 
@@ -79,6 +81,13 @@ onMounted(async () => {
 
   console.log(tyclass.value)
 })
+
+const submitForm = async () => {
+  console.log(newAula.value);
+  await addClassroom(newAula.value);
+  await router.push({ name: 'Salones' });
+}
+
 
 console.log(tyclass)
 

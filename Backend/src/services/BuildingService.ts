@@ -16,11 +16,10 @@ export const getBuildings = async () => {
 
 //agregar un edificio
 export const addBuilding = async (building: BuildingNew) => {
-    console.log("aaaaaaaaaa"+building);
+
     try {
-        console.log("serviceeeeeses"+[building.Nombre, building.ID_Emp, building.ID_TipDpto]);
         
-        const [rows] = await connection.query('INSERT INTO edificio (Nombre,ID_Emp,ID_TipDpto) values (?,?,?)', [building.Nombre, building.ID_Emp, building.ID_TipDpto]);
+        const [rows] = await connection.query('INSERT INTO Edificio (Nombre,ID_Emp,ID_TipDpto) values (?,?,?)', [building.Nombre, building.ID_Emp, building.ID_TipDpto]);
         console.log(rows);
         console.log(rows);
         return rows;

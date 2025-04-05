@@ -27,7 +27,8 @@
                 <div class="form-group">
                     <label for="departamento">Departamento:</label>
                     <select v-model="newBuilding.ID_TipDpto" id="departamento" required class="form-control">
-                        <option v-for="departamento in departments" :key="departamento.ID_TipDpto" :value="departamento.ID_TipDpto">
+                        <option v-for="departamento in departments" :key="departamento.ID_TipDpto"
+                            :value="departamento.ID_TipDpto">
                             {{ departamento.Nombre }}
                         </option>
                     </select>
