@@ -12,17 +12,54 @@ export const getIncidents = async () => {
     }
 }
 
-//obtener todas las incidencias
+/**
+ * 
+ * @returns 
+ * Consulta anterior
+ * //obtener todas las incidencias
 export const getIncidentsRecandEmi = async () => {
     try {
-        const [rows] = await connection.query(`SELECT i.Folio,i.Descripcion,i.Fecha,i.Periodo, i.Estado,i.Hora,a.Nombre as 'Aula' , ta.Nombre as 'Tipo Aula', E.Nombre AS  'Emisor', te.Nombre as 'Puesto Emisor', e2.Nombre as 'Receptor',te2.Nombre as 'Puesto Receptor' FROM incidencia i 
+        const [rows] = await connection.query(SELECT i.Folio,i.Descripcion,i.Fecha,i.Periodo, i.Estado,i.Hora,a.Nombre as 'Aula' , ta.Nombre as 'Tipo Aula', E.Nombre AS  'Emisor', te.Nombre as 'Puesto Emisor', e2.Nombre as 'Receptor',te2.Nombre as 'Puesto Receptor' FROM incidencia i 
                                                 inner join empleado e on i.ID_Emi = e.ID_Emp
                                                 inner join empleado e2 on e2.ID_Emp = i.ID_Rec
                                                 inner join aula a on i.ID_Aula = a.ID_Aul 
                                                 inner join tipoaula ta on ta.ID_TipoAula = a.ID_TipoAula
                                                 inner join tipoempleado te on te.ID_TipEmp = e.ID_TipEmp
                                                 inner join tipoempleado te2 on te2.ID_TipEmp = e2.ID_TipEmp
-                                                ORDER BY Folio`);
+                                                ORDER BY Folio);
+        return rows;
+    } catch (error) {
+        return { error: "no se pudo obtener las incidencias" };
+    }
+}
+
+ */
+//obtener todas las incidencias
+export const getIncidentsRecandEmi = async () => {
+    try {
+        const [rows] = await connection.query(`SELECT 
+        i.Folio,
+        i.Descripcion,
+        i.Fecha,
+        i.Periodo, 
+        i.Estado,
+        i.Hora,
+        COALESCE(a.Nombre, 'Desconocido') AS 'Aula',
+        COALESCE(ta.Nombre, 'Desconocido') AS 'Tipo Aula',
+        COALESCE(E.Nombre, 'Desconocido') AS 'Emisor',
+        COALESCE(te.Nombre, 'Desconocido') AS 'Puesto Emisor',
+        COALESCE(e2.Nombre, 'Desconocido') AS 'Receptor',
+        COALESCE(te2.Nombre, 'Desconocido') AS 'Puesto Receptor'
+    FROM incidencia i 
+    LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
+    LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+    LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul 
+    LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+    LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
+    LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
+    ORDER BY Folio;
+    
+    `);
         return rows;
     } catch (error) {
         return { error: "no se pudo obtener las incidencias" };

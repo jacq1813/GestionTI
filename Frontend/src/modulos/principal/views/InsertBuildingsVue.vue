@@ -1,187 +1,130 @@
 <template>
-    <div class="container">
+    <div class="Container">
         <TopBar></TopBar>
-        <h2>Reportar incidencia</h2>
 
-        <div class="classboton">
-            <button class="btn btn-secondary" @click="home">Regresar</button>
-            <button class="btn btn-danger" @click="logout">Cerrar Sesión</button>
+        <div class="Cont">
+            <h2>Registrar Edificio</h2>
+
+            <div class="classboton">
+                <button class="btn btn-secondary" @click="home">Regresar</button>
+            </div>
+
+            <form @submit.prevent="submitForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Edificio:</label>
+                    <input type="text" v-model="newBuilding.Nombre" id="nombre" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="empleado">Empleado:</label>
+                    <select v-model="newBuilding.ID_Emp" id="empleado" required class="form-control">
+                        <option v-for="empleado in employees" :key="empleado.ID_Emp" :value="empleado.ID_Emp">
+                            {{ empleado.Nombre }} {{ empleado.ApellidoPat }} {{ empleado.ApellidoMat }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="departamento">Departamento:</label>
+                    <select v-model="newBuilding.ID_TipDpto" id="departamento" required class="form-control">
+                        <option v-for="departamento in departments" :key="departamento.ID_TipDpto"
+                            :value="departamento.ID_TipDpto">
+                            {{ departamento.Nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Registrar Edificio</button>
+            </form>
         </div>
-
-        <form class="formulario" @submit.prevent="submitForm">
-            <div class="top">
-                <div class="grupo">
-                    <input type="text" placeholder="# Folio" disabled />
-                </div>
-
-                <!-- Edificio -->
-                <div class="grupo">
-                    <label>Edificio</label>
-                    <select v-model="newIncident.ID_Edif">
-                        <option v-for="opcion in buildings" :key="opcion.ID_Edif" :value="opcion.ID_Edif">
-                            {{ opcion.Nombre }}
-                        </option>
-                    </select>
-                </div>
-
-                <!-- Aula -->
-                <div class="grupo">
-                    <label>Aula</label>
-                    <select v-model="newIncident.ID_Aula">
-                        <option v-for="opcion in filteredClassrooms" :key="opcion.ID_Aula" :value="opcion.ID_Aula">
-                            {{ opcion.Nombre }}
-                        </option>
-                    </select>
-                </div>
-
-                <!-- Dispositivo -->
-                <div class="grupo">
-                    <label>Dispositivos</label>
-                    <select v-model="newIncident.ID_Dispositivo">
-                        <option v-for="opcion in filteredDevices" :key="opcion.ID_Dispositivo"
-                            :value="opcion.ID_Dispositivo">
-                            {{ opcion.Nombre }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Descripción -->
-            <div class="grupoD">
-                <label for="tipo">Descripción</label>
-                <input class="desc" type="text" placeholder="Descripción" v-model="newIncident.Descripcion" />
-            </div>
-
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
     </div>
 </template>
-  
+
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import TopBar from '../layouts/TopBar.vue'
-
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useEmployees } from '../controladores/useEmployee'
+import { useDepartment } from '../controladores/useDepartment'
 import { useBuilding } from '../controladores/useBuilding'
-import { useClassroom } from '../controladores/useClassroom'
-import { useDevice } from '../controladores/useDevice'
-import { useIncidents } from '../controladores/useIncidents'
+const { employees, getEmployees } = useEmployees()
+const { departments, getDepartments } = useDepartment()
+const { addBuilding } = useBuilding()
 
-// Hooks personalizados
-const { buildings, getBuilding } = useBuilding()
-const { classrooms, getClassroom } = useClassroom()
-const { devices, getDevices } = useDevice()
-const { addIncidents } = useIncidents()
 
-const router = useRouter()
-
-// Datos del formulario
-const newIncident = ref({
-    ID_Aula: '',
-    ID_Dispositivo: '',
-    Descripcion: '',
-    Fecha: new Date().toISOString().slice(0, 10),
-    Hora: new Date().toISOString().slice(11, 19)
-})
-
-// Enviar formulario
-const submitForm = async () => {
-    try {
-        console.log('Enviando:', newIncident.value)
-        await addIncidents(newIncident.value)
-        alert('Incidencia enviada con éxito')
-        router.push({ name: 'Inicio' })
-    } catch (error) {
-        console.error('Error al enviar la incidencia:', error)
-        alert('Ocurrió un error al enviar la incidencia')
-    }
-}
-
-// Filtrar aulas por edificio
-const filteredClassrooms = computed(() =>
-    classrooms.value.filter(
-        (aula) => aula.ID_Edif === newIncident.value.ID_Edif
-    )
-)
-
-// Filtrar dispositivos por aula
-const filteredDevices = computed(() =>
-    devices.value.filter(
-        (device) => device.ID_Aula === newIncident.value.ID_Aula
-    )
-)
-
-// Cargar datos al montar
 onMounted(async () => {
-    await getBuilding()
-    await getClassroom()
-    await getDevices()
+    await getEmployees()
+    await getDepartments()
 })
 
-// Navegación
-const logout = () => {
-    localStorage.clear()
-    sessionStorage.clear()
-    router.push({ name: 'validacion' })
+//const { empleados, departamentos, addBuilding } = useBuilding();
+
+const router = useRouter();
+
+const newBuilding = ref({
+    Nombre: '',
+    ID_Emp: '',
+    ID_TipDpto: ''
+});
+
+const submitForm = async () => {
+    console.log(newBuilding.value);
+    await addBuilding(newBuilding.value);
+    await router.push({ name: 'Edificios' });
 }
 
 const home = () => {
-    router.push({ name: 'Inicio' })
+    router.push({ name: 'Inicio' });
 }
+
+
 </script>
-  
+
 <style scoped>
 .container {
     max-width: 100%;
     width: 100%;
-    height: 100vw;
+    height: 100vh;
     background-color: rgb(255, 255, 255);
     color: black;
 }
 
-h2 {
-    text-align: center;
-    margin: 2em;
-    color: black;
-}
-
-.formulario {
+.Cont {
     display: flex;
     flex-direction: column;
     gap: 2em;
     padding: 2em;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    margin: 2em 3em;
+    background-color: #F9F9F9;
+}
+
+h2 {
+    text-align: center;
+    padding: 1em;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin: 3em 2em;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.top {
-    display: flex;
-    gap: 2em;
-    justify-content: first baseline;
-}
-
-.grupo {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    color: black;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
-.desc {
-    width: 100%;
-    height: 100px;
-}
-
-.classboton {
-    margin-bottom: -20px;
-    display: flex;
-    padding: 0 2em;
-    justify-content: space-between;
+button {
+    margin-top: 1em;
 }
 </style>
-  
