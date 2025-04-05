@@ -62,6 +62,7 @@ import { useIncidents } from '../controladores/useIncidents';
 import TopBar from '../../principal/layouts/TopBar.vue';
 
 const { incidents, getIncidentsByFolio } = useIncidents();
+const { updateEstadoIncident } = useIncidents(); // Asegúrate de tener esta función en tu controlador
 
 const updatedState = ref<string>('');
 const updatedPriority = ref<string>('');
@@ -69,6 +70,9 @@ const router = useRouter();
 
 const selectedIncident = ref<any>(null);
 
+const updEstadoInc = ref({
+    Estado: '',
+});
 
 onMounted(async () => {
     const folio = router.currentRoute.value.query.folio as string;  // Asumimos que el folio se pasa como parámetro de la URL
@@ -80,6 +84,9 @@ onMounted(async () => {
         updatedState.value = selectedIncident.value.Estado;  // Llenamos el estado actual de la incidencia
     }
 });
+
+// Función para actualizar la incidencia
+
 
 
 // Cargar la incidencia al montar el componente
@@ -94,19 +101,16 @@ onMounted(async () => {
 
 // Función para actualizar la incidencia
 const updateIncident = async () => {
-    if (!selectedIncident.value) {
-        alert("Seleccione una incidencia.");
-        return;
+    try {
+
+        const estado = updatedState.value;
+        await updateEstadoIncident(selectedIncident.value.Folio, estado);
+        alert('Incidencia actualizada con éxito');
+
+    } catch (error) {
+        console.error('Error al actualizar la incidencia:', error);
+        alert('Ocurrió un error al actualizar la incidencia');
     }
-
-    const updatedData = {
-        Estado: updatedState.value,
-        Prioridad: updatedPriority.value,
-    };
-
-    // Aquí deberías hacer la llamada a la API para actualizar el estado
-    // await updateIncidentStatus(selectedIncident.value.Folio, updatedData);
-    alert("Incidencia actualizada correctamente.");
 };
 
 // Funciones de navegación

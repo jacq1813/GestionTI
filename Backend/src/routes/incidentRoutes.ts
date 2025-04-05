@@ -51,4 +51,12 @@ router.put('/:folio', async (req: Request, res: Response) => {
     res.send(updatedIncident);
 });
 
+// actualizar estado de la incidencia
+router.put('/estado/:folio', async (req: Request, res: Response) => {
+    const folio = req.params.folio;
+    const { estado } = req.body;
+    const updatedIncident = await incidentService.updateEstadoIncident(folio, estado);
+    res.send(updatedIncident);
+});
+
 export default router;

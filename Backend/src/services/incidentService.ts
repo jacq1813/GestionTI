@@ -133,4 +133,17 @@ export const updateIncident = async (folio: string, Prioridad: string, ID_Rec: n
     }
 }
 
+// actualizar el estado de la incidencia
+export const updateEstadoIncident = async (folio: string, estado: string) => {
+    try {
+        const [result] = await connection.query(
+            'UPDATE incidencia SET Estado = ? WHERE Folio = ?', 
+            [estado, folio]
+        );
+        return result;
+    } catch (error) {
+        return { error: "no se pudo actualizar el estado de la incidencia" };
+    }
+}
+
 

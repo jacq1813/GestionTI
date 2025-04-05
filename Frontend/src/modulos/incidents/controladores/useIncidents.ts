@@ -47,6 +47,17 @@ export const useIncidents = () => {
         }
     }
 
+    // actualizar estado de la incidencia
+    const updateEstadoIncident = async (folio: string, estado: string) => {
+        try {
+            const response = await incidentsApi.put<Incident>(`/estado/${folio}`, { estado });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return { error: "No se pudo actualizar el estado de la incidencia" };
+        }
+    }
+
     return {
         incidents,
         getIncidents,
@@ -54,6 +65,7 @@ export const useIncidents = () => {
         getIncidentsByEstado,
         getIncidentsByEstadoPeriodoAnio,
         getIncidentsByFolio,
-        updateIncident
+        updateIncident,
+        updateEstadoIncident
     }
 }
