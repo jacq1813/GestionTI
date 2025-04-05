@@ -106,4 +106,31 @@ export const getIncidentsByFolio = async (folio: string) => {
 }
 
 
+// agregar una incidencia
+export const addIncidents = async (incidencia: any) => {
+    try {
+        const { Descripcion, Fecha, Hora, ID_Aula} = incidencia;
+        const [result] = await connection.query(
+            'INSERT INTO incidencia (Descripcion, Fecha, Hora, ID_Aula) VALUES (?, ?, ?, ?)', 
+            [Descripcion, Fecha, Hora, ID_Aula]
+        );
+        return result;
+    } catch (error) {
+        return { error: "no se pudo agregar la incidencia" };
+    }
+}
+
+// asignar prioridad y tecnico a la incidencia
+export const updateIncident = async (folio: string, Prioridad: string, ID_Rec: number) => {
+    try {
+        const [result] = await connection.query(
+            'UPDATE incidencia SET Prioridad = ?, ID_Rec = ? WHERE Folio = ?', 
+            [Prioridad, ID_Rec, folio]
+        );
+        return result;
+    } catch (error) {
+        return { error: "no se pudo actualizar la incidencia" };
+    }
+}
+
 

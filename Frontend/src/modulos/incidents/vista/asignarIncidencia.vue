@@ -30,7 +30,7 @@
 
         <label class="subT">Seleccionar técnico</label>
         <div class="grupoB">
-            <select>
+            <select v-model="updIncident.ID_Tec">
                 <option v-for="opcion in techEmployees" :key="opcion.ID_Emp" :value="opcion.ID_Emp">
                     {{ opcion.Nombre + ' ' + opcion.ApellidoPat + ' ' + opcion.ApellidoMat }}
                 </option>
@@ -46,7 +46,7 @@
                 </select>
             </div>
 
-            <button class="btn btn-primary">Asignar</button>
+            <button class="btn btn-primary" @click="assignIncident">Asignar</button>
         </div>
 
 
@@ -65,6 +65,8 @@ const { incidents, getIncidentsByFolio } = useIncidents();
 const { techemployees: techEmployees, getTechEmployees } = useTechEmployees();
 const router = useRouter()
 const selectedIncident = ref<any>(null);
+const { updateIncident } = useIncidents();
+
 
 onMounted(async () => {
 
@@ -73,11 +75,28 @@ onMounted(async () => {
 
         selectedIncident.value = await getIncidentsByFolio(folio);
         console.log(selectedIncident.value);
-
-
     }
     await getTechEmployees();
 });
+
+const updIncident = ref({
+    ID_Tec: '',
+    Prioridad: ''
+})
+// Asignar la incidencia con los datos actualizados
+const assignIncident = async () => {
+    try {
+        const Prioridad = (document.querySelectorAll('select')[1] as HTMLSelectElement).value;
+        const ID_Tec = (document.querySelector('select') as HTMLSelectElement).value;
+
+        console.log(updIncident.value);
+        await updateIncident(selectedIncident.value.Folio, Prioridad, Number(ID_Tec));
+        alert('Incidencia asignada con éxito');
+        router.push({ name: 'InicioAdmin' });
+    } catch (error) {
+        console.error('Error al asignar la incidencia:', error);
+    }
+};
 
 //cerrar sesion
 const logout = () => {

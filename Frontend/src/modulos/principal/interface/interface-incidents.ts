@@ -13,3 +13,10 @@ export interface Incident {
     Receptor: string;
     PuestoReceptor: string; 
 }
+
+export interface NewIncident {
+    Descripcion: string;
+    Fecha: string; 
+    Hora: string; 
+    ID_Aula: number; 
+}

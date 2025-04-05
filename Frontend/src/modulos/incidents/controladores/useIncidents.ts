@@ -36,6 +36,16 @@ export const useIncidents = () => {
         }
     }
     
+    // asignar prioridad y tecnico a la incidencia
+    const updateIncident = async (folio: string, Prioridad: string, ID_Rec: number) => {
+        try {
+            const response = await incidentsApi.put<Incident>(`/${folio}`, { Prioridad, ID_Rec });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return { error: "No se pudo actualizar la incidencia" };
+        }
+    }
 
     return {
         incidents,
@@ -43,6 +53,7 @@ export const useIncidents = () => {
         getIncidentsRecandEmi,
         getIncidentsByEstado,
         getIncidentsByEstadoPeriodoAnio,
-        getIncidentsByFolio
+        getIncidentsByFolio,
+        updateIncident
     }
 }

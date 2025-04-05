@@ -32,4 +32,23 @@ router.get('/recandemi/:folio', async (req: Request, res: Response) => {
 });
 
 
+router.post('/', async (req: Request, res: Response) => {
+    try {
+        const { Descripcion, Fecha, Hora, ID_Aula} = req.body;
+        const newIncident = await incidentService.addIncidents({Descripcion, Fecha, Hora, ID_Aula});
+        res.send(newIncident);
+
+    }catch(e) {
+        res.send({ error: "no se pudo agregar la incidencia" });
+    }
+});
+
+// asignar prioridad y tecnico a la incidencia
+router.put('/:folio', async (req: Request, res: Response) => {
+    const folio = req.params.folio;
+    const { Prioridad, ID_Rec } = req.body;
+    const updatedIncident = await incidentService.updateIncident(folio, Prioridad, ID_Rec);
+    res.send(updatedIncident);
+});
+
 export default router;

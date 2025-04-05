@@ -1,7 +1,7 @@
 import {ref} from 'vue';
 
 import incidentsApi from '../api/Incidents';
-import type {Incident} from '../interface/interface-incidents';
+import type {Incident, NewIncident} from '../interface/interface-incidents';
 
 export const useIncidents = () => {
     const incidents = ref<Incident[]>([]);
@@ -26,11 +26,25 @@ export const useIncidents = () => {
         incidents.value = response.data
     }
 
+    const addIncidents = async (Incident: NewIncident) => {
+        try {
+            console.log(Incident)
+            const response = await incidentsApi.post<Incident>('/', Incident);
+            console.log(response.data)
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return { error: "No se pudo agregar la incidencia" };
+        }
+    }
+
+
     return {
         incidents,
         getIncidents,
         getIncidentsRecandEmi,
         getIncidentsByEstado,
-        getIncidentsByEstadoPeriodoAnio
+        getIncidentsByEstadoPeriodoAnio,
+        addIncidents
     }
 }
