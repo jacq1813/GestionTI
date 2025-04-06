@@ -105,3 +105,24 @@ CREATE TABLE Incidencia (
     FOREIGN KEY (ID_Emi) REFERENCES Empleado(ID_Emp),
     FOREIGN KEY (ID_Rec) REFERENCES Empleado(ID_Emp)
 );
+
+CREATE TABLE AlmacenComponentes (
+    Id_Almacen INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(100) NOT NULL,
+    Cantidad_disponible INT NOT NULL DEFAULT 0,
+    Cantidad_no_funcional INT DEFAULT 0,
+    Proveedor VARCHAR(100),
+    Fecha_ultima_reposicion DATE
+);
+
+CREATE TABLE BitacoraIncidencias (
+    Id_Bitacora INT PRIMARY KEY AUTO_INCREMENT,
+    Folio_Incidencia INT,
+    Fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Usuario VARCHAR(100) NOT NULL,
+    Accion VARCHAR(50) NOT NULL,
+    Descripcion TEXT,
+    Estado_anterior VARCHAR(20),
+    Estado_nuevo VARCHAR(20),
+    FOREIGN KEY (Folio_Incidencia) REFERENCES Incidencias(Folio) ON DELETE SET NULL
+);
