@@ -41,11 +41,23 @@ INSERT INTO TipoAula (ID_TipoAula, Nombre) VALUES
 
 -- Insertar datos en Aula
 INSERT INTO Aula (ID_Aul, Nombre, ID_TipoAula, ID_Edif, ID_Emp) VALUES
-(1, 'Lab 101', 1, 1, 1),
-(2, 'Aula 202', 2, 2, 2),
-(3, 'Auditorio Central', 3, 3, 3),
-(4, 'Biblioteca General', 4, 4, 4),
-(5, 'Aula Magna', 5, 5, 5);
+(1, 'Lab 101 - Computación Básica', 1, 1, 1),
+(2, 'Lab de Programación', 1, 1, 1),
+(3, 'Lab de Redes', 1, 1, 1),
+(4, 'Lab de Dispositivos Moviles', 1, 1, 1),
+(5, 'Aula 201', 2, 2, 2),
+(6, 'Aula 202', 2, 2, 2),
+(7, 'Aula 203', 2, 2, 2),
+(8, 'Aula 204', 2, 2, 2),
+(9, 'Auditorio Central', 3, 3, 3),
+(10, 'Auditorio Principal', 3, 3, 3),
+(11, 'Biblioteca principal', 4, 4, 4),
+(12, 'Sala de estudio', 4, 4, 4),
+(13, 'Videoteca', 4, 4, 4),
+(14, 'Cubiculos', 4, 4, 4),
+(15, 'Aula Magna', 5, 5, 5),
+(16, 'Sala de Conferencias principal', 5, 5, 5),
+(17, 'Sala de Conferencias Postgrado', 5, 5, 5);
 
 -- Insertar datos en TipoEquipo
 INSERT INTO TipoEquipo (ID_TipEquipo, Nombre) VALUES
@@ -57,11 +69,22 @@ INSERT INTO TipoEquipo (ID_TipEquipo, Nombre) VALUES
 
 -- Insertar datos en Equipo
 INSERT INTO Equipo (ID_Equip, Nombre, Fecha_Ult_Mod, Version, Fecha_Inst, ID_Aul, ID_TipEquipo) VALUES
-(1, 'PC Dell 1', '2023-01-10', 'V1.0', '2022-12-05', 1, 1),
-(2, 'Proyector Epson', '2023-02-15', 'V2.1', '2023-01-20', 2, 2),
-(3, 'Pizarrón Interactivo', '2023-03-01', 'V3.0', '2023-02-10', 3, 3),
-(4, 'HP LaserJet', '2023-04-10', 'V1.2', '2023-03-25', 4, 4),
-(5, 'Servidor Principal', '2023-05-05', 'V4.5', '2023-04-15', 5, 5);
+-- Computadoras (Tipo 1)
+(1, 'Dell OptiPlex 7090', '2023-03-15', '1.2.1', '2023-02-10', 101, 1),
+(2, 'HP EliteDesk 800 G8', '2023-04-20', '1.3.0', '2023-03-12', 102, 1),
+(3, 'Apple Mac Mini M2 2023', '2023-05-10', '2.0.0', '2023-04-05', 103, 1),
+-- Proyectores (Tipo 2)
+(4, 'Epson EB-1785W', '2023-06-18', '2.1.3', '2023-05-15', 201, 2),
+(5, 'BenQ MH560', '2023-07-22', '1.9.2', '2023-06-10', 202, 2),
+-- Pizarras (Tipo 3)
+(6, 'Smart Board 7000R', '2023-08-30', '3.2.1', '2023-07-20', 301, 3),
+(7, 'Promethean ActivPanel 9', '2023-09-12', '3.5.0', '2023-08-25', 302, 3),
+-- Impresoras (Tipo 4)
+(8, 'HP Color LaserJet Pro M454dn', '2023-10-05', '1.4.2', '2023-09-15', 401, 4),
+(9, 'Brother MFC-L8900CDW', '2023-11-18', '2.0.1', '2023-10-10', 402, 4),
+-- Servidores (Tipo 5)
+(10, 'Dell PowerEdge R760', '2023-12-10', '5.1.0', '2023-11-20', 501, 5),
+(11, 'HPE ProLiant DL380 Gen11', '2024-01-25', '5.2.1', '2023-12-15', 502, 5);
 
 -- Insertar datos en TipoComponente
 INSERT INTO TipoComponente (ID_TipComp, Nombre) VALUES
@@ -138,7 +161,6 @@ INSERT INTO Almacen (Nombre, ID_TipComp, Cantidad_disponible, Cantidad_no_funcio
 ('Switch 8 Puertos Gigabit', 8, 6, 0, 'TP-Link', '2024-05-08'),
 ('Router WiFi 5 Dual-Band', 8, 5, 0, 'D-Link', '2024-07-25'),
 ('Tarjeta de Red PCIe Gigabit', 8, 8, 0, 'Intel', '2024-10 18'),
-
 -- REFRIGERACIÓN (Tipo 9)
 ('Ventilador CPU 120mm', 9, 20, 1, 'Cooler Master', '2024-03-22'),
 ('Pasta Térmica 3.5g', 9, 15, 0, 'Arctic', '2024-06-05');
