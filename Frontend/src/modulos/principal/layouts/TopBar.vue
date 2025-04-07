@@ -68,7 +68,7 @@ const navigate = (direction: string) => {
 /* Estilos del menú */
 .menuPresentacion {
     width: 100%;
-    background-color: #2c3e50;
+    background-color: #7a0796;
     color: white;
     display: flex;
     align-items: center;
@@ -77,6 +77,8 @@ const navigate = (direction: string) => {
     font-weight: bold;
     gap: 0.7em;
     position: relative;
+    box-shadow: 0 2px 4px rgba(3, 0, 0, .3);
+
 }
 
 .nombreUsuario {
