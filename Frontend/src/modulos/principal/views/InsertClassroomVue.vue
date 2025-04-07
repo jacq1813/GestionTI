@@ -92,7 +92,7 @@ const submitForm = async () => {
 console.log(tyclass)
 
 const goBack = () => {
-  router.push({ name: 'Inicio' })
+  router.push({ name: 'InicioAdmin' })
 }
 </script>
   

@@ -17,8 +17,6 @@
                         <th>Empleado</th>
                         <th>Edificio</th>
                         <th>Tipo de aula</th>
-
-
                     </tr>
                 </thead>
 

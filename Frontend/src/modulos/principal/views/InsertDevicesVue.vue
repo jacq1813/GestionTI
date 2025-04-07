@@ -88,7 +88,7 @@ const submitForm = async () => {
 }
 
 const goBack = () => {
-    router.push({ name: 'Inicio' })
+    router.push({ name: 'InicioAdmin' })
 }
 </script>
   

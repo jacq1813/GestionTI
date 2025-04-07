@@ -138,11 +138,13 @@ const router = createRouter({
       path: '/RolesA',
       name: 'RolesA',
       component: RolesAdminVue,
+      beforeEnter: requireRole(['admin']),
     },
     {
       path: '/Incidentes',
       name: 'Incidentes',
       component: IncidentVue,
+      beforeEnter: requireRole(['usuario']),
     },
     {
       path: '/AsignarIncidente',

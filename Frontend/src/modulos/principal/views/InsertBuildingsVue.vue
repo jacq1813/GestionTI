@@ -74,7 +74,7 @@ const submitForm = async () => {
 }
 
 const home = () => {
-    router.push({ name: 'Inicio' });
+    router.push({ name: 'InicioAdmin' });
 }
 
 

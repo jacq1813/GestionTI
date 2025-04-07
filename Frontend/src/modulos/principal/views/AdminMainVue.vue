@@ -15,14 +15,14 @@
                 <li class="elementoMenu" @click="navigateToRoles('')">
                     Solicitudes
                 </li>
-                <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
+                <li class="elementoMenu" @click="navigateToRoles('')">
                     Incidencias
                 </li>
                 <li class="elementoMenu" @click="navigateToRoles('RolesA')">
                     Roles
                 </li>
                 <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
-                    AsignarIncidencias
+                    Asignar Incidencias
                 </li>
             </ul>
             <br>
