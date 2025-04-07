@@ -73,6 +73,10 @@ const { classrooms, getClassroom } = useClassroom()
 const { devices, getDevices } = useDevice()
 const { addIncidents } = useIncidents()
 
+// Rol del usuario
+const rol = ref('')
+
+
 const router = useRouter()
 
 // Datos del formulario
@@ -117,6 +121,8 @@ onMounted(async () => {
     await getBuilding()
     await getClassroom()
     await getDevices()
+
+
 })
 
 // Navegación

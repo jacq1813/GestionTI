@@ -11,7 +11,7 @@
             <li class="elementoMenu" @click="navigateToRoles('ActualizarIncidente')">
                 Solicitudes
             </li>
-            <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
+            <li class="elementoMenu">
                 Reportes
             </li>
             <li class="elementoMenu" @click="navigateToRoles('Incidentes')">

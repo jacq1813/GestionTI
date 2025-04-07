@@ -57,14 +57,16 @@
                     <td>{{ employees.Calificacion }}</td>
                     <td>{{ employees.Correo }}</td>
                     <td>
-                        <button @click="assignRole(employees.Nombre+' '+employees.ApellidoPat+' '+employees.ApellidoMat,employees.ID_Emp,employees.Correo,employees.Contrasena)" class="btn btn-primary">Asignar rol</button>
+                        <button
+                            @click="assignRole(employees.Nombre + ' ' + employees.ApellidoPat + ' ' + employees.ApellidoMat, employees.ID_Emp, employees.Correo, employees.Contrasena)"
+                            class="btn btn-primary">Asignar rol</button>
                     </td>
-                    
+
                 </tr>
             </tbody>
         </table>
 
-        <div class="modal-overlay" v-show="showModal" @click.self="closeModal" :class="{'active': showModal }">
+        <div class="modal-overlay" v-show="showModal" @click.self="closeModal" :class="{ 'active': showModal }">
             <div class="modal-content" @click.stop>
                 <div class="modal-header">
                     <h3>Asignar Rol al Empleado</h3>
@@ -97,7 +99,7 @@
 import { onMounted, ref } from 'vue';
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
-import { getFirestore, doc, setDoc,getDoc,updateDoc,collection,getDocs } from 'firebase/firestore'
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs } from 'firebase/firestore'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import type { Employee } from '../interface/interface-employee'
 import TopBar from '../layouts/TopBar.vue'
@@ -119,7 +121,7 @@ const roles = ref([
     { ID_Rol: 1, NombreRol: 'Jefe de taller' },
     { ID_Rol: 2, NombreRol: 'Tecnico' },
     { ID_Rol: 3, NombreRol: 'Usuario' },
-    { ID_Rol: 4, NombreRol: 'Secretaria'},
+    { ID_Rol: 4, NombreRol: 'Secretaria' },
 ])
 
 onMounted(async () => {
@@ -140,7 +142,7 @@ const navigateToRoles = (direction: string) => {
 };
 
 //abrir modal
-const assignRole = async (Nombre:string,id: number,correo: string,contrasena:string) => {
+const assignRole = async (Nombre: string, id: number, correo: string, contrasena: string) => {
     selectedEmployeeName.value = Nombre
     selectedEmployee.value = id
     selectedCorreo.value = correo
@@ -394,7 +396,8 @@ td {
     align-items: center;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;  /* Transición solo para el fondo */
+    transition: background-color 0.3s ease;
+    /* Transición solo para el fondo */
     pointer-events: auto;
 }
 
@@ -418,12 +421,16 @@ td {
     max-height: 90%;
     overflow-y: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: scale(0.8);  /* Comienza ligeramente más pequeño */
-    opacity: 1;  /* Comienza invisible */
-    transition: transform 0.3s ease, opacity 1s ease;  /* Transición para escala y opacidad */
+    transform: scale(0.8);
+    /* Comienza ligeramente más pequeño */
+    opacity: 1;
+    /* Comienza invisible */
+    transition: transform 0.3s ease, opacity 1s ease;
+    /* Transición para escala y opacidad */
     color: black;
     pointer-events: auto;
 }
+
 /* 
 .modal-content.active {
     transform: scale(1);  /* Escala normal al abrir 
@@ -474,5 +481,4 @@ td {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-</style>
+}</style>

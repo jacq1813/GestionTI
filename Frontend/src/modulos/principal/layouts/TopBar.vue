@@ -4,14 +4,14 @@
         <div class="menuPresentacion">
 
 
-            <span class="nombreUsuario">Usuario</span>
+            <span class="nombreUsuario">{{ nombre }}</span>
 
             <!-- Icono de usuario con menú desplegable al pasar el cursor -->
             <div class="user-menu" @mouseenter="menuOpen = true" @mouseleave="menuOpen = false">
                 <i class="fa fa-user user-icon"></i>
 
                 <div v-if="menuOpen" class="dropdown-menu">
-                    <a href="#" @click="navigate('RolesA')">Usuarios</a>
+                    <a href="#" @click="navigate('RolesA')" v-if="rol == 'admin'">Usuarios</a>
                     <a href="#" @click="navigate('Edificios')">Edificios</a>
                     <a href="#" @click="navigate('Salones')">Aulas</a>
                     <a href="#" @click="navigate('Dispositivos')">Equipos</a>
@@ -26,25 +26,41 @@
 </template>
   
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { getAuth } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 const router = useRouter()
-const menuOpen = ref(false) // Estado del menú desplegable
+const menuOpen = ref(false)
+
+const auth = getAuth()
+const user = auth.currentUser
+
+const rol = ref('')
+const nombre = ref('')
+
+onMounted(async () => {
+    if (user) {
+        const db = getFirestore()
+        const userDoc = await getDoc(doc(db, 'usuarios', user.uid))
+        if (userDoc.exists()) {
+            const data = userDoc.data()
+            rol.value = data.Rol
+            nombre.value = data.Correo || 'Usuario'
+        }
+    }
+})
 
 const logout = () => {
-    localStorage.clear();
-    sessionStorage.clear();
+    localStorage.clear()
+    sessionStorage.clear()
     router.push({ name: 'validacion' })
 }
 
-// Función para navegar a las secciones
 const navigate = (direction: string) => {
-    console.log(direction)
     router.push({ name: direction })
 }
-
 
 </script>
   

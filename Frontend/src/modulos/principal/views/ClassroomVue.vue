@@ -7,7 +7,7 @@
 
             <div class="classboton">
                 <button class="btn btn-secondary" @click="home">Regresar</button>
-                <button class="btn btn-secondary" @click="addClass">Añadir</button>
+                <button class="btn btn-secondary" @click="addClass" v-if="rol === 'admin'">Añadir</button>
             </div>
             <table class="table">
                 <thead>
@@ -40,27 +40,51 @@
 
 <script setup lang="ts">
 import TopBar from '../layouts/TopBar.vue'
-import { onMounted, ref, computed } from 'vue'
-import { useClassroom } from '../controladores/useClassroom';
-
-
+import { onMounted, ref } from 'vue'
+import { useClassroom } from '../controladores/useClassroom'
 import { useRouter } from 'vue-router'
+import { getAuth } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
-const { classrooms, getClassroomsDetail } = useClassroom();
+const { classrooms, getClassroomsDetail } = useClassroom()
+const router = useRouter()
 
-const router = useRouter();
+// Rol del usuario
+const rol = ref('')
 
-onMounted(() => {
-    getClassroomsDetail();
+onMounted(async () => {
+    // Obtener aulas
+    getClassroomsDetail()
+
+    // Obtener rol desde Firestore
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    if (user) {
+        const db = getFirestore()
+        const userDoc = await getDoc(doc(db, 'usuarios', user.uid))
+        if (userDoc.exists()) {
+            const userData = userDoc.data()
+            rol.value = userData.Rol
+        }
+    }
 })
 
+// Navegación
 const home = () => {
-    router.push({ name: 'Inicio' });
+
+    if (rol.value === 'admin') {
+        router.push({ name: 'InicioAdmin' })
+    } else {
+        router.push({ name: 'Inicio' })
+    }
+
 }
 const addClass = () => {
-    router.push({ name: 'InsertarSalon' });
+    router.push({ name: 'InsertarSalon' })
 }
 </script>
+
 
 <style scoped>
 .container {

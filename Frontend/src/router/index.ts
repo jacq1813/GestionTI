@@ -20,8 +20,10 @@ import InsertDevice from '@/modulos/principal/views/InsertDevicesVue.vue'
 import InsertClassroom from '@/modulos/principal/views/InsertClassroomVue.vue'
 
 const requireAuth = (to:any, from:any, next:any) => {
+
   const auth = getAuth()
   const user = auth.currentUser
+
   if (!user) {
     next('/validacion')
   } else {
@@ -29,7 +31,7 @@ const requireAuth = (to:any, from:any, next:any) => {
   }
 }
 
-const requireAdmin = async (to:any, from:any, next:any) => {
+/*const requireAdmin = async (to:any, from:any, next:any) => {
   const auth = getAuth()
   const user = auth.currentUser
   
@@ -58,7 +60,42 @@ const requireAdmin = async (to:any, from:any, next:any) => {
     console.error('Error verificando rol de usuario', error)
     next('/AccessDen')
   }
+}*/
+
+type RolUsuario = 'admin' | 'jefe' | 'tecnico' | 'usuario'
+
+const requireRole = (rolesPermitidos: RolUsuario[]) => {
+  return async (to:any, from:any, next:any) => {
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    if (!user) {
+      return next('/validacion')
+    }
+
+    try {
+      const db = getFirestore()
+      const userDoc = await getDoc(doc(db, 'usuarios', user.uid))
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data()
+        const rol = userData.Rol
+
+        if (rolesPermitidos.includes(rol)) {
+          return next()
+        } else {
+          return next('/AccessDen')
+        }
+      } else {
+        return next('/AccessDen')
+      }
+    } catch (error) {
+      console.error('Error verificando el rol del usuario:', error)
+      return next('/AccessDen')
+    }
+  }
 }
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +104,7 @@ const router = createRouter({
       path: '/validacion',
       name: 'validacion',
       component: SignIn,
+      
     },
     {
       path: '/registro',
@@ -82,19 +120,19 @@ const router = createRouter({
       path: '/Inicio',
       name: 'Inicio',
       component: Main,
-      beforeEnter: requireAuth,
+      beforeEnter: requireRole(['usuario']),
     },
     {
       path: '/InicioAdmin',
       name: 'InicioAdmin',
       component: AdminMainVue,
-      beforeEnter: requireAdmin,
+      beforeEnter: requireRole(['admin']),
     },
     {
       path: '/InicioJefe',
       name: 'InicioJefe',
       component: JefeMainVue,
-      beforeEnter: requireAdmin,
+      beforeEnter: requireRole(['admin']),
     },
     {
       path: '/RolesA',
@@ -110,11 +148,13 @@ const router = createRouter({
       path: '/AsignarIncidente',
       name: 'AsignarIncidente',
       component: AssingIncidet,
+      beforeEnter: requireRole(['admin'])
     },
     {
       path: '/ActualizarIncidente',
       name: 'ActualizarIncidente',
       component: UpdateIncident,
+      beforeEnter: requireRole(['admin', 'tecnico']),
     },
     {
       path: '/Edificios',
@@ -135,16 +175,19 @@ const router = createRouter({
       path: '/InsertaEdificio',
       name: 'InsertaEdificio',
       component: InsertBuildings,
+      beforeEnter: requireRole(['admin']),
     },
     {
       path: '/InsertaEquipo',
       name: 'InsertaEquipo',
       component: InsertDevice,
+      beforeEnter: requireRole(['admin']),
     },
     {
       path: '/InsertarSalon',
       name: 'InsertarSalon',
       component: InsertClassroom,
+      beforeEnter: requireRole(['admin']),
     },
     {
       path: '/about',

@@ -7,7 +7,7 @@
 
             <div class="classboton">
                 <button class="btn btn-secondary" @click="home">Regresar</button>
-                <button class="btn btn-secondary" @click="anadir">Añadir</button>
+                <button class="btn btn-secondary" @click="anadir" v-if="rol === 'admin'">Añadir</button>
             </div>
             <table class="table">
                 <thead>
@@ -39,6 +39,10 @@ import TopBar from '../layouts/TopBar.vue'
 import { onMounted, ref, computed } from 'vue'
 import { useBuilding } from '../controladores/useBuilding';
 import { useRouter } from 'vue-router'
+import { getAuth } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+
+const rol = ref('')
 
 const { buildings, getBuilding } = useBuilding();
 
@@ -46,6 +50,21 @@ const router = useRouter();
 
 onMounted(async () => {
     await getBuilding();
+    const auth = getAuth();
+    const db = getFirestore();
+    const user = auth.currentUser;
+
+    if (user) {
+        const userDoc = doc(db, 'Usuarios', user.uid);
+        const docSnap = await getDoc(userDoc);
+        if (docSnap.exists()) {
+            rol.value = docSnap.data().Rol;
+        } else {
+            console.log('No such document!');
+        }
+    } else {
+        console.log('No user is signed in');
+    }
 })
 
 const home = () => {

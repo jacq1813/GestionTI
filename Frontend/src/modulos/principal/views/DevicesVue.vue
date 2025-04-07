@@ -7,7 +7,7 @@
 
             <div class="classboton">
                 <button class="btn btn-secondary" @click="home">Regresar</button>
-                <button class="btn btn-secondary" @click="addDevice">Añadir</button>
+                <button class="btn btn-secondary" @click="addDevice" v-if="rol === 'admin'">Añadir</button>
             </div>
 
             <table class="table">
@@ -21,7 +21,7 @@
                         <th>Tipo de Equipo</th>
                         <th>Aula</th>
                         <th>Componentes</th>
-                        <th>Acciones</th>
+                        <th v-if="rol == 'admin'">Acciones</th>
                     </tr>
                 </thead>
 
@@ -66,9 +66,9 @@
                             </div>
                             <span v-else>Sin componentes</span>
                         </td>
-                        <td>
-                            <button class="btn btn-primary btn-sm">Editar</button>
-                            <button class="btn btn-danger btn-sm ml-1">Eliminar</button>
+                        <td v-if="rol == 'admin'">
+                            <button class="btn btn-primary btn-sm" v-if="rol == 'admin'">Editar</button>
+                            <button class="btn btn-danger btn-sm ml-1" v-if="rol === 'admin'">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -82,13 +82,31 @@ import { onMounted, ref } from 'vue';
 import { useDevice } from '../controladores/useDevice'; // Importa el hook useDevice
 import { useRouter } from 'vue-router';
 import TopBar from '../layouts/TopBar.vue'
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+
+
 
 const { devices, getDevicesDetail } = useDevice(); // Usa el hook para obtener dispositivos
 const router = useRouter();
 const expandedDevices = ref<number[]>([]);
 
-onMounted(async() => {
+const rol = ref(''); // Rol del usuario
+
+onMounted(async () => {
     await getDevicesDetail(); // Obtén los dispositivos al montar el componente
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+        const db = getFirestore();
+        const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            rol.value = userData.Rol;
+        }
+    }
+
 });
 
 const toggleComponentes = (deviceId: number) => {
@@ -100,8 +118,15 @@ const toggleComponentes = (deviceId: number) => {
 };
 
 const home = () => {
-    router.push({ name: 'Inicio' }); // Redirige al inicio
-};
+
+    if (rol.value === 'admin') {
+        router.push({ name: 'InicioAdmin' })
+    } else {
+        router.push({ name: 'Inicio' })
+    }
+
+}
+
 
 const addDevice = () => {
     router.push({ name: 'InsertaEquipo' }); // Redirige al inicio
