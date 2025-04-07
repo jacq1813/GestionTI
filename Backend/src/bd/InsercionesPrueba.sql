@@ -45,7 +45,7 @@ INSERT INTO Aula (ID_Aul, Nombre, ID_TipoAula, ID_Edif, ID_Emp) VALUES
 (2, 'Aula 202', 2, 2, 2),
 (3, 'Auditorio Central', 3, 3, 3),
 (4, 'Biblioteca General', 4, 4, 4),
-(5, 'Sala Magna', 5, 5, 5);
+(5, 'Aula Magna', 5, 5, 5);
 
 -- Insertar datos en TipoEquipo
 INSERT INTO TipoEquipo (ID_TipEquipo, Nombre) VALUES
@@ -70,6 +70,11 @@ INSERT INTO TipoComponente (ID_TipComp, Nombre) VALUES
 (3, 'Disco Duro'),
 (4, 'Tarjeta de Video'),
 (5, 'Fuente de Poder');
+(6, 'Placa Madre'),
+(7, 'Periférico'),
+(8, 'Componente de Red'),
+(9, 'Refrigeración'),
+(10, 'Monitor');
 
 -- Insertar datos en Componente
 INSERT INTO Componente (ID_Comp, Nombre, Fecha_Ult_Mod, Version, Fecha_Inst, ID_Equip, ID_TipComp) VALUES
@@ -94,3 +99,46 @@ INSERT INTO Incidencia (Folio, Descripcion, Fecha, ID_Periodo, Estado, Prioridad
 (3, 'Pizarrón sin respuesta táctil', '2023-04-10', 1, 'Liberada', 'Alta', '12:45:00', 3, 4, 5),
 (4, 'Impresora atascada', '2023-05-20', 1, 'Rechazada', 'Mediana', '14:00:00', 4, 5, 1),
 (5, 'Servidor caído', '2023-06-30', 1, 'En proceso', 'Crítico', '16:30:00', 5, 1, 2);
+
+
+INSERT INTO Almacen (Nombre, ID_TipComp, Cantidad_disponible, Cantidad_no_funcional, Proveedor, Fecha_ultima_reposicion) VALUES
+-- PROCESADORES (Tipo 1)
+('AMD Ryzen 5 5600', 1, 11, 1, 'AMD', '2024-02-10'),
+('Intel Core i3-10100', 1, 10, 0, 'Intel', '2024 05-15'),
+('Intel Core i5-10400', 1, 11, 1, 'Intel', '2024-11-05'),
+('AMD Ryzen 5 7600', 1, 10, 0, 'AMD', '2025-01-15'),
+-- PLACAS MADRE (Tipo 6)
+('Gigabyte B550M', 6, 8, 0, 'Gigabyte', '2024-07-12'),
+('MSI Pro H610M', 6, 9, 1, 'MSI', '2024-09-30'),
+('ASUS TUF B650', 6, 6, 0, 'ASUS', '2025-02-20'),
+-- MEMORIA RAM (Tipo 2)
+('Memoria 4GB DDR4', 2, 20, 2, 'Kingston', '2024-04-25'),
+('Memoria 8GB DDR4', 2, 20, 0, 'Kingston', '2024-04-25'),
+('Memoria 16GB DDR4', 2, 10, 1, 'Kingston', '2024-06-14'),
+-- ALMACENAMIENTO (Tipo 3)
+('SSD 500GB', 3, 25, 2, 'Kingston', '2024-01-30'),
+('SSD 1TB', 3, 15, 0, 'Kingston', '2024-05-20'),
+('HDD 1TB', 3, 15, 0, 'Kingston', '2024-08-05'),
+('HDD 2TB', 3, 10, 1, 'Kingston', '2024-08-05'),
+-- TARJETAS GRÁFICAS (Tipo 4)
+('NVIDIA GTX 1650', 4, 6, 1, 'NVIDIA', '2024-07-18'),
+('Intel Arc A380', 4, 5, 0, 'Intel', '2024-11-12'),
+('AMD Radeon RX 7600', 4, 4, 0, 'AMD', '2025-01-25'),
+-- FUENTES DE PODER (Tipo 5)
+('Fuente 500W 80+ Bronze', 5, 12, 0, 'EVGA', '2024-02-28'),
+('Fuente 650W 80+ Gold', 5, 8, 0, 'Corsair', '2024-06-22'),
+('Fuente 750W 80+ Platinum', 5, 5, 0, 'Seasonic', '2025-03-05'),
+-- PERIFÉRICOS (Tipo 7)
+('Teclado USB', 7, 40, 2, 'Logitech', '2024-04-10'),
+('Mouse USB', 7, 40, 3, 'Microsoft', '2024-08-28'),
+-- MONITORES (Tipo 10)
+('Monitor 24" FHD', 10, 12, 0, 'Dell', '2024-12-03'),
+('Monitor 27" QHD', 10, 6, 0, 'LG', '2025-02-15'),
+-- COMPONENTES DE RED (Tipo 8)
+('Switch 8 Puertos Gigabit', 8, 6, 0, 'TP-Link', '2024-05-08'),
+('Router WiFi 5 Dual-Band', 8, 5, 0, 'D-Link', '2024-07-25'),
+('Tarjeta de Red PCIe Gigabit', 8, 8, 0, 'Intel', '2024-10 18'),
+
+-- REFRIGERACIÓN (Tipo 9)
+('Ventilador CPU 120mm', 9, 20, 1, 'Cooler Master', '2024-03-22'),
+('Pasta Térmica 3.5g', 9, 15, 0, 'Arctic', '2024-06-05');

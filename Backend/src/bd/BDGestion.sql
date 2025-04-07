@@ -106,13 +106,15 @@ CREATE TABLE Incidencia (
     FOREIGN KEY (ID_Rec) REFERENCES Empleado(ID_Emp)
 );
 
-CREATE TABLE AlmacenComponentes (
+CREATE TABLE Almacen (
     Id_Almacen INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(100) NOT NULL,
+    ID_TipComp INT,
     Cantidad_disponible INT NOT NULL DEFAULT 0,
     Cantidad_no_funcional INT DEFAULT 0,
     Proveedor VARCHAR(100),
-    Fecha_ultima_reposicion DATE
+    Fecha_ultima_reposicion DATE,
+    FOREIGN KEY (ID_TipComp) REFERENCES TipoComponente(ID_TipComp)
 );
 
 CREATE TABLE BitacoraIncidencias (
