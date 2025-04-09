@@ -2,17 +2,9 @@
     <div class="containerGod">
         <TopBar></TopBar>
         <div class="headerPrincipal">
-            <h2>Mantenimiento y servicios</h2>
-            <h3>Instituto Tecnológico de Culiacán</h3>
         </div>
 
-        <ul class="navMenu">
-            <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">Principal</li>
-            <li class="elementoMenu" @click="navigateToRoles('Solicitudes')">Solicitudes</li>
-            <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">Reportes</li>
-            <li class="elementoMenu" @click="navigateToRoles('Incidentes')">Incidencias</li>
-            <li class="elementoMenu" @click="navigateToRoles('RolesA')">Roles</li>
-        </ul>
+
 
         <div class="opciones">
             <section class="Users">
@@ -319,23 +311,37 @@ th {
     font-size: 1rem;
 }
 
+/* Menú de navegación */
 .navMenu {
     display: flex;
     justify-content: center;
-    background-color: #424951;
-    padding: 0.8em;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    padding: 1em;
+    gap: 1em;
+    border: 1px solid #ddd;
     border-radius: 8px;
     width: 90%;
     margin: 0 auto;
-    gap: 1em;
 }
 
 .navMenu.IncidMenu {
-    background-color: #6c757d;
-    font-size: small;
-    margin-top: 1em;
-    padding: 0.5em;
-    border-radius: 8px 8px 0 0;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+}
+
+.elementoMenu {
+    background-color: #2c3e50;
+    color: white;
+    padding: 0.6em 1.2em;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.elementoMenu:hover {
+    background-color: #1abc9c;
 }
 
 .navMenu li {
@@ -357,19 +363,6 @@ th {
 .navMenu.navMenu.IncidMenu li a:hover {
     background-color: brown;
     padding: 0.7em 1.5em;
-}
-
-.elementoMenu {
-    background-color: #424951;
-    border-radius: 8px;
-    padding: 0.24em 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.elementoMenu:hover {
-    background-color: #1abc9c;
-    transition: background-color 0.3s ease-in-out;
 }
 
 .headerPrincipal {

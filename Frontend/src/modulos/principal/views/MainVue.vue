@@ -9,13 +9,13 @@
 
         <ul class="navMenu">
             <li class="elementoMenu" @click="navigateToRoles('ActualizarIncidente')">
-                Solicitudes
+                Solicitudes 
             </li>
             <li class="elementoMenu">
                 Reportes
             </li>
             <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
-                Incidencias
+                Reportar Incidencias
             </li>
         </ul>
         <br>

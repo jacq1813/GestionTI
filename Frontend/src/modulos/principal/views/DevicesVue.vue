@@ -369,6 +369,10 @@ tr:hover {
     padding: 20px;
 }
 
+.modal-body p {
+    color: black;
+}
+
 .modal-footer {
     padding: 15px 20px;
     display: flex;

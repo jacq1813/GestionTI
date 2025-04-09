@@ -63,7 +63,7 @@ const requireAuth = (to:any, from:any, next:any) => {
   }
 }*/
 
-type RolUsuario = 'admin' | 'jefe' | 'tecnico' | 'usuario'
+type RolUsuario = 'admin' | 'Jefe de taller' | 'Tecnico' | 'usuario'
 
 const requireRole = (rolesPermitidos: RolUsuario[]) => {
   return async (to:any, from:any, next:any) => {
@@ -121,19 +121,19 @@ const router = createRouter({
       path: '/Inicio',
       name: 'Inicio',
       component: Main,
-      beforeEnter: requireRole(['usuario']),
+      beforeEnter: requireRole(['usuario','Tecnico']),
     },
     {
       path: '/InicioAdmin',
       name: 'InicioAdmin',
       component: AdminMainVue,
-      beforeEnter: requireRole(['admin']),
+      beforeEnter: requireRole(['admin','Tecnico', 'Jefe de taller']),
     },
     {
       path: '/InicioJefe',
       name: 'InicioJefe',
       component: JefeMainVue,
-      beforeEnter: requireRole(['admin', 'jefe']),
+      beforeEnter: requireRole(['admin', 'Jefe de taller']),
     },
     {
       path: '/RolesA',
@@ -151,13 +151,13 @@ const router = createRouter({
       path: '/AsignarIncidente',
       name: 'AsignarIncidente',
       component: AssingIncidet,
-      beforeEnter: requireRole(['admin'])
+      beforeEnter: requireRole(['admin','Jefe de taller'])
     },
     {
       path: '/ActualizarIncidente',
       name: 'ActualizarIncidente',
       component: UpdateIncident,
-      beforeEnter: requireRole(['admin', 'tecnico']),
+      beforeEnter: requireRole(['admin', 'Tecnico']),
     },
     {
       path: '/Edificios',

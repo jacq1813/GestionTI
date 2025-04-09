@@ -15,9 +15,6 @@
                 <li class="elementoMenu" @click="navigateToRoles('')">
                     Solicitudes
                 </li>
-                <li class="elementoMenu" @click="navigateToRoles('')">
-                    Incidencias
-                </li>
                 <li class="elementoMenu" @click="navigateToRoles('RolesA')">
                     Roles
                 </li>
@@ -98,14 +95,14 @@
                         <td>{{ incident.Estado }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)"
-                                v-if="rol === 'Tecnico'" title="Actualizar"><i class="fa fa-pencil"></i></button>
+                                v-if="rol === 'Tecnico' " title="Actualizar"><i class="fa fa-pencil"></i></button>
 
                             <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)" title="Asignar"
                                 v-if="rol === 'Jefe de taller' || rol === 'admin'"> <i class="fa fa-user-plus">
                                 </i></button>
 
                             <button class="btn btn-danger btn-sm" @click="navigateToCambios(incident.Folio)"
-                                title="Solicitar cambio" v-if="rol === 'Jefe de taller' || rol === 'Tecnico'"> <i
+                                title="Solicitar cambio" v-if="rol === 'Tecnico'"> <i
                                     class="fa fa-refresh">
                                 </i></button>
 

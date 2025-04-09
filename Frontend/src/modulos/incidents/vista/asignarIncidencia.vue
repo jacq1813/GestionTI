@@ -1,6 +1,6 @@
 <template>
+    <TopBar></TopBar>
     <div class="container">
-        <TopBar></TopBar>
         <h2>Asignar incidencia</h2>
         <div class="classboton">
             <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
