@@ -106,6 +106,7 @@
       }
 
       await setDoc(usuariosRef, {
+        Nombre: user.value.nombre,
         Correo: user.value.email,
         Rol: rol,
         Activo: true,
