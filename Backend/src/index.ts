@@ -11,6 +11,7 @@ import buildingRoutes from './routes/BuildingRoutes';
 import departmentRoutes from './routes/DepartmenRoutes';
 import devicesT from './routes/DeviceTRoutes';
 import tyclass from './routes/TypesClassroom';
+import logRoutes from './routes/LogRoutes';
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/buildings', buildingRoutes);
 app.use('/departments', departmentRoutes);
 app.use('/devicesT', devicesT);
 app.use('/TyClass', tyclass)
+app.use('/logs', logRoutes);
 
 
 app.get('/hola', (_req, res) => {

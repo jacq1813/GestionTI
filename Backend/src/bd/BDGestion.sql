@@ -121,10 +121,10 @@ CREATE TABLE BitacoraIncidencias (
     Id_Bitacora INT PRIMARY KEY AUTO_INCREMENT,
     Folio_Incidencia INT,
     Fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Usuario VARCHAR(100) NOT NULL,
     Accion VARCHAR(50) NOT NULL,
     Descripcion TEXT,
     Estado_anterior VARCHAR(20),
     Estado_nuevo VARCHAR(20),
     FOREIGN KEY (Folio_Incidencia) REFERENCES Incidencia(Folio) ON DELETE SET NULL
+    FOREIGN KEY (ID_Emp) REFERENCES Empleado(ID_Emp) ON DELETE SET NULL
 );
