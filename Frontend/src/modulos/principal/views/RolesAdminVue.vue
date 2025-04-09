@@ -99,7 +99,7 @@
 import { onMounted, ref } from 'vue';
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs } from 'firebase/firestore'
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs,query,where } from 'firebase/firestore'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import type { Employee } from '../interface/interface-employee'
 import TopBar from '../layouts/TopBar.vue'
@@ -157,6 +157,7 @@ const closeModal = () => {
     selectedRole.value = null
 }
 // Asignar el rol en Firestore
+// Asignar el rol en Firestore
 const confirmAssignRole = async () => {
     if (!selectedRole.value || !selectedEmployee.value) {
         alert('Seleccione un rol y un empleado');
@@ -164,17 +165,20 @@ const confirmAssignRole = async () => {
     }
 
     try {
-        const userRef = doc(collection(db, 'usuarios'));
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-            // Actualizar usuario existente
-            await updateDoc(userRef, {
+        // Primero verificar si el usuario ya existe en Firestore por su correo
+        const usersRef = collection(db, 'usuarios');
+        const q = query(usersRef, where("Correo", "==", selectedCorreo.value));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+            // Usuario ya existe, actualizar su rol
+            const userDoc = querySnapshot.docs[0];
+            await updateDoc(doc(db, 'usuarios', userDoc.id), {
                 Rol: selectedRole.value,
                 ID_Emp: selectedEmployee.value,
                 UltimoLogin: new Date(),
             });
-            alert('Rol asignado correctamente');
+            alert('Rol actualizado correctamente');
         } else {
             // Crear nuevo usuario si no existe
             if (selectedCorreo.value && selectedContrasena.value) {
@@ -183,7 +187,8 @@ const confirmAssignRole = async () => {
                     const userCredential = await createUserWithEmailAndPassword(auth, selectedCorreo.value, selectedContrasena.value);
                     const user = userCredential.user;
 
-                    await setDoc(userRef, {
+                    // Crear un nuevo documento en Firestore con los datos del usuario
+                    await setDoc(doc(usersRef), {
                         Uid: user.uid,
                         Correo: selectedCorreo.value,
                         Rol: selectedRole.value,
@@ -207,7 +212,6 @@ const confirmAssignRole = async () => {
         closeModal();
     }
 };
-
 // Manejar errores de autenticación
 const handleAuthError = (err: any) => {
     switch (err.code) {

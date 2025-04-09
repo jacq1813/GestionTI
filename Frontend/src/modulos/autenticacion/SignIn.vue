@@ -52,11 +52,6 @@ const signIn = async () => {
         // Obtener datos del usuario desde Firestore
         const db = getFirestore();
         const userDocRef = doc(db, 'usuarios', user.uid);
-
-        //pendiente por ver
-        console.log(db);
-        console.log(userDocRef, 'usuarios', user.uid);
-        console.log(user.uid);
         console.log(user);
         const userDoc = await getDoc(userDocRef);
         await updateDoc(userDocRef, {
@@ -65,7 +60,7 @@ const signIn = async () => {
 
         if (userDoc.exists()) {
             const userData = userDoc.data();
-            console.log(userData);
+            console.log("Uid del ",user.email,userData);
 
             // Redirigir según el rol
             if (userData.Rol === 'admin') {
