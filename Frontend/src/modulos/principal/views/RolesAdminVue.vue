@@ -1,31 +1,18 @@
 <template>
     <div class="containerGod">
-
-
         <TopBar></TopBar>
-        <div class=" headerPrincipal">
+        <div class="headerPrincipal">
             <h2>Mantenimiento y servicios</h2>
-            <h3>Instituto tecnologico de Culiacán</h3>
+            <h3>Instituto Tecnológico de Culiacán</h3>
         </div>
 
         <ul class="navMenu">
-            <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">
-                Principal
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('Solicitudes')">
-                Solicitudes
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
-                Reportes
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
-                Incidencias
-            </li>
-            <li class="elementoMenu" @click="navigateToRoles('RolesA')">
-                Roles
-            </li>
+            <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">Principal</li>
+            <li class="elementoMenu" @click="navigateToRoles('Solicitudes')">Solicitudes</li>
+            <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">Reportes</li>
+            <li class="elementoMenu" @click="navigateToRoles('Incidentes')">Incidencias</li>
+            <li class="elementoMenu" @click="navigateToRoles('RolesA')">Roles</li>
         </ul>
-
 
         <div class="opciones">
             <section class="Users">
@@ -73,8 +60,8 @@
                     <button class="close-btn" @click="closeModal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Empleado: {{ selectedEmployeeName }}</p>
-                    <p>Correo: {{ selectedCorreo }}</p>
+                    <p>Empleado: {{ Empleado.Nombre }}</p>
+                    <p>Correo: {{ Empleado.Correo }}</p>
                     <div class="form-group">
                         <label for="roleSelect">Seleccione Rol:</label>
                         <select v-model="selectedRole" id="roleSelect" class="form-control">
@@ -110,11 +97,16 @@ const db = getFirestore()
 
 //Estado para el modal
 const showModal = ref(false)
-const selectedEmployeeName = ref<string | null>(null)
-const selectedEmployee = ref<number | null>(null)
-const selectedCorreo = ref<string | null>(null)
-const selectedRole = ref<number | null>(null)
-const selectedContrasena = ref<string | null>(null)
+
+// Rol seleccionado
+const selectedRole = ref<string | null>(null)
+const Empleado = ref({
+    Nombre: null as string | null,
+    ID: null as number | null,
+    Correo: null as string | null,
+    Rol: null as number | null,
+    Contrasena: null as string | null
+})
 
 //Roles disponibles
 const roles = ref([
@@ -143,23 +135,27 @@ const navigateToRoles = (direction: string) => {
 
 //abrir modal
 const assignRole = async (Nombre: string, id: number, correo: string, contrasena: string) => {
-    selectedEmployeeName.value = Nombre
-    selectedEmployee.value = id
-    selectedCorreo.value = correo
-    selectedContrasena.value = contrasena
-    showModal.value = true
+    Empleado.value.Nombre = Nombre;
+    Empleado.value.ID = id;
+    Empleado.value.Correo = correo;
+    Empleado.value.Contrasena = contrasena;
+    showModal.value = true;
 }
 
 //cerrar modal
 const closeModal = () => {
     showModal.value = false
-    selectedEmployee.value = null
+    Empleado.value.Nombre = null;
+    Empleado.value.ID = null;
+    Empleado.value.Correo = null;
+    Empleado.value.Rol = null;
+    Empleado.value.Contrasena = null;
     selectedRole.value = null
 }
 // Asignar el rol en Firestore
 // Asignar el rol en Firestore
 const confirmAssignRole = async () => {
-    if (!selectedRole.value || !selectedEmployee.value) {
+    if (!selectedRole.value || !Empleado.value.ID) {
         alert('Seleccione un rol y un empleado');
         return;
     }
@@ -167,33 +163,35 @@ const confirmAssignRole = async () => {
     try {
         // Primero verificar si el usuario ya existe en Firestore por su correo
         const usersRef = collection(db, 'usuarios');
-        const q = query(usersRef, where("Correo", "==", selectedCorreo.value));
+        const q = query(usersRef, where("Correo", "==", Empleado.value.Correo));
         const querySnapshot = await getDocs(q);
-        
+
         if (!querySnapshot.empty) {
             // Usuario ya existe, actualizar su rol
             const userDoc = querySnapshot.docs[0];
             await updateDoc(doc(db, 'usuarios', userDoc.id), {
+                Nombre : Empleado.value.Nombre,
                 Rol: selectedRole.value,
-                ID_Emp: selectedEmployee.value,
+                ID_Emp: Empleado.value.ID,
                 UltimoLogin: new Date(),
             });
             alert('Rol actualizado correctamente');
         } else {
             // Crear nuevo usuario si no existe
-            if (selectedCorreo.value && selectedContrasena.value) {
+            if (Empleado.value.Correo && Empleado.value.Contrasena) {
                 const auth = getAuth();
                 try {
-                    const userCredential = await createUserWithEmailAndPassword(auth, selectedCorreo.value, selectedContrasena.value);
+                    const userCredential = await createUserWithEmailAndPassword(auth, Empleado.value.Correo, Empleado.value.Contrasena);
                     const user = userCredential.user;
 
                     // Crear un nuevo documento en Firestore con los datos del usuario
                     await setDoc(doc(usersRef), {
+                        Nombre: Empleado.value.Nombre,
                         Uid: user.uid,
-                        Correo: selectedCorreo.value,
+                        Correo: Empleado.value.Correo,
                         Rol: selectedRole.value,
                         Activo: true,
-                        ID_Emp: selectedEmployee.value,
+                        ID_Emp: Empleado.value.ID,
                         UltimoLogin: new Date(),
                     });
 

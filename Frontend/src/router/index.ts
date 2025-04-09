@@ -132,7 +132,7 @@ const router = createRouter({
       path: '/InicioJefe',
       name: 'InicioJefe',
       component: JefeMainVue,
-      beforeEnter: requireRole(['admin']),
+      beforeEnter: requireRole(['admin', 'jefe']),
     },
     {
       path: '/RolesA',
@@ -144,7 +144,7 @@ const router = createRouter({
       path: '/Incidentes',
       name: 'Incidentes',
       component: IncidentVue,
-      beforeEnter: requireRole(['usuario']),
+      beforeEnter: requireRole(['usuario','admin']),
     },
     {
       path: '/AsignarIncidente',
