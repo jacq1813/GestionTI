@@ -97,12 +97,11 @@
                         <td>{{ incident.Descripcion }}</td>
                         <td>{{ incident.Estado }}</td>
                         <td>
+                            <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)"
+                                title="Actualizar"><i class="fa fa-pencil"></i></button>
 
-                            <button class="btn btn-primary btn-sm"
-                                @click="navigateToActualizar(incident.Folio)">Actualizar</button>
-
-                            <button class="btn btn-danger btn-sm"
-                                @click="navigateToAsignar(incident.Folio)">Asignar</button>
+                            <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)"
+                                title="Asignar"> <i class="fa fa-user-plus"> </i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -196,190 +195,170 @@ const fetchData = async (type: string) => {
 </script>
 
 <style scoped>
-template {
-    display: flex;
-}
-
-
-h2,
-h3 {
-    text-align: center;
-    color: black;
-}
-
-tr {
-    text-align: center;
-    font-size: 1.1em;
-    transition: all 0.3s;
-}
-
-tr:hover {
-    background-color: #9afaa2;
-    transition: all 0.3s;
-}
-
-td {
-    padding: 2px;
-    font-size: 0.9em;
-    text-align: left;
-}
-
-.headerPrincipal {
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    padding: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .Contenedor {
-    max-width: 100%;
+    background-color: #f8f9fa;
     width: 100%;
-
-    height: 100vh;
-    background-color: rgb(255, 255, 255);
+    min-height: 100vh;
 }
 
-.table {
-    width: 90%;
-    justify-self: center;
-    border-radius: 5px;
-}
-
-.navMenu {
-    display: flex;
-    justify-content: center;
-    background-color: #424951;
-    padding: 0.8em;
-    border-radius: 8px;
-    width: 90%;
-    margin: 0 auto;
-    gap: 1em;
-}
-
-.navMenu.IncidMenu {
-    background-color: #6c757d;
-    font-size: small;
-    margin-top: 1em;
-    padding: 0.5em;
-    border-radius: 8px 8px 0 0;
-}
-
-.navMenu li {
+li {
     list-style: none;
 }
 
-.navMenu li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 0.8em 1.5em;
-    transition: background-color 0.3s ease-in-out;
+/* Encabezado */
+.headerPrincipal {
+    background-color: #ffffff;
+    padding: 2em;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1em;
 }
 
-.navMenu li a:hover {
-    background-color: #1abc9c;
+.headerPrincipal h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 0.2em;
 }
 
-.navMenu.navMenu.IncidMenu li a:hover {
-    background-color: brown;
-    padding: 0.7em 1.5em;
+.headerPrincipal h3 {
+    font-size: 1.1rem;
+    color: #7f8c8d;
 }
 
-/* Barra superior con usuario e icono */
-.menuPresentacion {
-    width: 100%;
-    background-color: #2c3e50;
-    color: white;
+/* Menú de navegación */
+.navMenu {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0.8em 1.5em;
-    font-weight: bold;
-    gap: 0.7em;
-}
-
-.nombreUsuario {
-    font-size: 1rem;
-}
-
-.iconoUsuario {
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.iconoUsuario:hover {
-    color: #1abc9c;
-}
-
-.opciones {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    padding: 1em;
+    gap: 1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     width: 90%;
     margin: 0 auto;
-    padding: 1em;
+}
+
+.navMenu.IncidMenu {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
 }
 
 .elementoMenu {
-    background-color: #424951;
-    border-radius: 8px;
-    padding: 0.24em 1em;
+    background-color: #2c3e50;
+    color: white;
+    padding: 0.6em 1.2em;
+    border-radius: 6px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.3s;
 }
 
 .elementoMenu:hover {
     background-color: #1abc9c;
-    transition: background-color 0.3s ease-in-out;
 }
 
-.Incidencias {
+/* Filtros */
+.opciones {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 90%;
+    margin: 0 auto 1.5em;
+    padding: 1em;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.periodo {
-    display: flex;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: black;
-    align-items: self-end;
-    justify-content: center;
+.Incidencias h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
 }
 
 .periodoYano {
-    display: grid;
-    flex-flow: row wrap;
-    width: 50%;
-    justify-content: flex-end;
-}
-
-.caja1 {
     display: flex;
-    flex-flow: column wrap;
-    gap: 0.5em;
-    justify-content: space-between;
+    gap: 1em;
 }
 
-.caja2 {
-    display: flex;
-    flex-flow: column wrap;
+.periodo {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.3em;
+    margin-right: .5em;
 }
 
-.salir {
-    background-color: #b91300;
+select {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+/* Tabla */
+.table {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-collapse: collapse;
+    margin-bottom: 5em;
+}
+
+th {
+    background-color: #2c3e50;
     color: white;
+    padding: 0.75em;
+}
+
+td {
+    padding: 0.75em;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn {
+    margin: 0 0.25em;
+}
+
+/* Botón de cerrar sesión */
+.salir {
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.6em 1.2em;
     border: none;
-    padding: 0.5em 1em;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: 0.5s;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .salir:hover {
-    background-color: #7a0796;
-    transition: 0.5s;
+    background-color: #c0392b;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .opciones {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .periodoYano {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navMenu {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>

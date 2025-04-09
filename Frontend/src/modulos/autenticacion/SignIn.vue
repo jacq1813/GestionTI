@@ -70,8 +70,10 @@ const signIn = async () => {
             // Redirigir según el rol
             if (userData.Rol === 'admin') {
                 router.push({ name: 'InicioAdmin' });
-            } else {
+            } else if (userData.Rol === 'usuario') {
                 router.push({ name: 'Inicio' }); // Ruta para usuarios regulares
+            } else {
+                router.push({ name: 'InicioJefe' }); // Ruta para usuarios regulares
             }
         } else {
             // Si no existe el documento en Firestore, crear uno con rol predeterminado

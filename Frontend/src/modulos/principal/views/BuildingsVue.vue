@@ -1,24 +1,28 @@
 <template>
     <div class="Container">
-        <TopBar></TopBar>
+        <TopBar />
 
         <div class="Cont">
-            <h2>Edificios</h2>
+            <h2>Listado de Edificios</h2>
 
-            <div class="classboton">
-                <button class="btn btn-secondary" @click="home">Regresar</button>
-                <button class="btn btn-secondary" @click="anadir" v-if="rol === 'admin'">Añadir</button>
+            <div class="btn-group">
+                <button class="btn btn-regresar" @click="home" title="Volver al inicio">
+                    <i class="fa fa-arrow-left"></i> Regresar
+                </button>
+                <button class="btn btn-anadir" @click="anadir" v-if="rol === 'admin'" title="Añadir nuevo edificio">
+                    <i class="fa fa-plus"></i> Añadir
+                </button>
             </div>
+
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID edificio</th>
+                        <th>ID Edificio</th>
                         <th>Nombre</th>
                         <th>Empleado</th>
                         <th>Departamento</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <tr v-for="building in buildings" :key="building.ID_Edif">
                         <td>{{ building.ID_Edif }}</td>
@@ -28,11 +32,10 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
-
     </div>
 </template>
+
 
 <script setup lang="ts">
 import TopBar from '../layouts/TopBar.vue'
@@ -50,25 +53,25 @@ const router = useRouter();
 
 onMounted(async () => {
     await getBuilding();
-    const auth = getAuth();
-    const db = getFirestore();
-    const user = auth.currentUser;
+    const auth = getAuth()
+    const user = auth.currentUser
 
     if (user) {
-        const userDoc = doc(db, 'Usuarios', user.uid);
-        const docSnap = await getDoc(userDoc);
-        if (docSnap.exists()) {
-            rol.value = docSnap.data().Rol;
-        } else {
-            console.log('No such document!');
+        const db = getFirestore()
+        const userDoc = await getDoc(doc(db, 'usuarios', user.uid))
+        if (userDoc.exists()) {
+            const userData = userDoc.data()
+            rol.value = userData.Rol
         }
-    } else {
-        console.log('No user is signed in');
     }
 })
 
 const home = () => {
-    router.push({ name: 'Inicio' });
+    if (rol.value === 'admin') {
+        router.push({ name: 'InicioAdmin' })
+    } else {
+        router.push({ name: 'Inicio' })
+    }
 }
 
 const anadir = () => {
@@ -77,50 +80,92 @@ const anadir = () => {
 </script>
 
 <style scoped>
-.container {
-    max-width: 100%;
-    width: 100%;
-    height: 100vh;
-    background-color: rgb(255, 255, 255);
-    color: black;
+.Container {
+    background-color: #f4f6fa;
+    min-height: 100vh;
 }
 
 .Cont {
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-    padding: 2em;
-    border: 1px solid #DDD;
-    border-radius: 5px;
+    max-width: 100hv;
     margin: 2em 3em;
-    background-color: #F9F9F9;
+    padding: 2em;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    align-self: center;
 }
 
 h2 {
     text-align: center;
-    padding: 1em;
-    color: #333;
+    margin-bottom: 1.5em;
+    font-size: 1.8em;
+    color: #4a4a4a;
+    border-bottom: 2px solid #daadff;
+    padding-bottom: 0.5em;
 }
 
-table {
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5em;
+    flex-wrap: wrap;
+
+}
+
+.btn {
+    padding: 0.6em 1.2em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background-color 0.3s ease;
+}
+
+.btn i {
+    font-size: 1em;
+}
+
+.btn-regresar {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-regresar:hover {
+    background-color: #5a6268;
+}
+
+.btn-anadir {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.btn-anadir:hover {
+    background-color: #5a32a3;
+}
+
+.table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1em;
+    font-size: 0.95em;
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 th,
 td {
-    padding: 12px 15px;
+    padding: 14px 18px;
     text-align: left;
     border: 1px solid #ddd;
-    font-size: 14px;
 }
 
 th {
     background-color: #daadff;
     color: white;
+    font-weight: 600;
 }
 
 tr:nth-child(even) {
@@ -128,6 +173,6 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #eef0f4;
 }
 </style>
