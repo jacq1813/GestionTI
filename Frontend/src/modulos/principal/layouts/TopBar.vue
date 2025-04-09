@@ -15,6 +15,7 @@
                     <a href="#" @click="navigate('Edificios')">Edificios</a>
                     <a href="#" @click="navigate('Salones')">Aulas</a>
                     <a href="#" @click="navigate('Dispositivos')">Equipos</a>
+                    <a href="#" @click="navigate('Bitacora')" v-if="rol == 'Jefe de taller'">Bitacora</a>
                     <hr>
                     <a href="#" @click="logout">Cerrar Sesión</a>
                 </div>

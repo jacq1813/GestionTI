@@ -19,7 +19,8 @@ import InsertBuildings from '@/modulos/principal/views/InsertBuildingsVue.vue'
 import InsertDevice from '@/modulos/principal/views/InsertDevicesVue.vue'
 import InsertClassroom from '@/modulos/principal/views/InsertClassroomVue.vue'
 import Changes from '@/modulos/principal/views/Changes.vue'
-
+import Bitacora from '@/modulos/principal/views/Bitacora.vue'
+import ChangesStatus from '@/modulos/principal/views/ChangesStatus.vue'
 const requireAuth = (to:any, from:any, next:any) => {
 
   const auth = getAuth()
@@ -196,6 +197,16 @@ const router = createRouter({
       path: '/Cambios',
       name: 'Cambios',
       component: Changes,
+    },
+    {
+      path: '/CambiosStatus',
+      name: 'CambiosStatus',
+      component: ChangesStatus
+    },
+    {
+      path: '/Bitacora',
+      name: 'Bitacora',
+      component: Bitacora,
     },
     {
       path: '/about',
