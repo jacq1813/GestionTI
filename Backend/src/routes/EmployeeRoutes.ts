@@ -9,6 +9,12 @@ router.get('/', async (_req: Request, res: Response) => {
     res.status(200).send(employees);
 });
 
+//http://localhost:3001/employees/pos
+router.get('/pos', async (_req: Request, res: Response) => {
+    const employees = await employeeService.getEmployeesPosition();
+    res.status(200).send(employees);
+});
+
 //http://localhost:3001/employees/tech
 router.get('/tech', async (_req: Request, res: Response) => {
     const techEmployees = await employeeService.getTechEmployees();

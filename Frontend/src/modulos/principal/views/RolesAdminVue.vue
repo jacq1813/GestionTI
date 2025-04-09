@@ -28,7 +28,7 @@
                     <th>Telefono</th>
                     <th>Tipo Empleado</th>
                     <th>Calificación</th>
-                    <th>Descripcion</th>
+                    <th>Correo</th>
                     <th>Asignar Rol</th>
                 </tr>
             </thead>
@@ -40,7 +40,7 @@
                     <td>{{ employees.ID_Emp }}</td>
                     <td>{{ employees.Nombre + ' ' + employees.ApellidoPat + ' ' + employees.ApellidoMat }}</td>
                     <td>{{ employees.Num_tel }}</td>
-                    <td>{{ employees.ID_TipEmp }}</td>
+                    <td>{{ employees.Puesto }}</td>
                     <td>{{ employees.Calificacion }}</td>
                     <td>{{ employees.Correo }}</td>
                     <td>
@@ -91,7 +91,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import type { Employee } from '../interface/interface-employee'
 import TopBar from '../layouts/TopBar.vue'
 
-const { employees, getEmployees, getTechEmployees } = useEmployees()
+const { employees, getEmployees, getTechEmployees,getEmployeesPosition } = useEmployees()
 const router = useRouter()
 const db = getFirestore()
 
@@ -117,7 +117,7 @@ const roles = ref([
 ])
 
 onMounted(async () => {
-    await getEmployees()
+    await getEmployeesPosition()
 
 })
 
@@ -271,6 +271,12 @@ td {
     padding: 2px;
     font-size: 0.9em;
 }
+th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 0.75em;
+    text-align: center;
+}
 
 .containerGod {
     max-width: 100%;
@@ -280,7 +286,13 @@ td {
 
 .table {
     width: 90%;
-    justify-self: center;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-collapse: collapse;
+    margin-bottom: 5em;
 }
 
 .opciones {

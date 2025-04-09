@@ -109,11 +109,9 @@ INSERT INTO Componente (ID_Comp, Nombre, Fecha_Ult_Mod, Version, Fecha_Inst, ID_
 
 -- Insertar datos en Periodos
 INSERT INTO Periodos (ID_Periodo, Nombre) VALUES
-(1, 'Enero - Junio 2023'),
-(2, 'Julio - Diciembre 2023'),
-(3, 'Enero - Junio 2024'),
-(4, 'Julio - Diciembre 2024'),
-(5, 'Enero - Junio 2025');
+(1, 'Enero - Junio'),
+(2, 'Verano'),
+(3, 'Julio - Diciembre');
 
 -- Insertar datos en Incidencia (corregido ID_Aula a ID_Aula)
 INSERT INTO Incidencia (Folio, Descripcion, Fecha, ID_Periodo, Estado, Prioridad, Hora, ID_Aula, ID_Emi, ID_Rec) VALUES

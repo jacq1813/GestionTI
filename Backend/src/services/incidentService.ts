@@ -41,7 +41,7 @@ export const getIncidentsRecandEmi = async () => {
         i.Folio,
         i.Descripcion,
         i.Fecha,
-        i.Periodo, 
+        p.Nombre as 'Periodo', 
         i.Estado,
         i.Hora,
         COALESCE(a.Nombre, 'Desconocido') AS 'Aula',
@@ -50,15 +50,15 @@ export const getIncidentsRecandEmi = async () => {
         COALESCE(te.Nombre, 'Desconocido') AS 'Puesto Emisor',
         COALESCE(e2.Nombre, 'Desconocido') AS 'Receptor',
         COALESCE(te2.Nombre, 'Desconocido') AS 'Puesto Receptor'
-    FROM incidencia i 
-    LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
-    LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
-    LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul 
-    LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
-    LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
-    LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
-    ORDER BY Folio;
-    
+        FROM incidencia i 
+        LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
+        LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+        LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul 
+        LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+        LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
+        LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
+        LEFT JOIN periodos p ON p.ID_Periodo = i.ID_Periodo
+        ORDER BY Folio;
     `);
         return rows;
     } catch (error) {
@@ -87,29 +87,37 @@ export const getIncidentsByEstado = async (estado: string) => {
     }
 }
 //obtener todas las incidencias por estado, periodo y año
-
 export const getIncidentsByEstadoPeriodoAnio = async (estado: string, periodo: string, anio: string) => {
     try {
-        // Expresión regular para extraer solo "Enero - Junio", "Verano" o "Agosto - Diciembre"
-        const match = periodo.match(/(Enero - Junio|Verano|Agosto - Diciembre)/);
-        const filteredPeriodo = match ? `${match[0]} ${anio}` : '';
+        let IDPerido = 0;
+        switch (periodo) {
+            case 'Enero - Junio':
+                IDPerido = 1;
+                break;
+            case 'Verano':
+                IDPerido = 2;
+                break;
+            case 'Agosto - Diciembre':
+                IDPerido = 3;
+                break;
+        }
         const [rows] = await connection.query(
-            `SELECT i.Folio, i.Descripcion, i.Fecha, i.Periodo, i.Estado, i.Hora,
+            `SELECT i.Folio, i.Descripcion, i.Fecha, p.Nombre as 'Periodo', i.Estado, i.Hora,
                     a.Nombre AS 'Aula', ta.Nombre AS 'Tipo Aula', 
                     E.Nombre AS 'Emisor', te.Nombre AS 'Puesto Emisor',
                     e2.Nombre AS 'Receptor', te2.Nombre AS 'Puesto Receptor'
-             FROM incidencia i 
-             INNER JOIN empleado e ON i.ID_Emi = e.ID_Emp
-             INNER JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
-             INNER JOIN aula a ON i.ID_Aula = a.ID_Aul 
-             INNER JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
-             INNER JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
-             INNER JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
-             WHERE i.Estado = ? AND i.Periodo = ? AND YEAR(i.Fecha) = ?
-             ORDER BY Folio`,
-            [estado, filteredPeriodo, anio]
+                    FROM incidencia i 
+                    INNER JOIN empleado e ON i.ID_Emi = e.ID_Emp
+                    INNER JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+                    INNER JOIN aula a ON i.ID_Aula = a.ID_Aul 
+                    INNER JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+                    INNER JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
+                    INNER JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
+                    INNER JOIN Periodos p ON p.ID_Periodo = i.ID_Periodo
+                    WHERE i.Estado = ? AND i.ID_Periodo = ? AND YEAR(i.Fecha) = ?
+                    ORDER BY Folio;`,
+                    [estado, IDPerido, anio]
         );
-
         return rows;
     } catch (error) {
         return { error: "No se pudo obtener las incidencias" };

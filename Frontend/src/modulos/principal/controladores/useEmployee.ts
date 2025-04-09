@@ -12,6 +12,12 @@ export const useEmployees = () => {
         employees.value = response.data
     } 
 
+    //obtener todos los empleados y sus puestos
+    const getEmployeesPosition = async () => {
+        const response = await employeesApi.get<Employee[]>('/pos')
+        employees.value = response.data
+    }
+
     //obtener los empleados que son tecnicos
     const getTechEmployees = async () => {
         const response = await employeesApi.get<Employee[]>('/tech')
@@ -69,6 +75,7 @@ export const useEmployees = () => {
         addEmployee,
         getEmployeeById,
         updateEmployee,
-        deleteEmployee
+        deleteEmployee,
+        getEmployeesPosition
     }
 }

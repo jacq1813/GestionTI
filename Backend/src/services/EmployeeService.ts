@@ -13,6 +13,17 @@ export const getEmployees = async () => {
     }
 }
 
+//obtener todos los empleados y sus puestos
+export const getEmployeesPosition = async () => {
+    try {
+        const [rows] = await connection.query(`SELECT e.ID_Emp,e.Nombre,e.ApellidoPat,e.ApellidoMat,e.Num_tel, te.Nombre as 'Puesto', e.Calificacion, e.Correo FROM empleado e inner join tipoempleado te on e.ID_TipEmp = te.ID_TipEmp`);
+        return rows;
+
+    } catch (error) {
+        return { error: "no se pudo obtener los empleados" };
+    }
+}
+
 //obtener los empleados que son tecnicos
 export const getTechEmployees = async () => {
     try {
