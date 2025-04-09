@@ -47,7 +47,7 @@ onMounted(async () => {
         if (userDoc.exists()) {
             const data = userDoc.data()
             rol.value = data.Rol
-            nombre.value = data.Correo || 'Usuario'
+            nombre.value = data.Nombre || 'Usuario'
         }
     }
 })

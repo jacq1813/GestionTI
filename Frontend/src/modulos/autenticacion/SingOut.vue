@@ -63,7 +63,7 @@
     apellidoPaterno: '',
     apellidoMaterno: '',
     telefono: '',
-    ID_TipEmp: 1,
+    ID_TipEmp: 2,
     Calificaion: 0,
     email: '',
     password: '',
