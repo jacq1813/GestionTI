@@ -60,10 +60,10 @@ const signIn = async () => {
 
         if (userDoc.exists()) {
             const userData = userDoc.data();
-            console.log("Uid del ",user.email,userData);
+            console.log("Uid del ", user.email, userData);
 
             // Redirigir según el rol
-            if (userData.Rol === 'admin') {
+            if (userData.Rol === 'admin' || userData.Rol === 'Tecnico') {
                 router.push({ name: 'InicioAdmin' });
             } else if (userData.Rol === 'usuario') {
                 router.push({ name: 'Inicio' }); // Ruta para usuarios regulares

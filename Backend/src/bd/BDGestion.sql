@@ -126,5 +126,5 @@ CREATE TABLE BitacoraIncidencias (
     Descripcion TEXT,
     Estado_anterior VARCHAR(20),
     Estado_nuevo VARCHAR(20),
-    FOREIGN KEY (Folio_Incidencia) REFERENCES Incidencias(Folio) ON DELETE SET NULL
+    FOREIGN KEY (Folio_Incidencia) REFERENCES Incidencia(Folio) ON DELETE SET NULL
 );

@@ -67,32 +67,32 @@ INSERT INTO TipoEquipo (ID_TipEquipo, Nombre) VALUES
 (4, 'Impresora'),
 (5, 'Servidor');
 
--- Insertar datos en Equipo
+-- Insertar datos en Equipo (corregido con ID_Aul apropiados)
 INSERT INTO Equipo (ID_Equip, Nombre, Fecha_Ult_Mod, Version, Fecha_Inst, ID_Aul, ID_TipEquipo) VALUES
 -- Computadoras (Tipo 1)
-(1, 'Dell OptiPlex 7090', '2023-03-15', '1.2.1', '2023-02-10', 101, 1),
-(2, 'HP EliteDesk 800 G8', '2023-04-20', '1.3.0', '2023-03-12', 102, 1),
-(3, 'Apple Mac Mini M2 2023', '2023-05-10', '2.0.0', '2023-04-05', 103, 1),
+(1, 'Dell OptiPlex 7090', '2023-03-15', '1.2.1', '2023-02-10', 1, 1),
+(2, 'HP EliteDesk 800 G8', '2023-04-20', '1.3.0', '2023-03-12', 2, 1),
+(3, 'Apple Mac Mini M2 2023', '2023-05-10', '2.0.0', '2023-04-05', 3, 1),
 -- Proyectores (Tipo 2)
-(4, 'Epson EB-1785W', '2023-06-18', '2.1.3', '2023-05-15', 201, 2),
-(5, 'BenQ MH560', '2023-07-22', '1.9.2', '2023-06-10', 202, 2),
+(4, 'Epson EB-1785W', '2023-06-18', '2.1.3', '2023-05-15', 5, 2),
+(5, 'BenQ MH560', '2023-07-22', '1.9.2', '2023-06-10', 6, 2),
 -- Pizarras (Tipo 3)
-(6, 'Smart Board 7000R', '2023-08-30', '3.2.1', '2023-07-20', 301, 3),
-(7, 'Promethean ActivPanel 9', '2023-09-12', '3.5.0', '2023-08-25', 302, 3),
+(6, 'Smart Board 7000R', '2023-08-30', '3.2.1', '2023-07-20', 9, 3),
+(7, 'Promethean ActivPanel 9', '2023-09-12', '3.5.0', '2023-08-25', 10, 3),
 -- Impresoras (Tipo 4)
-(8, 'HP Color LaserJet Pro M454dn', '2023-10-05', '1.4.2', '2023-09-15', 401, 4),
-(9, 'Brother MFC-L8900CDW', '2023-11-18', '2.0.1', '2023-10-10', 402, 4),
+(8, 'HP Color LaserJet Pro M454dn', '2023-10-05', '1.4.2', '2023-09-15', 11, 4),
+(9, 'Brother MFC-L8900CDW', '2023-11-18', '2.0.1', '2023-10-10', 12, 4),
 -- Servidores (Tipo 5)
-(10, 'Dell PowerEdge R760', '2023-12-10', '5.1.0', '2023-11-20', 501, 5),
-(11, 'HPE ProLiant DL380 Gen11', '2024-01-25', '5.2.1', '2023-12-15', 502, 5);
+(10, 'Dell PowerEdge R760', '2023-12-10', '5.1.0', '2023-11-20', 15, 5),
+(11, 'HPE ProLiant DL380 Gen11', '2024-01-25', '5.2.1', '2023-12-15', 16, 5);
 
--- Insertar datos en TipoComponente
+-- Insertar datos en TipoComponente (corregido sintaxis)
 INSERT INTO TipoComponente (ID_TipComp, Nombre) VALUES
 (1, 'Procesador'),
 (2, 'Memoria RAM'),
 (3, 'Disco Duro'),
 (4, 'Tarjeta de Video'),
-(5, 'Fuente de Poder');
+(5, 'Fuente de Poder'),
 (6, 'Placa Madre'),
 (7, 'Periférico'),
 (8, 'Componente de Red'),
@@ -115,7 +115,7 @@ INSERT INTO Periodos (ID_Periodo, Nombre) VALUES
 (4, 'Julio - Diciembre 2024'),
 (5, 'Enero - Junio 2025');
 
--- Insertar datos en Incidencia
+-- Insertar datos en Incidencia (corregido ID_Aula a ID_Aula)
 INSERT INTO Incidencia (Folio, Descripcion, Fecha, ID_Periodo, Estado, Prioridad, Hora, ID_Aula, ID_Emi, ID_Rec) VALUES
 (1, 'Computadora no enciende', '2023-02-01', 1, 'En proceso', 'Baja', '08:30:00', 1, 2, 3),
 (2, 'Proyector con imagen distorsionada', '2023-03-05', 1, 'Terminada', 'Mediana', '10:15:00', 2, 3, 4),
@@ -123,11 +123,11 @@ INSERT INTO Incidencia (Folio, Descripcion, Fecha, ID_Periodo, Estado, Prioridad
 (4, 'Impresora atascada', '2023-05-20', 1, 'Rechazada', 'Mediana', '14:00:00', 4, 5, 1),
 (5, 'Servidor caído', '2023-06-30', 1, 'En proceso', 'Crítico', '16:30:00', 5, 1, 2);
 
-
+-- Insertar datos en Almacen (corregido fechas)
 INSERT INTO Almacen (Nombre, ID_TipComp, Cantidad_disponible, Cantidad_no_funcional, Proveedor, Fecha_ultima_reposicion) VALUES
 -- PROCESADORES (Tipo 1)
 ('AMD Ryzen 5 5600', 1, 11, 1, 'AMD', '2024-02-10'),
-('Intel Core i3-10100', 1, 10, 0, 'Intel', '2024 05-15'),
+('Intel Core i3-10100', 1, 10, 0, 'Intel', '2024-05-15'),
 ('Intel Core i5-10400', 1, 11, 1, 'Intel', '2024-11-05'),
 ('AMD Ryzen 5 7600', 1, 10, 0, 'AMD', '2025-01-15'),
 -- PLACAS MADRE (Tipo 6)
@@ -160,7 +160,7 @@ INSERT INTO Almacen (Nombre, ID_TipComp, Cantidad_disponible, Cantidad_no_funcio
 -- COMPONENTES DE RED (Tipo 8)
 ('Switch 8 Puertos Gigabit', 8, 6, 0, 'TP-Link', '2024-05-08'),
 ('Router WiFi 5 Dual-Band', 8, 5, 0, 'D-Link', '2024-07-25'),
-('Tarjeta de Red PCIe Gigabit', 8, 8, 0, 'Intel', '2024-10 18'),
+('Tarjeta de Red PCIe Gigabit', 8, 8, 0, 'Intel', '2024-10-18'),
 -- REFRIGERACIÓN (Tipo 9)
 ('Ventilador CPU 120mm', 9, 20, 1, 'Cooler Master', '2024-03-22'),
 ('Pasta Térmica 3.5g', 9, 15, 0, 'Arctic', '2024-06-05');

@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <TopBar></TopBar>
         <h2>Asignar incidencia</h2>
         <div class="classboton">
             <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
@@ -56,7 +57,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useTechEmployees } from '../controladores/useEmployees.ts';
-
+import TopBar from '../../principal/layouts/TopBar.vue';
 import { useRouter } from 'vue-router'
 import { useIncidents } from '../controladores/useIncidents';
 

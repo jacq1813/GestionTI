@@ -162,7 +162,7 @@ const closeComponentsModal = () => {
 };
 
 const home = () => {
-    if (rol.value === 'admin') {
+    if (rol.value === 'admin' || rol.value === 'Tecnico') {
         router.push({ name: 'InicioAdmin' });
     } else {
         router.push({ name: 'Inicio' });

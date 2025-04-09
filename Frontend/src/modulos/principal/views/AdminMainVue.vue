@@ -98,10 +98,17 @@
                         <td>{{ incident.Estado }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)"
-                                title="Actualizar"><i class="fa fa-pencil"></i></button>
+                                v-if="rol === 'Tecnico'" title="Actualizar"><i class="fa fa-pencil"></i></button>
 
-                            <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)"
-                                title="Asignar"> <i class="fa fa-user-plus"> </i></button>
+                            <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)" title="Asignar"
+                                v-if="rol === 'Jefe de taller' || rol === 'admin'"> <i class="fa fa-user-plus">
+                                </i></button>
+
+                            <button class="btn btn-danger btn-sm" @click="navigateToCambios(incident.Folio)"
+                                title="Solicitar cambio" v-if="rol === 'Jefe de taller' || rol === 'Tecnico'"> <i
+                                    class="fa fa-refresh">
+                                </i></button>
+
                         </td>
                     </tr>
                 </tbody>
@@ -116,6 +123,11 @@ import { useIncidents } from '../controladores/useIncidents'
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
 import TopBar from '../layouts/TopBar.vue'
+import { getAuth } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+
+const rol = ref('');
+
 const { employees, getEmployees, getTechEmployees } = useEmployees()
 const { incidents, getIncidents, getIncidentsRecandEmi, getIncidentsByEstado, getIncidentsByEstadoPeriodoAnio } = useIncidents()
 
@@ -132,10 +144,28 @@ const navigateToAsignar = (folio: number) => {
     // Navegar a la ruta 'AsignarIncidente' y pasar el 'folio' como parámetro de ruta
     router.push({ name: 'AsignarIncidente', query: { folio } });
 };
+
+const navigateToCambios = (folio: number) => {
+    // Navegar a la ruta 'CambiosIncidente' y pasar el 'folio' como parámetro de ruta
+    router.push({ name: 'Cambios', query: { folio } });
+};
 onMounted(async () => {
     await getIncidentsRecandEmi()
     periodSelected.value = 'Enero - Junio'
     yearSelected.value = '2021'
+
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    if (user) {
+        const db = getFirestore()
+        const userDoc = await getDoc(doc(db, 'usuarios', user.uid))
+        if (userDoc.exists()) {
+            const userData = userDoc.data()
+            rol.value = userData.Rol
+        }
+    }
+
 })
 
 //cerrar sesion

@@ -18,6 +18,7 @@ import DevicesVue from '@/modulos/principal/views/DevicesVue.vue'
 import InsertBuildings from '@/modulos/principal/views/InsertBuildingsVue.vue'
 import InsertDevice from '@/modulos/principal/views/InsertDevicesVue.vue'
 import InsertClassroom from '@/modulos/principal/views/InsertClassroomVue.vue'
+import Changes from '@/modulos/principal/views/Changes.vue'
 
 const requireAuth = (to:any, from:any, next:any) => {
 
@@ -190,6 +191,11 @@ const router = createRouter({
       name: 'InsertarSalon',
       component: InsertClassroom,
       beforeEnter: requireRole(['admin']),
+    },
+    {
+      path: '/Cambios',
+      name: 'Cambios',
+      component: Changes,
     },
     {
       path: '/about',

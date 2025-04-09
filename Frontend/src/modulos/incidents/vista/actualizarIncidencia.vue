@@ -121,7 +121,7 @@ const logout = () => {
 };
 
 const home = () => {
-    router.push({ name: 'Inicio' });
+    router.push({ name: 'InicioAdmin' });
 };
 </script>
 
