@@ -86,7 +86,7 @@ const newIncident = ref({
     ID_Dispositivo: '',
     Descripcion: '',
     ID_Periodo: 0,
-    Estado: 'Levantada',
+    Estado: 'En proceso',
     Fecha: new Date().toISOString().slice(0, 10),
     Hora: new Date().toISOString().slice(11, 19)
 })

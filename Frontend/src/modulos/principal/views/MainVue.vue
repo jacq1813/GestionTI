@@ -68,6 +68,7 @@
                     <th>Descripcion</th>
                     <th>Estado</th>
                     <th>Acciones</th>
+                    <th>Prioridad</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,6 +83,7 @@
                     <td>{{ incident.Aula }}</td>
                     <td>{{ incident.Descripcion }}</td>
                     <td>{{ incident.Estado }}</td>
+                    <td>{{ incident.Prioridad }}</td>
                     <td>Accion</td>
                 </tr>
             </tbody>

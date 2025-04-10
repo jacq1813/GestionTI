@@ -46,6 +46,7 @@ export const getIncidentsRecandEmi = async () => {
         p.Nombre as 'Periodo', 
         i.Estado,
         i.Hora,
+        i.Prioridad,
         COALESCE(a.Nombre, 'Desconocido') AS 'Aula',
         COALESCE(ta.Nombre, 'Desconocido') AS 'Tipo Aula',
         COALESCE(E.Nombre, 'Desconocido') AS 'Emisor',

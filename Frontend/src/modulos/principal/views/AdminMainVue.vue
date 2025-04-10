@@ -69,6 +69,7 @@
                         <th>Aula</th>
                         <th>Descripcion</th>
                         <th>Estado</th>
+                        <th>Prioridad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -84,6 +85,7 @@
                         <td>{{ incident.Aula }}</td>
                         <td>{{ incident.Descripcion }}</td>
                         <td>{{ incident.Estado || 'Pendiente' }}</td>
+                        <td>{{ incident.Prioridad }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)"
                                 v-if="rol === 'Tecnico'" title="Actualizar"><i class="fa fa-pencil"></i></button>
