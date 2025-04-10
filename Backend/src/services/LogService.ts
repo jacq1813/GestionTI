@@ -1,6 +1,6 @@
 import { LogNew } from '../typesLog';
 
-const connection = require('../connection/conec'); 
+const connection = require('../connection/conec');
 
 //obtener todas las bitacoras
 export const getLogs = async () => {
@@ -22,13 +22,13 @@ export const getLogsDetails = async () => {
         CONCAT(e2.Nombre, ' ', e2.ApellidoPat, ' ', e2.ApellidoMat) AS Receptor, 
         eq.Version AS Version
                     FROM bitacoraincidencias bi
-                    INNER JOIN incidencia i ON bi.Folio_Incidencia = i.Folio
-                    INNER JOIN aula a ON i.ID_Aula = a.ID_Aul
-                    INNER JOIN edificio ed ON a.ID_Edif = ed.ID_Edif
-                    INNER JOIN empleado e ON i.ID_Emi = e.ID_Emp
-                    INNER JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
-                    INNER JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
-                    INNER JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula;    
+                    LEFT JOIN incidencia i ON bi.Folio_Incidencia = i.Folio
+                    LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul
+                    LEFT JOIN edificio ed ON a.ID_Edif = ed.ID_Edif
+                    LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
+                    LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+                    LEFT JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
+                    LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula;    
                 `);
         return rows;
     } catch (error) {
@@ -56,16 +56,16 @@ export const getLogById = async (id: number) => {
         CONCAT(e2.Nombre, ' ', e2.ApellidoPat, ' ', e2.ApellidoMat) AS Receptor, 
         eq.Version AS Version
     FROM bitacoraincidencias bi
-    INNER JOIN incidencia i ON bi.Folio_Incidencia = i.Folio
-    INNER JOIN aula a ON i.ID_Aula = a.ID_Aul
-    INNER JOIN edificio ed ON a.ID_Edif = ed.ID_Edif
-    INNER JOIN empleado e ON i.ID_Emi = e.ID_Emp
-    INNER JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
-    INNER JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
-    INNER JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+    LEFT JOIN incidencia i ON bi.Folio_Incidencia = i.Folio
+    LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul
+    LEFT JOIN edificio ed ON a.ID_Edif = ed.ID_Edif
+    LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
+    LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+    LEFT JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
+    LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
     WHERE bi.Id_Bitacora = ?;
-    `, 
-                    [id]);
+    `,
+            [id]);
         return rows[0];
     } catch (error) {
         return { error: "no se pudo obtener la bitacora" };
@@ -76,7 +76,7 @@ export const getLogById = async (id: number) => {
 export const addLog = async (log: LogNew) => {
     console.log(log)
     try {
-        const [rows] = await connection.query('INSERT INTO BitacoraIncidencias (Folio_Incidencia, Fecha_Cambio, Descripcion, Estado, ID_Emp) values (?,?,?,?,?)', [log.Folio_Incidencia, log.Fecha_Cambio,log.Descripcion, log.Estado, log.ID_Emp]);
+        const [rows] = await connection.query('INSERT INTO BitacoraIncidencias (Folio_Incidencia, Fecha_Cambio, Descripcion, Estado, ID_Emp) values (?,?,?,?,?)', [log.Folio_Incidencia, log.Fecha_Cambio, log.Descripcion, log.Estado, log.ID_Emp]);
         return rows;
     } catch (error) {
         return { error: "no se pudo agregar la bitacorssa" };
@@ -95,7 +95,7 @@ export const updateLogStatus = async (id: number, Estado: string) => {
             `UPDATE BitacoraIncidencias 
              SET Estado = ? 
              WHERE Id_Bitacora = ?;`,
-            [Estado, id]  
+            [Estado, id]
         );
 
         return result;

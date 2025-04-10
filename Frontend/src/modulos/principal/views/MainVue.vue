@@ -67,8 +67,8 @@
                     <th>Aula</th>
                     <th>Descripcion</th>
                     <th>Estado</th>
-                    <th>Acciones</th>
                     <th>Prioridad</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>

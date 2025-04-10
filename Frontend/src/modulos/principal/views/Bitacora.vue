@@ -25,6 +25,7 @@
                         <th>Descripción de incidencia</th>
                         <th>Prioridad</th>
                         <th>Ubicacion</th>
+                        <th>Estado</th>
                         <th>Accion</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                         <td>{{ bitacora.Descripcion_Incidencia }}</td>
                         <td>{{ bitacora.Prioridad }}</td>
                         <td>{{ bitacora.Edificio + ', ' + bitacora.Aula }}</td>
+                        <td>{{ bitacora.Estado }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" @click="navigateToStatus(bitacora.ID_Bitacora)"
                                 title="Actualizar estado" v-if="rol === 'Jefe de taller'"><i

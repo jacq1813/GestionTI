@@ -52,7 +52,7 @@ const bitacora = ref({
     Fecha_Cambio: new Date().toISOString(),
     Descripcion: '',
     Estado: 'Pendiente',
-    ID_Emp: Number(localStorage.getItem('ID_Emp'))
+    ID_Emp: 1
 });
 
 
@@ -62,7 +62,7 @@ onMounted(async () => {
         selectedIncident.value = await getIncidentsByFolio(folio);
         bitacora.value.Folio_Incidencia = selectedIncident.value?.Folio;
 
-        bitacora.value.ID_Emp = selectedIncident.value?.ID_Emp;
+        bitacora.value.ID_Emp = 1;
         console.log('selectedIncident', selectedIncident.value);
     }
 });
