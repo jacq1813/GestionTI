@@ -85,6 +85,8 @@ const newIncident = ref({
     ID_Aula: 0,
     ID_Dispositivo: '',
     Descripcion: '',
+    ID_Periodo : 1,
+    Estado: 'Levantada',
     Fecha: new Date().toISOString().slice(0, 10),
     Hora: new Date().toISOString().slice(11, 19)
 })

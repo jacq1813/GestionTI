@@ -34,12 +34,12 @@ router.get('/recandemi/:folio', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
     try {
-        const { Descripcion, Fecha, Hora, ID_Aula} = req.body;
-        const newIncident = await incidentService.addIncidents({Descripcion, Fecha, Hora, ID_Aula});
-        res.send(newIncident);
+        const { Descripcion, Fecha, Hora, ID_Aula,Estado,ID_Periodo} = req.body;
+        const newIncident = await incidentService.addIncidents({Descripcion, Fecha, Hora, ID_Aula,Estado,ID_Periodo});
+        res.status(201).send(newIncident);
 
     }catch(e) {
-        res.send({ error: "no se pudo agregar la incidencia" });
+        res.status(500).send({ error: "no se pudo agregar la incidencia" });
     }
 });
 

@@ -3,6 +3,8 @@
 
 const connection = require('../connection/conec');
 
+import { IncidentNew } from "../typesIncident";
+
 export const getIncidents = async () => {
     try {
         const [rows] = await connection.query('SELECT * FROM incidencia');
@@ -152,12 +154,13 @@ export const getIncidentsByFolio = async (folio: string) => {
 
 
 // agregar una incidencia
-export const addIncidents = async (incidencia: any) => {
+export const addIncidents = async (incidencia: IncidentNew) => {
     try {
-        const { Descripcion, Fecha, Hora, ID_Aula} = incidencia;
+        const { Descripcion, ID_Periodo,Estado,Fecha, Hora, ID_Aula} = incidencia;
+        console.log(Descripcion, ID_Periodo,Estado,Fecha, Hora, ID_Aula)
         const [result] = await connection.query(
-            'INSERT INTO incidencia (Descripcion, Fecha, Hora, ID_Aula) VALUES (?, ?, ?, ?)', 
-            [Descripcion, Fecha, Hora, ID_Aula]
+            'INSERT INTO incidencia (Descripcion, Fecha, Hora,Estado, ID_Aula, ID_Periodo) VALUES (?, ?, ?, ?, ?, ?)', 
+            [Descripcion, Fecha, Hora,Estado, ID_Aula, ID_Periodo]
         );
         return result;
     } catch (error) {

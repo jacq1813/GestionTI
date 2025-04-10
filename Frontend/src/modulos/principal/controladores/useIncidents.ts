@@ -1,7 +1,7 @@
 import {ref} from 'vue';
 
 import incidentsApi from '../api/Incidents';
-import type {Incident, NewIncident} from '../interface/interface-incidents';
+import type {Incident, NewIncident,IncidentNew} from '../interface/interface-incidents';
 
 export const useIncidents = () => {
     const incidents = ref<Incident[]>([]);
@@ -27,11 +27,11 @@ export const useIncidents = () => {
         incidents.value = response.data
     }
 
-    const addIncidents = async (Incident: NewIncident) => {
+    const addIncidents = async (Incident: IncidentNew) => {
         try {
-            console.log(Incident)
+            console.log(Incident.Estado)
             const response = await incidentsApi.post<Incident>('/', Incident);
-            console.log(response.data)
+            console.log(response)
             return response.data;
         } catch (error) {
             console.error(error);

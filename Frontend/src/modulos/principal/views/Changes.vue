@@ -64,6 +64,7 @@ onMounted(async () => {
     if (folio) {
         selectedIncident.value = await getIncidentsByFolio(folio);
         bitacora.value.Folio_Incidencia = selectedIncident.value?.Folio;
+        bitacora.value.ID_Emp = selectedIncident.value?.ID_Emp;
     }
 });
 
