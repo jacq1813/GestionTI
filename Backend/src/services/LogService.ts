@@ -5,7 +5,7 @@ const connection = require('../connection/conec');
 //obtener todas las bitacoras
 export const getLogs = async () => {
     try {
-        const [rows] = await connection.query('SELECT * FROM bitacora');
+        const [rows] = await connection.query('SELECT * FROM bitacoraincidencias');
         return rows;
     } catch (error) {
         return { error: "no se pudo obtener las bitacoras" };
@@ -51,7 +51,7 @@ export const getLogById = async (id: number) => {
 //agregar una bitacora
 export const addLog = async (log: LogNew) => {
     try {
-        const [rows] = await connection.query('INSERT INTO bitacoraincidencias (Folio_Incidencia, Fecha_Cambio, Descripcion, ID_Emp) values (?,?,?,?)', [log.Folio_Incidencia, log.Fecha_Cambio,  log.Descripcion, log.ID_Emp]);
+        const [rows] = await connection.query('INSERT INTO bitacoraincidencias (Folio_Incidencia, Fecha_Cambio, Estado , Descripcion, ID_Emp) values (?,?,?,?,?)', [log.Folio_Incidencia, log.Fecha_Cambio,log.Estado,  log.Descripcion, log.ID_Emp]);
         return rows;
     } catch (error) {
         return { error: "no se pudo agregar la bitacora" };

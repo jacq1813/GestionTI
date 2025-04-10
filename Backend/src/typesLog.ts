@@ -2,10 +2,8 @@ export interface Log {
     ID_Bitacora: number;
     Folio_Incidencia : number;
     Fecha_Cambio: string;
-    Accion : string;
     Descripcion : string;
-    Estado_anterior : string;
-    Estado_nuevo : string;
+    Estado : string;
     ID_Emp : number;
 }
 

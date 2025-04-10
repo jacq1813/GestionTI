@@ -28,8 +28,8 @@ router.get('/:id', async (req: Request, res: Response) => {
 //http://localhost:3001/logs
 router.post('/', async (req: Request, res: Response) => {
     try {
-        const { Folio_Incidencia, Fecha_Cambio, Accion, Descripcion, Estado_anterior, Estado_nuevo, ID_Emp } = req.body;
-        const newLog = await logService.addLog({ Folio_Incidencia, Fecha_Cambio, Accion, Descripcion, Estado_anterior, Estado_nuevo, ID_Emp });
+        const { Folio_Incidencia, Fecha_Cambio, Descripcion, Estado, ID_Emp } = req.body;
+        const newLog = await logService.addLog({ Folio_Incidencia, Fecha_Cambio, Descripcion, Estado,ID_Emp });
         res.status(201).send(newLog);
     } catch (error) {
         console.error(error);
