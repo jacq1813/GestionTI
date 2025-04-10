@@ -146,7 +146,7 @@ const router = createRouter({
       path: '/Incidentes',
       name: 'Incidentes',
       component: IncidentVue,
-      beforeEnter: requireRole(['usuario','admin']),
+      beforeEnter: requireRole(['usuario']),
     },
     {
       path: '/AsignarIncidente',

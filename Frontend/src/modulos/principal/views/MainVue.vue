@@ -8,12 +8,6 @@
         </div>
 
         <ul class="navMenu">
-            <li class="elementoMenu" @click="navigateToRoles('ActualizarIncidente')">
-                Solicitudes 
-            </li>
-            <li class="elementoMenu">
-                Reportes
-            </li>
             <li class="elementoMenu" @click="navigateToRoles('Incidentes')">
                 Reportar Incidencias
             </li>

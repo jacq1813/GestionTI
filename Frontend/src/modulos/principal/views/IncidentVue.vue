@@ -85,16 +85,35 @@ const newIncident = ref({
     ID_Aula: 0,
     ID_Dispositivo: '',
     Descripcion: '',
-    ID_Periodo : 1,
+    ID_Periodo: 0,
     Estado: 'Levantada',
     Fecha: new Date().toISOString().slice(0, 10),
     Hora: new Date().toISOString().slice(11, 19)
 })
 
+const calculatePeriod = () => {
+    const month = new Date().getMonth() + 1; // Obtener el mes actual (0-11, por eso sumamos 1)
+
+    if (month >= 1 && month <= 6) {
+        newIncident.value.ID_Periodo = 1; // Enero - Junio
+    } else if (month === 7) {
+        newIncident.value.ID_Periodo = 2; // Verano
+    } else {
+        newIncident.value.ID_Periodo = 3; // Julio - Diciembre
+    }
+}
+
 // Enviar formulario
 const submitForm = async () => {
     try {
         console.log('Enviando:', newIncident.value)
+
+        calculatePeriod()
+        // Concatenar "Dispositivo" y "Aula" a la descripción
+        const dispositivo = devices.value.find(device => device.ID_Equip === Number(newIncident.value.ID_Dispositivo))?.Nombre || 'Desconocido';
+
+        newIncident.value.Descripcion += ` [ Dispositivo: ${dispositivo} ]`;
+
         await addIncidents(newIncident.value)
         alert('Incidencia enviada con éxito')
         router.push({ name: 'Inicio' })

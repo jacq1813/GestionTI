@@ -10,16 +10,12 @@
         <label class="subT">Datos de la incidencia</label>
         <div class="top">
             <div class="grupo">
-                <label>Folio de solicitud</label>
-                <input type="text" :placeholder="selectedIncident?.Id_Bitacora" disabled>
-            </div>
-            <div class="grupo">
                 <label>Folio de incidencia</label>
                 <input type="text" :placeholder="selectedIncident?.Folio" disabled>
             </div>
             <div class="grupo">
                 <label>Ubicacion</label>
-                <input type="text" :placeholder="selectedIncident?.Edificio + ', ' + selectedIncident?.Aula" disabled>
+                <input type="text" :placeholder="selectedIncident?.Aula" disabled>
             </div>
             <div class="grupo">
                 <label>Descripcion de la incidencia</label>
@@ -64,6 +60,7 @@ onMounted(async () => {
     if (folio) {
         selectedIncident.value = await getIncidentsByFolio(folio);
         bitacora.value.Folio_Incidencia = selectedIncident.value?.Folio;
+
         bitacora.value.ID_Emp = selectedIncident.value?.ID_Emp;
     }
 });
@@ -93,86 +90,131 @@ const home = () => {
 
 <style scoped>
 .container {
-    max-width: 80%;
-    width: 80%;
-    height: auto;
-    background-color: #fff;
-    color: black;
+    max-width: 900px;
+    margin: 2em auto;
+    background-color: #ffffff;
+    color: #333;
     padding: 2em;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 2em;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     text-align: center;
     margin-bottom: 1.5em;
+    font-size: 1.8em;
+    color: #007bff;
 }
 
 .subT {
     font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 0.5em;
+    font-weight: 600;
+    margin-top: 2em;
+    margin-bottom: 1em;
     display: block;
+    color: #444;
 }
 
 .top {
     display: flex;
-    gap: 1.5em;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2em;
+    margin-bottom: 1.5em;
 }
 
 .grupo {
+    flex: 1 1 300px;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
 }
 
-.grupoB {
-    display: flex;
-    gap: 1em;
-    align-items: center;
-    margin-top: 1em;
-}
-
-.desc {
-    width: 100%;
-    height: 80px;
-    padding: 0.5em;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-select,
 input[type="text"],
 textarea {
-    padding: 0.5em;
-    border-radius: 5px;
-    border: 1px solid #ced4da;
+    padding: 0.75em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
     font-size: 1em;
-    width: 70%;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #fff;
+}
+
+textarea.desc {
+    resize: vertical;
+    min-height: 100px;
+    max-height: 200px;
+    width: 100%;
 }
 
 button {
-    padding: 0.6em 1.2em;
-    background-color: #007bff;
-    color: white;
+    padding: 0.75em 1.5em;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 button:hover {
+    transform: scale(1.02);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    margin-top: 1.5em;
+}
+
+.btn-primary:hover {
     background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
 }
 
 .classboton {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1.5em;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .top {
+        flex-direction: column;
+    }
+
+    .classboton {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
 }
 </style>

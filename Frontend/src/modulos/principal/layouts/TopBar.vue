@@ -16,6 +16,9 @@
                     <a href="#" @click="navigate('Salones')">Aulas</a>
                     <a href="#" @click="navigate('Dispositivos')">Equipos</a>
                     <a href="#" @click="navigate('Bitacora')" v-if="rol == 'Jefe de taller'">Bitacora</a>
+                    <a href="#" @@click="navigate('Incidentes')" v-if="rol == 'usuario'">Reportar incidencia</a>
+                    <a href="#" @click="navigate('RolesA')" v-if="rol == 'admin'">Roles</a>
+                    <a href="#" @click="navigate('AsignarIncidente')" v-if="rol == 'Jefe de taller'">Asignar incidencia</a>
                     <hr>
                     <a href="#" @click="logout">Cerrar Sesión</a>
                 </div>
@@ -60,8 +63,10 @@ const logout = () => {
 }
 
 const navigate = (direction: string) => {
+    console.log(direction)
     router.push({ name: direction })
 }
+
 
 </script>
   

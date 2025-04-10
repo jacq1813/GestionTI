@@ -8,16 +8,7 @@
                 <h3>Instituto tecnologico de Culiacán</h3>
             </div>
 
-            <ul class="navMenu">
-                <li class="elementoMenu" @click="navigateToRoles('InicioAdmin')">
-                    Principal
-                </li>
-                <li class="elementoMenu" @click="navigateToRoles('')">
-                    Solicitudes
-                </li>
-                <li class="elementoMenu" @click="navigateToRoles('RolesA')">
-                    Roles
-                </li>
+            <ul class="navMenu" v-if="rol == 'Jefe de taller'">
                 <li class="elementoMenu" @click="navigateToRoles('AsignarIncidente')">
                     Asignar Incidencias
                 </li>
@@ -92,18 +83,17 @@
                         <td>{{ incident.Hora }}</td>
                         <td>{{ incident.Aula }}</td>
                         <td>{{ incident.Descripcion }}</td>
-                        <td>{{ incident.Estado }}</td>
+                        <td>{{ incident.Estado || 'Pendiente' }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)"
-                                v-if="rol === 'Tecnico' " title="Actualizar"><i class="fa fa-pencil"></i></button>
+                                v-if="rol === 'Tecnico'" title="Actualizar"><i class="fa fa-pencil"></i></button>
 
                             <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)" title="Asignar"
                                 v-if="rol === 'Jefe de taller' || rol === 'admin'"> <i class="fa fa-user-plus">
                                 </i></button>
 
                             <button class="btn btn-danger btn-sm" @click="navigateToCambios(incident.Folio)"
-                                title="Solicitar cambio" v-if="rol === 'Tecnico'"> <i
-                                    class="fa fa-refresh">
+                                title="Solicitar cambio" v-if="rol === 'Tecnico'"> <i class="fa fa-refresh">
                                 </i></button>
 
                         </td>
