@@ -49,6 +49,7 @@ import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
 import TopBar from '../layouts/TopBar.vue';
 import { useLog } from '../controladores/useLog';
+import axios from 'axios';
 
 const { logsD, getLogById } = useLog();
 
@@ -83,7 +84,6 @@ const bitacora = ref({
     Usuario: ''
 });
 
-// Función para registrar el cambio en la bitácora
 const registrarCambio = async () => {
     try {
         const data = {
@@ -97,6 +97,33 @@ const registrarCambio = async () => {
 
         // Aquí iría la lógica para enviar los datos al backend
         // Por ejemplo, puedes usar una API que reciba los datos y registre el cambio en la bitácora
+
+const registrarCambio = async () => {
+    try {
+        const data = {
+            Folio_Incidencia: selectedBitacora.value.Folio_Incidencia, 
+            Estado_anterior: selectedBitacora.value.Estado, 
+            Estado_nuevo: updEstadoInc.value.Estado, 
+            Descripcion: selectedBitacora.value.Descripcion_Bitacora, 
+            Accion: 'Actualización de estado',  
+            Usuario: 'Admin'  
+        };
+
+       const response = await axios.post('/bitacora/cambiar-estado', data);
+
+        if (response.status === 200) {
+            console.log("Cambio registrado:", response.data);
+            alert('Cambio registrado con éxito');
+            router.push({ name: 'InicioAdmin' });  
+        } else {
+            console.error('Error al registrar el cambio:', response.data);
+            alert('Hubo un error al registrar el cambio');
+        }
+    } catch (error) {
+        console.error('Error al registrar el cambio:', error);
+        alert('Error al registrar el cambio');
+    }
+};
 
         console.log("Cambio registrado:", data);
         alert('Cambio registrado con éxito');
