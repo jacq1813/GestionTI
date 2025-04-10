@@ -37,4 +37,14 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
+// http://localhost:3001/logs/:id
+router.put('/:id', async (req: Request, res: Response) => {
+    const logId = Number(req.params.id);
+    const { Estado } = req.body;
+    const result = await logService.updateLogStatus(logId, Estado);
+    res.send(result);
+});
+
+
+
 export default router;

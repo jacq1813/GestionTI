@@ -43,12 +43,29 @@ export const useLog = () => {
         }
     }
 
+    const updateLog = async (logId: number, estado: string) => {
+        console.log("hola")
+        console.log(logId)
+        console.log(estado)
+        try {
+
+            const response = await log.put<Log>(`/${logId}`, { Estado: estado });
+            console.log(estado)
+            console.log(response)
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return { error: "No se pudo actualizar el log" };
+        }
+    }
+
     return {
         logs,
         logsD,
         getLog,
         addLog,
         getLogDetails,
-        getLogById
+        getLogById,
+        updateLog
     }
 }

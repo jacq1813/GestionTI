@@ -82,3 +82,25 @@ export const addLog = async (log: LogNew) => {
         return { error: "no se pudo agregar la bitacorssa" };
     }
 }
+
+
+// actualizar el estado de una bitácora
+export const updateLogStatus = async (id: number, Estado: string) => {
+
+    console.log("holaupdate")
+    console.log(id)
+    console.log(Estado)
+    try {
+        const [result] = await connection.query(
+            `UPDATE BitacoraIncidencias 
+             SET Estado = ? 
+             WHERE Id_Bitacora = ?;`,
+            [Estado, id]  
+        );
+
+        return result;
+    } catch (error) {
+        console.error("Error al actualizar la bitácora:", error);
+        return { error: "No se pudo actualizar la bitácora" };
+    }
+}

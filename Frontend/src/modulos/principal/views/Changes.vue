@@ -55,6 +55,7 @@ const bitacora = ref({
     ID_Emp: Number(localStorage.getItem('ID_Emp'))
 });
 
+
 onMounted(async () => {
     const folio = router.currentRoute.value.query.folio as string;
     if (folio) {

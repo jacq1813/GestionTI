@@ -39,7 +39,8 @@
         </div>
 
         <!-- boton de solicitar cambio -->
-        <button class="btn btn-primary" @click="home">Solicitar Cambio</button>
+        <button class="btn btn-primary" @click="actualizarEstado">Solicitar Cambio</button>
+
     </div>
 </template>
 
@@ -49,9 +50,9 @@ import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
 import TopBar from '../layouts/TopBar.vue';
 import { useLog } from '../controladores/useLog';
-import axios from 'axios';
 
 const { logsD, getLogById } = useLog();
+const { updateLog } = useLog();
 
 const router = useRouter();
 
@@ -60,9 +61,8 @@ const selectedBitacora = ref<any>(null);
 const updEstadoInc = ref({
     Estado: '',
 });
-
+const folio = Number(router.currentRoute.value.query.folio);
 onMounted(async () => {
-    const folio = Number(router.currentRoute.value.query.folio);
     // Asumimos que el folio se pasa como parámetro de la URL
     if (folio) {
         selectedBitacora.value = await getLogById(folio);
@@ -73,66 +73,31 @@ onMounted(async () => {
     }
 });
 
-
-
-const bitacora = ref({
-    Folio_Incidencia: '',
-    Estado_anterior: '',
-    Estado_nuevo: '',
-    Descripcion: '',
-    Accion: '',
-    Usuario: ''
-});
-
-const registrarCambio = async () => {
+const actualizarEstado = async () => {
     try {
-        const data = {
-            Folio_Incidencia: bitacora.value.Folio_Incidencia,
-            Estado_anterior: bitacora.value.Estado_anterior,
-            Estado_nuevo: bitacora.value.Estado_nuevo,
-            Descripcion: bitacora.value.Descripcion,
-            Accion: bitacora.value.Accion,
-            Usuario: bitacora.value.Usuario
-        };
+        if (!folio) {
+            alert('No se encontró el ID de la bitácora');
+            return;
+        }
 
-        // Aquí iría la lógica para enviar los datos al backend
-        // Por ejemplo, puedes usar una API que reciba los datos y registre el cambio en la bitácora
+        const nuevoEstado = updEstadoInc.value.Estado;
+        console.log('Nuevo estado:', nuevoEstado);
+        console.log('Folio:', folio);
+        const respuesta = await updateLog(folio, nuevoEstado);
 
-const registrarCambio = async () => {
-    try {
-        const data = {
-            Folio_Incidencia: selectedBitacora.value.Folio_Incidencia, 
-            Estado_anterior: selectedBitacora.value.Estado, 
-            Estado_nuevo: updEstadoInc.value.Estado, 
-            Descripcion: selectedBitacora.value.Descripcion_Bitacora, 
-            Accion: 'Actualización de estado',  
-            Usuario: 'Admin'  
-        };
-
-       const response = await axios.post('/bitacora/cambiar-estado', data);
-
-        if (response.status === 200) {
-            console.log("Cambio registrado:", response.data);
-            alert('Cambio registrado con éxito');
-            router.push({ name: 'InicioAdmin' });  
+        if (respuesta) {
+            alert('Estado actualizado correctamente');
+            router.push({ name: 'InicioAdmin' });
         } else {
-            console.error('Error al registrar el cambio:', response.data);
-            alert('Hubo un error al registrar el cambio');
+            alert('Error al actualizar el estado');
         }
     } catch (error) {
-        console.error('Error al registrar el cambio:', error);
-        alert('Error al registrar el cambio');
+        console.error('Error al actualizar:', error);
+        alert('Ocurrió un error al actualizar el estado');
     }
 };
 
-        console.log("Cambio registrado:", data);
-        alert('Cambio registrado con éxito');
-        router.push({ name: 'InicioAdmin' });
-    } catch (error) {
-        console.error('Error al registrar el cambio:', error);
-        alert('Error al registrar el cambio');
-    }
-};
+
 
 // Función para cerrar sesión
 const logout = () => {
