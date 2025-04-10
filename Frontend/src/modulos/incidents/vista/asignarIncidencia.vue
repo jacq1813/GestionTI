@@ -75,6 +75,7 @@ onMounted(async () => {
     if (folio) {
 
         selectedIncident.value = await getIncidentsByFolio(folio);
+        console.log('selectedIncident', selectedIncident.value);
         console.log(selectedIncident.value);
     }
     await getTechEmployees();
