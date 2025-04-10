@@ -2,7 +2,7 @@
     <TopBar></TopBar>
     <div class="container">
 
-        <h2>Solicitar cambio</h2>
+        <h2> Actualizar cambio en bitacora </h2>
         <div class="classboton">
             <button class="btn btn-secondary btn-sm" @click="home">Regresar</button>
             <button class="btn btn-danger btn-sm" @click="logout">Cerrar Sesión</button>
@@ -12,28 +12,30 @@
             <div class="grupo">
                 <label>Folio de solicitud</label>
                 <!-- aqui se debera cambiar a selectedBitacora ya que tenga la API-->
-                <input type="text" :placeholder="selectedIncident?.Id_Bitacora" disabled>
+                <input type="text" :placeholder="selectedBitacora?.ID_Bitacora" disabled>
             </div>
             <div class="grupo">
                 <label>Folio de incidencia</label>
-                <input type="text" :placeholder="selectedIncident?.Folio" disabled>
+                <input type="text" :placeholder="selectedBitacora?.Folio_Incidencia" disabled>
             </div>
             <div class="grupo">
                 <label>Ubicacion</label>
-                <input type="text" :placeholder="selectedIncident?.Edificio + '' + selectedIncident?.Aula" disabled>
+                <input type="text" :placeholder="selectedBitacora?.Edificio + ', ' + selectedBitacora?.Aula" disabled>
             </div>
             <div class="grupo">
                 <label>Descripcion de la incidencia</label>
-                <input type="text" :placeholder="selectedIncident?.Descripcion" disabled>
+                <input type="text" :placeholder="selectedBitacora?.Descripcion_Bitacora" disabled>
             </div>
 
         </div>
 
-        <!-- Aqui se pone un vmodel-->
         <div class="grupo">
-            <label>Descripción del cambio requerido</label>
-            <textarea v-model="bitacora.Descripcion" class="desc" placeholder="Descripción del cambio realizado"
-                required></textarea>
+
+            <label>Estado del cambio</label>
+            <select v-model="updEstadoInc.Estado">
+                <option value="Aceptado">Aceptado</option>
+                <option value="Rechazado">Rechazado</option>
+            </select>
         </div>
 
         <!-- boton de solicitar cambio -->
@@ -45,30 +47,28 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
-import TopBar from '../layouts/TopBar.vue'
-import { useIncidents } from '@/modulos/incidents/controladores/useIncidents';
+import TopBar from '../layouts/TopBar.vue';
+import { useLog } from '../controladores/useLog';
 
+const { logsD, getLogById } = useLog();
 
-const { incidents, getIncidentsByFolio } = useIncidents();
-
-const updatedState = ref<string>('');
-const updatedPriority = ref<string>('');
 const router = useRouter();
 
-const selectedIncident = ref<any>(null);
+const selectedBitacora = ref<any>(null);
 
 const updEstadoInc = ref({
     Estado: '',
 });
 
 onMounted(async () => {
-    const folio = router.currentRoute.value.query.folio as string;  // Asumimos que el folio se pasa como parámetro de la URL
+    const folio = Number(router.currentRoute.value.query.folio);
+    // Asumimos que el folio se pasa como parámetro de la URL
     if (folio) {
-
-        selectedIncident.value = await getIncidentsByFolio(folio);
-        console.log(selectedIncident.value);
-
-        updatedState.value = selectedIncident.value.Estado;  // Llenamos el estado actual de la incidencia
+        selectedBitacora.value = await getLogById(folio);
+        console.log(folio);
+        console.log(selectedBitacora.value);
+    } else {
+        console.error('No se proporcionó un folio válido');
     }
 });
 

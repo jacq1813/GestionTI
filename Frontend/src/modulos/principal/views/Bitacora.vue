@@ -25,24 +25,23 @@
                         <th>Descripción de incidencia</th>
                         <th>Prioridad</th>
                         <th>Ubicacion</th>
-                        <th>Emp. asignado</th>
                         <th>Accion</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="building in buildings" :key="building.ID_Edif">
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
+                    <tr v-for="bitacora in logsD" :key="bitacora.ID_Bitacora">
+                        <td>{{ bitacora.ID_Bitacora }}</td>
+                        <td>{{ bitacora.Folio_Incidencia }}</td>
+                        <td>{{ bitacora.Receptor }}</td>
+                        <td>{{ bitacora.Fecha_Cambio }}</td>
+                        <td>{{ bitacora.Descripcion_Bitacora }}</td>
+                        <td>{{ bitacora.Descripcion_Incidencia }}</td>
+                        <td>{{ bitacora.Prioridad }}</td>
+                        <td>{{ bitacora.Edificio + ', ' + bitacora.Aula }}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" @click="navigateToStatus(1)"
-                                v-if="rol === 'Jefe de taller'" title="Actualizar"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-primary btn-sm" @click="navigateToStatus(bitacora.ID_Bitacora)"
+                                title="Actualizar estado" v-if="rol === 'Jefe de taller'"><i
+                                    class="fa fa-pencil"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -55,14 +54,13 @@
 <script setup lang="ts">
 import TopBar from '../layouts/TopBar.vue'
 import { onMounted, ref, computed } from 'vue'
-import { useBuilding } from '../controladores/useBuilding';
+import { useLog } from '../controladores/useLog'
 import { useRouter } from 'vue-router'
 import { getAuth } from 'firebase/auth'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 const rol = ref('')
-
-const { buildings, getBuilding } = useBuilding();
+const { logsD, getLogDetails } = useLog()
 
 const router = useRouter();
 
@@ -72,7 +70,7 @@ const navigateToStatus = (folio: number) => {
 };
 
 onMounted(async () => {
-    await getBuilding();
+    await getLogDetails();
     const auth = getAuth()
     const user = auth.currentUser
 

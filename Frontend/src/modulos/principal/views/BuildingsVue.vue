@@ -44,6 +44,7 @@ import { useBuilding } from '../controladores/useBuilding';
 import { useRouter } from 'vue-router'
 import { getAuth } from 'firebase/auth'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
+const selectedBitacora = ref<any>(null);
 
 const rol = ref('')
 

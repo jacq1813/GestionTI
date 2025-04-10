@@ -2,10 +2,12 @@ import { ref } from 'vue';
 
 import log from '../api/log';
 
-import type { Log, LogNew } from '../interface/interface-log';
+import type { Log, LogNew, LogD } from '../interface/interface-log';
 
 export const useLog = () => {
     const logs = ref<Log[]>([]);
+    const logsD = ref<LogD[]>([]);
+
 
     const getLog = async () => {
         const response = await log.get<Log[]>('');
@@ -14,24 +16,28 @@ export const useLog = () => {
     }
 
     const getLogDetails = async () => {
-        const response = await log.get<Log[]>('det');
-        logs.value = response.data
+        const response = await log.get<LogD[]>('det');
+        logsD.value = response.data
         console.log(response.data)
     }
 
     const getLogById = async (id: number) => {
-        const response = await log.get<Log>(`${id}`);
-        logs.value = [response.data]
-        console.log(response.data)
-    }
+        const response = await log.get<LogD>(`${id}`);
+        logsD.value = [response.data];
+        console.log(response.data);
+        return response.data; 
+    };
+    
 
     const addLog = async (logData: LogNew) => {
         try {
+            console.log("hola")
             console.log(logData)
             const response = await log.post<Log>('/', logData);
-            console.log(response.data)
+            console.log(response)
             return response.data;
         } catch (error) {
+            console.log(logData)
             console.error(error);
             return { error: "No se pudo agregar el log" };
         }
@@ -39,6 +45,7 @@ export const useLog = () => {
 
     return {
         logs,
+        logsD,
         getLog,
         addLog,
         getLogDetails,
