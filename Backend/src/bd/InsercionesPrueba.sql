@@ -4,7 +4,8 @@ USE Gestion;
  (1, 'Administrador'),
  (2, 'Usuario'),
  (3, 'Técnico'),
- (4, 'Jefe de taller');
+ (4, 'Jefe de taller'),
+ (5, 'Técnico de Diagnostico');
  
  -- Insertar datos en Empleado
  INSERT INTO Empleado (ID_Emp, Nombre, ApellidoPat, ApellidoMat, Num_tel, Correo, ID_TipEmp, Calificacion, Contrasena) VALUES
@@ -12,7 +13,10 @@ USE Gestion;
  (2, 'María', 'López', 'Fernández', '5552345678', 'maria.lopez@example.com', 2, 88, 'securepass456'),
  (3, 'Carlos', 'Hernández', 'Ruiz', '5553456789', 'carlos.hernandez@example.com', 3, 92, 'mypassword789'),
  (4, 'Ana', 'Martínez', 'Díaz', '5554567890', 'ana.martinez@example.com', 4, 85, 'passkey321'),
- (5, 'Pedro', 'García', 'Sánchez', '5555678901', 'pedro.garcia@example.com', 3, 90, 'qwerty654');
+ (5, 'Pedro', 'García', 'Sánchez', '5555678901', 'pedro.garcia@example.com', 3, 90, 'qwerty654'),
+ (6, 'Luis', 'Ramírez', 'Torres', '5556789012', 'luis.ramirez@example.com', 5, 87, 'diagtech001'),
+ (7, 'Sofía', 'Mendoza', 'Castro', '5557890123', 'sofia.mendoza@example.com', 5, 89, 'diagtech002'),
+ (8, 'Miguel', 'Vega', 'Morales', '5558901234', 'miguel.vega@example.com', 5, 91, 'diagtech003');
  
  -- Insertar datos en TipoDepartamento
  INSERT INTO TipoDepartamento (ID_TipDpto, Nombre) VALUES
@@ -165,3 +169,16 @@ USE Gestion;
 INSERT INTO BitacoraIncidencias (ID_Bitacora, Folio_Incidencia, Fecha_Cambio, Descripcion, Estado, ID_Emp) VALUES 
 (1, 1, '2023-02-02', 'Se revisó la computadora y se detectó un problema en la fuente de poder.', 'Aceptada', 1), 
 (2, 2, '2023-03-06', 'El proyector fue reparado y está funcionando correctamente.', 'Rechazada', 2);
+
+
+INSERT INTO SolucionIncidencia (ID_Solucion, Descripcion) VALUES 
+(1, 'Reemplazo de la fuente de poder.'), 
+(2, 'Ajuste de la configuración del proyector.');
+
+INSERT INTO CausaIncidencia (ID_Causa, Descripcion) VALUES 
+(1, 'Fallo en la fuente de poder.'), 
+(2, 'Problema de configuración del proyector.');
+
+INSERT INTO ProblemaIncidencia (ID_Problema, Folio_Incidencia) VALUES 
+(1, 1), 
+(2, 2);

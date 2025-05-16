@@ -12,6 +12,9 @@ import departmentRoutes from './routes/DepartmenRoutes';
 import devicesT from './routes/DeviceTRoutes';
 import tyclass from './routes/TypesClassroom';
 import logRoutes from './routes/LogRoutes';
+import ProblemsRoutes from './routes/ProblemsRoutes';
+import CauseProblemRoutes from './routes/CauseProblemRoutes';
+import SolveProblemRoutes from './routes/SolveProblemRoutes';
 
 
 const app = express();
@@ -30,6 +33,9 @@ app.use('/departments', departmentRoutes);
 app.use('/devicesT', devicesT);
 app.use('/TyClass', tyclass)
 app.use('/logs', logRoutes);
+app.use('/problems', ProblemsRoutes);
+app.use('/Cproblems', CauseProblemRoutes);
+app.use('/Sproblems', SolveProblemRoutes);
 
 
 app.get('/hola', (_req, res) => {

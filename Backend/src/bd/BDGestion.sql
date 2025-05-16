@@ -127,3 +127,27 @@ CREATE TABLE BitacoraIncidencias (
     FOREIGN KEY (Folio_Incidencia) REFERENCES Incidencia(Folio) ON DELETE SET NULL,
     FOREIGN KEY (ID_Emp) REFERENCES Empleado(ID_Emp) ON DELETE SET NULL
 );
+
+
+
+CREATE TABLE SolucionIncidencia (
+    ID_Solucion INT PRIMARY KEY AUTO_INCREMENT,
+    Descripcion TEXT,
+);
+
+CREATE TABLE CausaIncidencia (
+    ID_Causa INT PRIMARY KEY AUTO_INCREMENT,
+    Descripcion TEXT,
+);
+
+CREATE TABLE ProblemaIncidencia (
+    ID_Problema INT PRIMARY KEY AUTO_INCREMENT,
+    Folio_Incidencia INT,
+    ID_Emp INT,
+    ID_Solucion INT,
+    ID_Causa INT,
+    FOREIGN KEY (ID_Incidencia) REFERENCES Incidencia(Folio) ON DELETE CASCADE
+    FOREIGN KEY (ID_Solucion) REFERENCES SolucionIncidencia(ID_Solucion) ON DELETE CASCADE,
+    FOREIGN KEY (ID_Causa) REFERENCES CausaIncidencia(ID_Causa) ON DELETE CASCADE,
+    FOREIGN KEY (ID_Emp) REFERENCES Empleado(ID_Emp) ON DELETE CASCADE
+);
