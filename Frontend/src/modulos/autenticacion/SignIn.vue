@@ -67,7 +67,11 @@ const signIn = async () => {
                 router.push({ name: 'InicioAdmin' });
             } else if (userData.Rol === 'usuario') {
                 router.push({ name: 'Inicio' }); // Ruta para usuarios regulares
-            } else {
+            } else if (userData.Rol === 'Técnico de Diagnostico') {
+                router.push({ name: 'BitacoraProb' })
+            }
+
+            else {
                 router.push({ name: 'InicioAdmin' }); // Ruta para usuarios regulares
             }
         } else {

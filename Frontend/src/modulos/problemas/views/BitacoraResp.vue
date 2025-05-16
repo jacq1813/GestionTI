@@ -1,0 +1,144 @@
+<template>
+    <div class="container">
+        <TopBar></TopBar>
+
+        <div class="content">
+            <h2>Actualizar el estado del problema</h2>
+
+            <div class="boton">
+                <button class="btn btn-secondary" @click="goBack">Regresar</button>
+            </div>
+
+
+            <form @submit.prevent="submitForm">
+                <div class="form-group">
+                    <label for="nombre">Causa del problema:</label>
+                    <input type="text" v-model="newAula.Nombre" id="nombre" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="tipoAula">Solución</label>
+                    <select v-model="newAula.ID_TipoAula" id="tipoAula" required class="form-control">
+                        <!--<option v-for="tycs in tyclass" :key="tycs.ID_TipoAula" :value="tycs.ID_TipoAula">{{ tycs.Nombre }}
+                        </option>-->
+
+                    </select>
+                </div>
+
+                <div class="grupo">
+
+                    <label>Estado del cambio</label>
+
+                    <!--<select v-model="MODELO">
+                        <option value="Aceptado">En proceso</option>
+                        <option value="Rechazado">Liberado</option>
+                    </select>-->
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </form>
+        </div>
+    </div>
+</template>
+    
+<script setup lang="ts">
+//import TopBar from '../layouts/TopBar.vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import TopBar from '../../principal/layouts/TopBar.vue';
+
+//import { useAula } from '../controladores/useAula'
+//import { useEmployees } from '../controladores/useEmployee'
+//import { useBuilding } from '../controladores/useBuilding';
+//import { useTyClassroom } from '../controladores/useTyClassroom';
+//import { useClassroom } from '../controladores/useClassroom';
+//const { addClassroom } = useClassroom()
+//const { tyclass, getTyClass } = useTyClassroom();
+
+
+const router = useRouter()
+
+//const { employees, getEmployees } = useEmployees()
+//const { buildings, getBuilding } = useBuilding();
+
+
+const newAula = ref({
+    Nombre: '',
+    ID_TipoAula: '',
+    ID_Edif: '',
+    ID_Emp: ''
+})
+
+onMounted(async () => {
+    //await getEmployees()
+    //await getBuilding()
+    // await getTyClass()
+
+
+    //console.log(tyclass.value)
+})
+
+const submitForm = async () => {
+    console.log(newAula.value);
+    // await addClassroom(newAula.value);
+    await router.push({ name: 'Salones' });
+}
+
+
+//console.log(tyclass)
+
+const goBack = () => {
+    router.push({ name: 'InicioAdmin' })
+}
+</script>
+    
+<style scoped>
+.container {
+    max-width: 100%;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 2em;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    margin: 2em 3em;
+    background-color: #F9F9F9;
+}
+
+h2 {
+    text-align: center;
+    padding: 1em;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 1em;
+}
+</style>
+    

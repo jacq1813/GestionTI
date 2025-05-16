@@ -13,6 +13,12 @@
                     Asignar Incidencias
                 </li>
             </ul>
+
+            <ul class="navMenu" v-if="rol == 'admin'">
+                <li class="elementoMenu" @click="navigateToRoles('RolesA')">
+                    Cambios
+                </li>
+            </ul>
             <br>
 
             <div class="opciones">

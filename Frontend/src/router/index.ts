@@ -21,6 +21,9 @@ import InsertClassroom from '@/modulos/principal/views/InsertClassroomVue.vue'
 import Changes from '@/modulos/principal/views/Changes.vue'
 import Bitacora from '@/modulos/principal/views/Bitacora.vue'
 import ChangesStatus from '@/modulos/principal/views/ChangesStatus.vue'
+import BitacoraProb from '@/modulos/problemas/views/BitacoraProb.vue'
+import BitacoraResp from '@/modulos/problemas/views/BitacoraResp.vue'
+
 const requireAuth = (to:any, from:any, next:any) => {
 
   const auth = getAuth()
@@ -64,7 +67,7 @@ const requireAuth = (to:any, from:any, next:any) => {
   }
 }*/
 
-type RolUsuario = 'admin' | 'Jefe de taller' | 'Tecnico' | 'usuario'
+type RolUsuario = 'admin' | 'Jefe de taller' | 'Tecnico' | 'usuario' | 'Técnico de Diagnostico'
 
 const requireRole = (rolesPermitidos: RolUsuario[]) => {
   return async (to:any, from:any, next:any) => {
@@ -207,6 +210,19 @@ const router = createRouter({
       path: '/Bitacora',
       name: 'Bitacora',
       component: Bitacora,
+    },
+    {
+      path: '/BitacoraProb',
+      name: 'BitacoraProb',
+      component: BitacoraProb,
+      beforeEnter: requireRole(['Técnico de Diagnostico'])
+
+    },
+    {
+      path: '/BitacoraResp',
+      name: 'BitacoraResp',
+      component: BitacoraResp,
+      beforeEnter: requireRole(['Técnico de Diagnostico'])
     },
     {
       path: '/about',

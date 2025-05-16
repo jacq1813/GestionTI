@@ -4,8 +4,6 @@
         <div class="headerPrincipal">
         </div>
 
-
-
         <div class="opciones">
             <section class="Users">
                 <h2>Usuarios</h2>
@@ -78,12 +76,12 @@
 import { onMounted, ref } from 'vue';
 import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs,query,where } from 'firebase/firestore'
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import type { Employee } from '../interface/interface-employee'
 import TopBar from '../layouts/TopBar.vue'
 
-const { employees, getEmployees, getTechEmployees,getEmployeesPosition } = useEmployees()
+const { employees, getEmployees, getTechEmployees, getEmployeesPosition } = useEmployees()
 const router = useRouter()
 const db = getFirestore()
 
@@ -106,6 +104,8 @@ const roles = ref([
     { ID_Rol: 2, NombreRol: 'Tecnico' },
     { ID_Rol: 3, NombreRol: 'Usuario' },
     { ID_Rol: 4, NombreRol: 'Secretaria' },
+    { ID_Rol: 5, NombreRol: 'Técnico de Diagnostico' }
+
 ])
 
 onMounted(async () => {
@@ -162,7 +162,7 @@ const confirmAssignRole = async () => {
             // Usuario ya existe, actualizar su rol
             const userDoc = querySnapshot.docs[0];
             await updateDoc(doc(db, 'usuarios', userDoc.id), {
-                Nombre : Empleado.value.Nombre,
+                Nombre: Empleado.value.Nombre,
                 Rol: selectedRole.value,
                 ID_Emp: Empleado.value.ID,
                 UltimoLogin: new Date(),
@@ -263,6 +263,7 @@ td {
     padding: 2px;
     font-size: 0.9em;
 }
+
 th {
     background-color: #2c3e50;
     color: white;
@@ -488,4 +489,5 @@ th {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}</style>
+}
+</style>
