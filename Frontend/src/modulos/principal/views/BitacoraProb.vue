@@ -38,11 +38,16 @@
                         <td>{{ problema['Solucion del problema'] }}</td>
                         <th>{{ problema.Estado }}</th>
                         <th>{{ problema.Prioridad }}</th>
-                        <td>
+                        <th class="hola">
                             <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
-                                title="Actualizar estado" v-if="rol === 'Jefe de taller'"><i
-                                    class="fa fa-pencil"></i></button>
-                        </td>
+                                title="Actualizar estado" v-if="rol === 'Jefe de taller'">
+                            </button> Problema Raiz
+                        </th>
+                        <th class="hola">
+                            <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
+                                title="Actualizar estado" v-if="rol === 'Jefe de taller'">
+                            </button> Solucion
+                        </th>
                     </tr>
                 </tbody>
             </table>
@@ -173,6 +178,8 @@ h2 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+
+
 th,
 td {
     padding: 14px 18px;
@@ -180,7 +187,7 @@ td {
     border: 1px solid #ddd;
 }
 
-th {
+th , button {
     background-color: #daadff;
     color: white;
     font-weight: 600;
@@ -206,5 +213,18 @@ tr:hover {
 .btn-sm {
     padding: 0.25em 0.5em;
     font-size: 0.875em;
+}
+
+.hola{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 </style>
