@@ -6,12 +6,14 @@ const router = express.Router();
 //http://localhost:3001/problems
 router.get('/', async (_req: Request, res: Response) => {
     const problems = await problemService.getProblemas();
+    console.log(problems);
     res.status(200).send(problems);
 });
 
 //http://localhost:3001/problems/details
 router.get('/details', async (_req: Request, res: Response) => {
     const problems = await problemService.getProblemasDetalles();
+    console.log(problems);
     res.status(200).send(problems);
 });
 

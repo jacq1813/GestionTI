@@ -29,6 +29,8 @@ export const getProblemasDetalles = async () => {
                             LEFT JOIN causaincidencia ci ON pi.ID_Causa = ci.ID_Causa
                             LEFT JOIN solucionincidencia si ON pi.ID_Solucion = si.ID_Solucion;
                             `);
+
+                            console.log(rows);
         return rows;
 
     } catch (error) {

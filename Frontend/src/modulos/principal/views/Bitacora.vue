@@ -67,7 +67,6 @@ const { logsD, getLogDetails } = useLog()
 const router = useRouter();
 
 const navigateToStatus = (folio: number) => {
-    // Navegar a la ruta 'ActualizarIncidente' y pasar el 'folio' como parámetro de ruta
     router.push({ name: 'CambiosStatus', query: { folio } });
 };
 

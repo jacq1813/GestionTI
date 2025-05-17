@@ -48,6 +48,7 @@ export const useProblemas = () => {
 
     return {
         problemas,
+        problemasDetalles,
         getProblemas,
         addProblemas,
         getProblemasDetalles,

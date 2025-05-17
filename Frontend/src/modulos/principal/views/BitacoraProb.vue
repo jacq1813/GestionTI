@@ -29,11 +29,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="problema in problemas" :key="problema.ID_Problema">
+                    <tr v-for="problema in problemasDetalles" :key="problema.ID_Problema">
                         <td>{{ problema.ID_Problema }}</td>
-                        <td>{{ problema.Folio_Incidencia }}</td>
-                        <td>{{ problema. }}</td>
-
+                        <td>{{ problema.Folio }}</td>
+                        <td>{{ problema['Descripcion de Incidencia'] }}</td>
+                        <td>{{ problema['Tecnico Diagnostico'] }}</td>
+                        <td>{{ problema['Causa del problema'] }}</td>
+                        <td>{{ problema['Solucion del problema'] }}</td>
+                        <th>{{ problema.Estado }}</th>
+                        <th>{{ problema.Prioridad }}</th>
                         <td>
                             <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
                                 title="Actualizar estado" v-if="rol === 'Jefe de taller'"><i
@@ -54,7 +58,7 @@ import { getAuth } from 'firebase/auth'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { useProblemas } from '../controladores/useProblemas'
 
-const { problemas, getProblemasDetalles } = useProblemas()
+const { problemasDetalles, getProblemasDetalles } = useProblemas()
 const rol = ref('')
 
 const router = useRouter();
@@ -66,7 +70,7 @@ const navigateToStatus = (folio: number) => {
 
 onMounted(async () => {
     await getProblemasDetalles();
-
+    console.log(problemasDetalles.value)
 
     const auth = getAuth()
     const user = auth.currentUser
