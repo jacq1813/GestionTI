@@ -5,7 +5,7 @@ const router = express.Router();
 
 //http://localhost:3001/problems
 router.get('/', async (_req: Request, res: Response) => {
-    const problems = await problemService.getProblemas;
+    const problems = await problemService.getProblemas();
     res.status(200).send(problems);
 });
 

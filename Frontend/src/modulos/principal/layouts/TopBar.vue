@@ -19,6 +19,7 @@
                     <a href="#" @@click="navigate('Incidentes')" v-if="rol == 'usuario'">Reportar incidencia</a>
                     <a href="#" @click="navigate('RolesA')" v-if="rol == 'admin'">Roles</a>
                     <a href="#" @click="navigate('AsignarIncidente')" v-if="rol == 'Jefe de taller'">Asignar incidencia</a>
+                    <a href="#" @click="navigate('BitacoraProb') "v-if="rol == 'Técnico' || 'Tecnico'"  >Gestion de Problemas</a>
                     <hr>
                     <a href="#" @click="logout">Cerrar Sesión</a>
                 </div>
@@ -52,6 +53,7 @@ onMounted(async () => {
             const data = userDoc.data()
             rol.value = data.Rol
             nombre.value = data.Nombre || 'Usuario'
+            console.log('Rol:', rol.value)
         }
     }
 })
@@ -63,8 +65,12 @@ const logout = () => {
 }
 
 const navigate = (direction: string) => {
-    console.log(direction)
-    router.push({ name: direction })
+    try {
+        console.log('Navegando a:', direction)
+        router.push(direction)
+    } catch (error) {
+        console.error('Error al navegar:', error)
+    }
 }
 
 

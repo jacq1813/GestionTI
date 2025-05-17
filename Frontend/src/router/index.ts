@@ -215,14 +215,14 @@ const router = createRouter({
       path: '/BitacoraProb',
       name: 'BitacoraProb',
       component: BitacoraProb,
-      beforeEnter: requireRole(['Técnico de Diagnostico'])
+      beforeEnter: requireRole(['Tecnico'])
 
     },
     {
       path: '/BitacoraResp',
       name: 'BitacoraResp',
       component: BitacoraResp,
-      beforeEnter: requireRole(['Técnico de Diagnostico'])
+      beforeEnter: requireRole(['Tecnico'])
     },
     {
       path: '/about',

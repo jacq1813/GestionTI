@@ -31,6 +31,7 @@ export const createCausaProblema = async (causa: CauseProblemNew) => {
 
 export const updateCausaProblema = async (id: number, causa: CauseProblem) => {
     try {
+        console.log("hola buenassss "+causa.Descripcion);
         const [rows] = await connection.query("UPDATE causaincidencia SET Descripcion = ? WHERE ID_Causa = ?", [causa.Descripcion, id]);
         return rows;
     } catch (error) {

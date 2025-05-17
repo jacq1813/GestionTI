@@ -4,7 +4,7 @@ const connection = require('../connection/conec');
 
 export const getProblemas = async () => {
     try {
-        const [rows] = await connection.query("SELECT * FROM Problemas");
+        const [rows] = await connection.query("SELECT * FROM problemaincidencia");
         return rows;
     } catch (error) {
         return {error: "no se pueden obtener los problemas"}
@@ -88,7 +88,7 @@ export const getProblemaByFolio = async (folio: number) => {
 export const addProblema = async (problema: ProblemsNew) => {
     console.log(problema);
     try {
-        const [rows] = await connection.query(`INSERT INTO Problemas (Folio_Incidencia, ID_Emp, ID_Causa, ID_Solucion) VALUES (?, ?, ?, ?)`, [problema.Folio_Incidencia, problema.ID_Emp, problema.ID_Causa, problema.ID_Solucion]);
+        const [rows] = await connection.query(`INSERT INTO problemaincidencia (Folio_Incidencia, ID_Emp, ID_Causa, ID_Solucion) VALUES (?, ?, ?, ?)`, [problema.Folio_Incidencia, problema.ID_Emp, problema.ID_Causa, problema.ID_Solucion]);
         return rows;
     } catch (error) {
         return {error: "no se pueden agregar los problemas"}
@@ -98,7 +98,7 @@ export const addProblema = async (problema: ProblemsNew) => {
 //actualizar un problema
 export const updateProblema = async (problema: Problems) => {
     try {
-        const [rows] = await connection.query(`UPDATE Problemas SET ID_Emp = ?, ID_Causa = ?, ID_Solucion = ? WHERE Folio_Incidencia = ?`, [problema.ID_Emp, problema.ID_Causa, problema.ID_Solucion, problema.Folio_Incidencia]);
+        const [rows] = await connection.query(`UPDATE problemaincidencia SET ID_Emp = ?, ID_Causa = ?, ID_Solucion = ? WHERE Folio_Incidencia = ?`, [problema.ID_Emp, problema.ID_Causa, problema.ID_Solucion, problema.Folio_Incidencia]);
         return rows;
     } catch (error) {
         return {error: "no se pueden actualizar los problemas"}

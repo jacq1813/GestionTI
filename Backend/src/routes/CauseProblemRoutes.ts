@@ -30,7 +30,8 @@ router.post('/', async (req: Request, res: Response) => {
 //http://localhost:3001/Cproblems/:id
 router.put('/:id', async (req: Request, res: Response) => {
     try {
-        const { Descripcion } = req.body;
+        const Descripcion = req.body;
+        console.log("hola buenas "+Descripcion);
         const updatedProblem = await problemService.updateCausaProblema(Number(req.params.id),  Descripcion );
         res.status(200).send(updatedProblem);
     } catch (error) {
