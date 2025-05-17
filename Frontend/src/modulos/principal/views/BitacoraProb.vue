@@ -3,13 +3,13 @@
         <TopBar></TopBar>
 
         <div class="Cont">
-            <h2>Bitacora de problemas</h2>
+            <h2>Bitácora de problemas</h2>
 
             <div class="btn-group">
                 <button class="btn btn-regresar" @click="home" title="Volver al inicio">
                     <i class="fa fa-arrow-left"></i> Regresar
                 </button>
-                <button class="btn btn-anadir" @click="anadir" v-if="rol === 'admin'" title="Añadir nuevo edificio">
+                <button class="btn btn-anadir" @click="anadir" v-if="rol === 'admin'" title="Añadir nuevo problema">
                     <i class="fa fa-plus"></i> Añadir
                 </button>
             </div>
@@ -19,29 +19,25 @@
                     <tr>
                         <th>Folio del problema</th>
                         <th>Folio de incidencia</th>
-                        <th>Descripcion de incidencia</th>
-                        <th>Tec. de diagnostico</th>
+                        <th>Descripción de incidencia</th>
+                        <th>Técnico de diagnóstico</th>
                         <th>Causa del problema</th>
                         <th>Solución</th>
                         <th>Estado</th>
                         <th>Prioridad</th>
-                        <th>Accion</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
-                        <td>{{ }}</td>
+                    <tr v-for="problema in problemas" :key="problema.ID_Problema">
+                        <td>{{ problema.ID_Problema }}</td>
+                        <td>{{ problema.Folio_Incidencia }}</td>
+                        <td>{{ problema. }}</td>
+
                         <td>
-                            <button class="btn btn-primary btn-sm" @click="navigateToStatus()" title="Actualizar estado"
-                                v-if="rol === 'Jefe de taller'"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
+                                title="Actualizar estado" v-if="rol === 'Jefe de taller'"><i
+                                    class="fa fa-pencil"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -50,30 +46,28 @@
     </div>
 </template>
 
-
 <script setup lang="ts">
-//import TopBar from '../layouts/TopBar.vue'
-import { onMounted, ref, computed } from 'vue'
-//import { useLog } from '../controladores/useLog'
+import { onMounted, ref } from 'vue'
 import TopBar from '../../principal/layouts/TopBar.vue';
-
 import { useRouter } from 'vue-router'
 import { getAuth } from 'firebase/auth'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import { useProblemas } from '../controladores/useProblemas'
 
-
+const { problemas, getProblemasDetalles } = useProblemas()
 const rol = ref('')
-//const { logsD, getLogDetails } = useLog()
 
 const router = useRouter();
 
+
 const navigateToStatus = (folio: number) => {
-    // Navegar a la ruta 'ActualizarIncidente' y pasar el 'folio' como parámetro de ruta
     router.push({ name: 'CambiosStatus', query: { folio } });
 };
 
 onMounted(async () => {
-    // await getLogDetails();
+    await getProblemasDetalles();
+
+
     const auth = getAuth()
     const user = auth.currentUser
 
@@ -96,7 +90,7 @@ const home = () => {
 }
 
 const anadir = () => {
-    router.push({ name: 'InsertaEdificio' })
+    router.push({ name: 'AgregarProblema' }) // Asegúrate de tener esta ruta configurada
 }
 </script>
 
@@ -130,7 +124,6 @@ h2 {
     justify-content: space-between;
     margin-bottom: 1.5em;
     flex-wrap: wrap;
-
 }
 
 .btn {
@@ -195,5 +188,19 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #eef0f4;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-sm {
+    padding: 0.25em 0.5em;
+    font-size: 0.875em;
 }
 </style>

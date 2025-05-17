@@ -14,9 +14,9 @@
                 </li>
             </ul>
 
-            <ul class="navMenu" v-if="rol == 'admin'">
-                <li class="elementoMenu" @click="navigateToRoles('RolesA')">
-                    Cambios
+            <ul class="navMenu" v-if="rol == 'Tecnico'">
+                <li class="elementoMenu" @click="navigateToRoles('BitacoraProb')">
+                    Gestion de problemas
                 </li>
             </ul>
             <br>

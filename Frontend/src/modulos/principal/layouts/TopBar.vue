@@ -16,11 +16,11 @@
                     <a href="#" @click="navigate('Salones')">Aulas</a>
                     <a href="#" @click="navigate('Dispositivos')">Equipos</a>
                     <a href="#" @click="navigate('Bitacora')" v-if="rol == 'Jefe de taller'">Bitacora</a>
-                    <a href="#" @@click="navigate('Incidentes')" v-if="rol == 'usuario'">Reportar incidencia</a>
-                    <a href="#" @click="navigate('RolesA')" v-if="rol == 'admin'">Roles</a>
+                    <a href="#" @click="navigate('Incidentes')" v-if="rol == 'usuario'">Reportar incidencia</a>
                     <a href="#" @click="navigate('AsignarIncidente')" v-if="rol == 'Jefe de taller'">Asignar incidencia</a>
-                    <a href="#" @click="navigate('BitacoraProb') "v-if="rol == 'Técnico' || 'Tecnico'"  >Gestion de Problemas</a>
-                    <hr>
+                    <a href="#" @click="navigate('BitacoraProb')" v-if="rol == 'Tecnico'">Gestión de
+                        Problemas</a>
+
                     <a href="#" @click="logout">Cerrar Sesión</a>
                 </div>
             </div>
@@ -66,12 +66,13 @@ const logout = () => {
 
 const navigate = (direction: string) => {
     try {
+        router.push({ name: direction }) // Asegúrate de usar el nombre de la ruta
         console.log('Navegando a:', direction)
-        router.push(direction)
     } catch (error) {
         console.error('Error al navegar:', error)
     }
 }
+
 
 
 </script>
