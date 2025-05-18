@@ -36,17 +36,19 @@
                         <td>{{ problema['Tecnico Diagnostico'] }}</td>
                         <td>{{ problema['Causa del problema'] }}</td>
                         <td>{{ problema['Solucion del problema'] }}</td>
-                        <th>{{ problema.Estado }}</th>
-                        <th>{{ problema.Prioridad }}</th>
+                        <td>{{ problema.Estado }}</td>
+                        <td>{{ problema.Prioridad }}</td>
                         <th class="hola">
                             <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
-                                title="Actualizar estado" v-if="rol === 'Jefe de taller'">
-                            </button> Problema Raiz
+                                title="Actualizar estado" v-if="rol === 'Tecnico'">
+                                <i class="fa fa-pencil"></i>
+                            </button>
                         </th>
                         <th class="hola">
                             <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
-                                title="Actualizar estado" v-if="rol === 'Jefe de taller'">
-                            </button> Solucion
+                                title="Actualizar estado" v-if="rol === 'Tecnico'">
+                                Solucion
+                            </button>
                         </th>
                     </tr>
                 </tbody>
@@ -70,7 +72,8 @@ const router = useRouter();
 
 
 const navigateToStatus = (folio: number) => {
-    router.push({ name: 'CambiosStatus', query: { folio } });
+    console.log("folio", folio)
+    router.push({ name: 'BitacoraCausa', query: { id: folio.toString() } });
 };
 
 onMounted(async () => {
@@ -187,7 +190,8 @@ td {
     border: 1px solid #ddd;
 }
 
-th , button {
+th,
+button {
     background-color: #daadff;
     color: white;
     font-weight: 600;
@@ -215,7 +219,7 @@ tr:hover {
     font-size: 0.875em;
 }
 
-.hola{
+.hola {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -9,10 +9,15 @@ export const useCausaProblema = () => {
     const getCausaProblema = async () => {
         const response = await causaProblema.get<CauseProblem[]>('');
         causasProblemas.value = response.data
+        console.log("causasProblemas.value")
+        console.log(causasProblemas.value)
+        console.log("aqui es causas ")
         console.log(response.data)
     }
 
     const addCausaProblema = async (CausaProblema: NewCauseProblem) => {
+        console.log("aqui es causas ")
+        console.log(CausaProblema)
         try {
             console.log(CausaProblema)
             const response = await causaProblema.post<CauseProblem>('/', CausaProblema);

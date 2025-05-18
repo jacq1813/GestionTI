@@ -23,8 +23,10 @@ export const useProblemas = () => {
     }
 
     const getProblemaById = async (id: number) => {
-        const response = await problem.get<Problems>(`/${id}`);
-        console.log(response.data)
+        const response = await problem.get<ProblemsDetails>(`/${id}`);
+        problemasDetalles.value = [response.data]
+        console.log("aqui es  BY ID")
+        console.log(problemasDetalles)
         return response.data
     }
 
@@ -46,9 +48,26 @@ export const useProblemas = () => {
         }
     }
 
+    const updateProblema = async (problema: {
+        ID_Emp: number;
+        ID_Causa: number;
+        ID_Solucion: number | null;
+        Folio_Incidencia: string;
+    }) => {
+        try {
+            const response = await problem.put(`/${problema.Folio_Incidencia}`, problema);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return { error: 'No se pudo actualizar el problema' };
+        }
+    }
+    
+
     return {
         problemas,
         problemasDetalles,
+        updateProblema,
         getProblemas,
         addProblemas,
         getProblemasDetalles,

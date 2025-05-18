@@ -19,6 +19,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response) => {
     try {
         const { Descripcion } = req.body;
+        console.log("hola buenas "+ Descripcion);
         const newProblem = await problemService.createCausaProblema({ Descripcion });
         res.status(201).send(newProblem);
     } catch (error) {

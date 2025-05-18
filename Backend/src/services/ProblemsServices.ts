@@ -58,7 +58,8 @@ export const getProblemaById = async (id: number) => {
                             WHERE ID_Problema = ?;`, [id]);
         return rows;
     } catch (error) {
-        return {error: "no se pueden obtener los problemas"}
+        console.log(error);
+        return {error: "no se pueden obtener los problemasSS"}
     }
 }
 

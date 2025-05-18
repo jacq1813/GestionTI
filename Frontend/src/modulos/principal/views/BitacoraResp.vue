@@ -9,6 +9,27 @@
                 <button class="btn btn-secondary" @click="goBack">Regresar</button>
             </div>
 
+            <div class="top">
+                <div class="grupo">
+                    <label>Folio de diagnostico</label>
+                    <!-- aqui se debera cambiar a selectedBitacora ya que tenga la API-->
+                    <input type="text" :placeholder="selectedBitacora?.ID_Bitacora" disabled>
+                </div>
+                <div class="grupo">
+                    <label>Folio de incidencia</label>
+                    <input type="text" :placeholder="selectedBitacora?.Folio_Incidencia" disabled>
+                </div>
+                <div class="grupo">
+                    <label>Ubicacion</label>
+                    <input type="text" :placeholder="selectedBitacora?.Edificio + ', ' + selectedBitacora?.Aula" disabled>
+                </div>
+                <div class="grupo">
+                    <label>Descripcion de la incidencia</label>
+                    <input type="text" :placeholder="selectedBitacora?.Descripcion_Bitacora" disabled>
+                </div>
+
+            </div>
+
 
             <form @submit.prevent="submitForm">
                 <div class="form-group">
