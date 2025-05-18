@@ -22,10 +22,16 @@ export const getSolucionProblemaById = async (id: number) => {
 
 export const createSolucionProblema = async (solucion: SolveProblemsNew) => {
     try {
-        const [rows] = await connection.query("INSERT INTO solucionincidencia (Descripcion) VALUES (?)", [solucion.Descripcion]);
-        return rows;
+        const [result] = await connection.query(
+            "INSERT INTO solucionincidencia (Descripcion) VALUES (?)", 
+            [solucion.Descripcion]
+        );
+        
+        // Retornar el ID insertado
+        return { success: true, id: result.insertId };
     } catch (error) {
-        return {error: "no se pueden crear las soluciones de los problemas"}
+        console.error(error);
+        return { error: "No se pueden crear las soluciones de los problemas" };
     }
 };
 

@@ -39,20 +39,24 @@
                         <td>{{ problema.Estado }}</td>
                         <td>{{ problema.Prioridad }}</td>
                         <th class="hola">
-                            <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
+                            <button class="btn btn-primary btn-sm" @click="navigateToBitacora(problema.ID_Problema)"
                                 title="Actualizar estado" v-if="rol === 'Tecnico'">
                                 <i class="fa fa-pencil"></i>
                             </button>
                         </th>
                         <th class="hola">
-                            <button class="btn btn-primary btn-sm" @click="navigateToStatus(problema.ID_Problema)"
-                                title="Actualizar estado" v-if="rol === 'Tecnico'">
+                            <button class="btn btn-primary btn-sm" @click="navigateToSolucion(problema.ID_Problema)"
+                                title="Actualizar estado" v-if="rol === 'Tecnico' && problema['Causa del problema']">
                                 Solucion
                             </button>
                         </th>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-primary btn-sm" @click="navigateToSolucion(problema.ID_Problema)"
+                title="Actualizar estado" v-if="rol === 'Tecnico'">
+                Nueva
+            </button>
         </div>
     </div>
 </template>
@@ -70,11 +74,18 @@ const rol = ref('')
 
 const router = useRouter();
 
-
-const navigateToStatus = (folio: number) => {
-    console.log("folio", folio)
+const navigateToBitacora = (folio: number) => {
     router.push({ name: 'BitacoraCausa', query: { id: folio.toString() } });
 };
+
+const navigateToSolucion = (folio: number) => {
+    router.push({ name: 'BitacoraResp', query: { id: folio.toString() } });
+};
+
+const navigateToAdd = () => {
+    router.push({ name: 'AddProblem' });
+};
+
 
 onMounted(async () => {
     await getProblemasDetalles();

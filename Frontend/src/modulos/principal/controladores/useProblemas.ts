@@ -38,7 +38,7 @@ export const useProblemas = () => {
 
     const addProblemas = async (Problemas: ProblemsNew) => {
         try {
-            console.log(Problemas)
+            console.log(Problemas.Folio_Incidencia)
             const response = await problem.post<Problems>('/', Problemas);
             console.log(response.data)
             return response.data;
@@ -62,6 +62,20 @@ export const useProblemas = () => {
             return { error: 'No se pudo actualizar el problema' };
         }
     }
+
+    const updateProblemaS = async (problema: {
+        ID_Emp: number;
+        ID_Solucion: number | null;
+        Folio_Incidencia: string;
+    }) => {
+        try {
+            const response = await problem.put(`/${problema.Folio_Incidencia}/solucion`, problema);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return { error: 'No se pudo actualizar el problema' };
+        }
+    }
     
 
     return {
@@ -69,6 +83,7 @@ export const useProblemas = () => {
         problemasDetalles,
         updateProblema,
         getProblemas,
+        updateProblemaS,
         addProblemas,
         getProblemasDetalles,
         getProblemaById,

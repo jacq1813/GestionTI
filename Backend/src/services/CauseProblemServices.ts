@@ -22,10 +22,16 @@ export const getCausaProblemaById = async (id: number) => {
 
 export const createCausaProblema = async (causa: CauseProblemNew) => {
     try {
-        const [rows] = await connection.query("INSERT INTO causaincidencia (Descripcion) VALUES (?)", [causa.Descripcion]);
-        return rows;
+        const [result] = await connection.query(
+            "INSERT INTO causaincidencia (Descripcion) VALUES (?)", 
+            [causa.Descripcion]
+        );
+        
+        // Retornar el ID insertado
+        return { success: true, id: result.insertId };
     } catch (error) {
-        return {error: "no se pueden crear las causas de los problemas"}
+        console.error(error);
+        return { error: "No se pueden crear las causas de los problemas" };
     }
 };
 

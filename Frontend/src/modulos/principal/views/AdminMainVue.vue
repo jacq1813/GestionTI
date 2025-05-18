@@ -99,7 +99,10 @@
                             <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)" title="Asignar"
                                 v-if="rol === 'Jefe de taller' || rol === 'admin'"> <i class="fa fa-user-plus">
                                 </i></button>
-
+                            <!--aqui voyyyx-->
+                            <button class="btn btn-info " @click="addProblem(incident.Folio)" title="Problema"
+                                v-if="rol === 'Jefe de taller' || rol === 'admin'"> <i class="fa fa-plus">
+                                </i> </button>
                             <button class="btn btn-danger btn-sm" @click="navigateToCambios(incident.Folio)"
                                 title="Solicitar cambio" v-if="rol === 'Tecnico'"> <i class="fa fa-refresh">
                                 </i></button>
@@ -119,10 +122,11 @@ import { useEmployees } from '../controladores/useEmployee'
 import { useRouter } from 'vue-router'
 import TopBar from '../layouts/TopBar.vue'
 import { getAuth } from 'firebase/auth'
+import { useProblemas } from '../controladores/useProblemas';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 const rol = ref('');
-
+const { addProblemas } = useProblemas()
 const { employees, getEmployees, getTechEmployees } = useEmployees()
 const { incidents, getIncidents, getIncidentsRecandEmi, getIncidentsByEstado, getIncidentsByEstadoPeriodoAnio } = useIncidents()
 
@@ -144,6 +148,22 @@ const navigateToCambios = (folio: number) => {
     // Navegar a la ruta 'CambiosIncidente' y pasar el 'folio' como parámetro de ruta
     router.push({ name: 'Cambios', query: { folio } });
 };
+
+const addProblem = async (folio: number) => {
+
+    const nuevaSolucion = await addProblemas({
+        ID_Causa: NaN,
+        ID_Emp: NaN,
+        ID_Solucion: NaN,
+        Folio_Incidencia: folio
+    })
+    console.log(nuevaSolucion)
+
+    if (nuevaSolucion) {
+        alert("Diagnostico de problema añadido. En proceso.")
+    }
+
+}
 onMounted(async () => {
     await getIncidentsRecandEmi()
     periodSelected.value = 'Enero - Junio'

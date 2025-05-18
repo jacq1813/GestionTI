@@ -51,6 +51,17 @@ router.put('/:folio', async (req: Request, res: Response) => {
     }
 });
 
+// En router de problemas (por ejemplo /api/problemas/:folio)
+router.put('/:folio/solucion', async (req: Request, res: Response) => {
+    try {
+        const problemaActualizado = await problemService.updateProblemaS(req.body);
+        res.status(200).send(problemaActualizado);
+    } catch (error) {
+        res.status(500).send({ error: 'No se pudo actualizar el problema' });
+    }
+});
+
+
 
 export default router;
 

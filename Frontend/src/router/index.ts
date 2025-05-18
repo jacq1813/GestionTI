@@ -24,6 +24,7 @@ import ChangesStatus from '@/modulos/principal/views/ChangesStatus.vue'
 import BitacoraProb from '@/modulos/principal/views/BitacoraProb.vue'
 import BitacoraResp from '@/modulos/principal/views/BitacoraResp.vue'
 import BitacoraCausa from '@/modulos/principal/views/BitacoraCausa.vue'
+import AddProblem from '@/modulos/principal/views/AddProblem.vue'
 
 const requireAuth = (to:any, from:any, next:any) => {
 
@@ -229,6 +230,12 @@ const router = createRouter({
       path: '/BitacoraCausa',
       name: 'BitacoraCausa',
       component: BitacoraCausa,
+      beforeEnter: requireRole(['Tecnico'])
+    },
+    {
+      path: '/AddProblem',
+      name: 'AddProblem',
+      component: AddProblem,
       beforeEnter: requireRole(['Tecnico'])
     },
     {
