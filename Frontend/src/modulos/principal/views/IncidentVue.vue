@@ -49,7 +49,16 @@
             <!-- Descripción -->
             <div class="grupoD">
                 <label for="tipo">Descripción</label>
-                <input class="desc" type="text" placeholder="Descripción" v-model="newIncident.Descripcion" />
+                <input class="desc" type="text" placeholder="Descripción" v-model="newIncident.Descripcion" @input="onInput"/>
+                <ul v-if="filteredDescriptions.length > 0" class="suggestions">
+                    <li v-for="(description, index) in filteredDescriptions" :key="index" @click="selectSuggestion(description)">
+                        {{ description }}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Comparacion con otras incidencias -->
+            <div class="grupo">
             </div>
 
             <button type="submit" class="btn btn-primary">Enviar</button>
@@ -71,10 +80,11 @@ import { useIncidents } from '../controladores/useIncidents'
 const { buildings, getBuilding } = useBuilding()
 const { classrooms, getClassroom } = useClassroom()
 const { devices, getDevices } = useDevice()
-const { addIncidents } = useIncidents()
+const { incidents,addIncidents, getIncidentsRecandEmi } = useIncidents()
 
 // Rol del usuario
 const rol = ref('')
+const allDescriptions = ref<String[]>([])
 
 
 const router = useRouter()
@@ -103,6 +113,29 @@ const calculatePeriod = () => {
     }
 }
 
+//Filtar sugerencias basadas en lo que se escribe
+const filteredDescriptions = computed(() => {
+  const query = newIncident.value.Descripcion.toLowerCase()
+  console.log('query', query)
+  return allDescriptions.value.filter(desc =>
+    desc.toLowerCase().includes(query) && query.length > 1
+  )
+})
+
+// Seleccionar sugerencia
+const selectSuggestion = (description: string) => {
+    newIncident.value.Descripcion = description
+    console.log('description', description)
+}
+
+// Manejar entrada de texto
+const onInput = (event: Event) => {
+    const input = event.target as HTMLInputElement
+    newIncident.value.Descripcion = input.value
+    console.log('input', input.value)
+    console.log('newIncident', newIncident.value.Descripcion)
+}
+
 // Enviar formulario
 const submitForm = async () => {
     try {
@@ -112,7 +145,7 @@ const submitForm = async () => {
         // Concatenar "Dispositivo" y "Aula" a la descripción
         const dispositivo = devices.value.find(device => device.ID_Equip === Number(newIncident.value.ID_Dispositivo))?.Nombre || 'Desconocido';
 
-        newIncident.value.Descripcion += ` [ Dispositivo: ${dispositivo} ]`;
+        newIncident.value.Descripcion += `  Dispositivo: ${dispositivo} `;
 
         await addIncidents(newIncident.value)
         alert('Incidencia enviada con éxito')
@@ -142,7 +175,12 @@ onMounted(async () => {
     await getBuilding()
     await getClassroom()
     await getDevices()
+    await getIncidentsRecandEmi()
 
+    if (Array.isArray(incidents.value)) {
+      const descriptionsSet = new Set(incidents.value.map((i: any) => i.Descripcion))
+      allDescriptions.value = Array.from(descriptionsSet)
+    }
 
 })
 
@@ -211,6 +249,25 @@ h2 {
     display: flex;
     padding: 0 2em;
     justify-content: space-between;
+}
+
+.suggestions {
+  border: 1px solid #ccc;
+  background: white;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background-color: #f0f0f0;
 }
 </style>
   

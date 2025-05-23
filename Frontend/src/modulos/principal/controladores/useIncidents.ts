@@ -14,11 +14,13 @@ export const useIncidents = () => {
     const getIncidentsRecandEmi = async () => {
         const response = await incidentsApi.get<Incident[]>('/recandemi');
         incidents.value = response.data
+        console.log(incidents.value)
     }
 
     const getIncidentsByEstado = async (estado: string) => {
         const response = await incidentsApi.get<Incident[]>(`/recandemi/`+estado);
         incidents.value = response.data
+        console.log(incidents.value)
     }
 
     const getIncidentsByEstadoPeriodoAnio = async (estado: string, periodo: string, anio: string) => {
