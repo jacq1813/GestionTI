@@ -27,6 +27,7 @@ export const useIncidents = () => {
         console.log(estado, periodo, anio)
         const response = await incidentsApi.get<Incident[]>(`/recandemi/`+estado+`/`+periodo+`/`+anio);
         incidents.value = response.data
+        console.log(incidents.value)
     }
 
     const addIncidents = async (Incident: IncidentNew) => {

@@ -65,7 +65,7 @@
 
             </ul>
 
-            <table class="table table-success table-striped">
+            <table class="table table-success">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -74,6 +74,7 @@
                         <th>Hora</th>
                         <th>Aula</th>
                         <th>Descripcion</th>
+                        <th>Dispositivo</th>
                         <th>Estado</th>
                         <th>Prioridad</th>
                         <th>Acciones</th>
@@ -90,11 +91,29 @@
                         <td>{{ incident.Hora }}</td>
                         <td>{{ incident.Aula }}</td>
                         <td>{{ incident.Descripcion }}</td>
-                        <td>{{ incident.Estado || 'Pendiente' }}</td>
-                        <td>{{ incident.Prioridad }}</td>
+                        <td>{{  incident.TipoEquipo }}</td>
+                        <td :class="{
+                            'estado-pendiente': !incident.Estado || incident.Estado === 'Pendiente',
+                            'estado-enproceso': incident.Estado === 'En proceso',
+                            'estado-terminada': incident.Estado === 'Terminada',
+                            'estado-liberada': incident.Estado === 'Liberada',
+                            'estado-rechazada': incident.Estado === 'Rechazada',
+                            'estado-aceptada': incident.Estado === 'Aceptada' || incident.Estado === 'Levantada',
+                        }">
+                            {{ incident.Estado }}
+                        </td>
+                        <td :class="{
+                            'prioridad-baja': incident.Prioridad === 'Baja',
+                            'prioridad-media': incident.Prioridad === 'Mediana' || incident.Prioridad === 'Media',
+                            'prioridad-alta': incident.Prioridad === 'Alta' || incident.Prioridad === 'Crítico',
+                        }">
+                            {{ incident.Prioridad }}
+                        </td>
                         <td>
-                            <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)"
-                                v-if="rol === 'Tecnico'" title="Actualizar"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-primary btn-sm" @click="navigateToActualizar(incident.Folio)" title="Actualizar"
+                                v-if="rol === 'Tecnico' " ><i class="fa fa-pencil">
+                                    
+                                </i></button>
 
                             <button class="btn btn-danger btn-sm" @click="navigateToAsignar(incident.Folio)" title="Asignar"
                                 v-if="rol === 'Jefe de taller' || rol === 'admin'"> <i class="fa fa-user-plus">
@@ -348,7 +367,7 @@ select {
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 6px rgba(0, 0, 0, 0.05);
     border-collapse: collapse;
     margin-bottom: 5em;
 }
@@ -364,10 +383,53 @@ td {
     padding: 0.75em;
     border-bottom: 1px solid #ddd;
     text-align: center;
+
 }
+
 
 tbody tr:hover {
     background-color: #f1f1f1;
+}
+
+.estado-pendiente {
+    color: #3498db;
+    font-weight: bold;
+}
+.estado-enproceso {
+    color:  #f39c12;
+    font-weight: bold;
+}
+.estado-terminada {
+    color:  #2ecc71;
+    font-weight: bold;
+}
+.estado-liberada {
+    color:  #2ecc71;
+    font-weight: bold;
+}
+.estado-rechazada {
+    color:  #e74c3c;
+    font-weight: bold;
+}
+.estado-aceptada {
+    color:  #8e44ad;
+    font-weight: bold;
+}
+
+.prioridad-baja {
+    color: #000000;
+    font-weight: bold;
+    background-color: #2ecc71;
+}
+.prioridad-media {
+    color: #000000;
+    font-weight: bold;
+    background-color: #f39c12;
+}
+.prioridad-alta {
+    color: #000000;
+    font-weight: bold;
+    background-color: #e74c3c;
 }
 
 .btn {

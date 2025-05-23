@@ -1,6 +1,7 @@
 export interface Incident {
     Folio: number;
     Descripcion: string;
+    TipoEquipo: string;
     Fecha: string; 
     Periodo: string; 
     Estado: string; 

@@ -39,7 +39,7 @@ export const getIncidentsRecandEmi = async () => {
 //obtener todas las incidencias
 export const getIncidentsRecandEmi = async () => {
     try {
-        const [rows] = await connection.query(`SELECT 
+        const [rows] = await connection.query(`        SELECT
         i.Folio,
         i.Descripcion,
         i.Fecha,
@@ -52,7 +52,8 @@ export const getIncidentsRecandEmi = async () => {
         COALESCE(E.Nombre, 'Desconocido') AS 'Emisor',
         COALESCE(te.Nombre, 'Desconocido') AS 'Puesto Emisor',
         COALESCE(e2.Nombre, 'Desconocido') AS 'Receptor',
-        COALESCE(te2.Nombre, 'Desconocido') AS 'Puesto Receptor'
+        COALESCE(te2.Nombre, 'Desconocido') AS 'Puesto Receptor',
+        eq.Nombre as 'TipoEquipo'
         FROM incidencia i 
         LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
         LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
@@ -61,7 +62,9 @@ export const getIncidentsRecandEmi = async () => {
         LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
         LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
         LEFT JOIN periodos p ON p.ID_Periodo = i.ID_Periodo
-        ORDER BY Folio;
+        LEFT JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
+        LEFT JOIN tipoequipo teq ON teq.ID_TipEquipo = eq.ID_TipEquipo
+        ORDER BY Folio
     `);
         return rows;
     } catch (error) {
@@ -73,7 +76,7 @@ export const getIncidentsRecandEmi = async () => {
 export const getIncidentsByEstado = async (estado: string) => {
     try {
         const [rows] = await connection.query(
-            `SELECT i.Folio,i.Descripcion,i.Fecha,i.Periodo, i.Estado,i.Hora,a.Nombre as 'Aula' , ta.Nombre as 'Tipo Aula', E.Nombre AS  'Emisor', te.Nombre as 'Puesto Emisor', e2.Nombre as 'Receptor',te2.Nombre as 'Puesto Receptor' FROM incidencia i 
+            `SELECT i.Folio,i.Descripcion,i.Fecha,i.Periodo, i.Estado,i.Hora,a.Nombre as 'Aula' , ta.Nombre as 'Tipo Aula', E.Nombre AS  'Emisor', te.Nombre as 'Puesto Emisor', e2.Nombre as 'Receptor',te2.Nombre as 'Puesto Receptor',i.Prioridad FROM incidencia i 
              inner join empleado e on i.ID_Emi = e.ID_Emp
              inner join empleado e2 on e2.ID_Emp = i.ID_Rec
              inner join aula a on i.ID_Aula = a.ID_Aul 
@@ -105,18 +108,21 @@ export const getIncidentsByEstadoPeriodoAnio = async (estado: string, periodo: s
                 break;
         }
         const [rows] = await connection.query(
-            `SELECT i.Folio, i.Descripcion, i.Fecha, p.Nombre as 'Periodo', i.Estado, i.Hora,
+            `        SELECT i.Folio, i.Descripcion, i.Fecha, p.Nombre as 'Periodo', i.Estado, i.Hora,
                     a.Nombre AS 'Aula', ta.Nombre AS 'Tipo Aula', 
                     E.Nombre AS 'Emisor', te.Nombre AS 'Puesto Emisor',
-                    e2.Nombre AS 'Receptor', te2.Nombre AS 'Puesto Receptor'
+                    e2.Nombre AS 'Receptor', te2.Nombre AS 'Puesto Receptor',
+                    eq.Nombre as 'TipoEquipo', i.Prioridad
                     FROM incidencia i 
-                    INNER JOIN empleado e ON i.ID_Emi = e.ID_Emp
-                    INNER JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
-                    INNER JOIN aula a ON i.ID_Aula = a.ID_Aul 
-                    INNER JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
-                    INNER JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
-                    INNER JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
-                    INNER JOIN Periodos p ON p.ID_Periodo = i.ID_Periodo
+                    LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
+                    LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+                    LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul 
+                    LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+                    LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
+                    LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
+                    LEFT JOIN Periodos p ON p.ID_Periodo = i.ID_Periodo
+                    LEFT JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
+                    LEFT JOIN tipoequipo teq ON teq.ID_TipEquipo = eq.ID_TipEquipo
                     WHERE i.Estado = ? AND i.ID_Periodo = ? AND YEAR(i.Fecha) = ?
                     ORDER BY Folio;`,
                     [estado, IDPerido, anio]
@@ -134,16 +140,19 @@ export const getIncidentsByFolio = async (folio: string) => {
             `SELECT i.Folio, i.Descripcion, i.Fecha, i.Periodo, i.Estado, i.Hora,
             a.Nombre AS 'Aula', ta.Nombre AS 'Tipo Aula', 
             E.Nombre AS 'Emisor', te.Nombre AS 'Puesto Emisor',
-            e2.Nombre AS 'Receptor', te2.Nombre AS 'Puesto Receptor'
-    FROM incidencia i 
-    LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
-    LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
-    LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul 
-    LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
-    LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
-    LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
-    WHERE i.Folio = ?
-    ORDER BY Folio`,
+            e2.Nombre AS 'Receptor', te2.Nombre AS 'Puesto Receptor',
+            eq.Nombre as 'TipoEquipo'
+            FROM incidencia i 
+            LEFT JOIN empleado e ON i.ID_Emi = e.ID_Emp
+            LEFT JOIN empleado e2 ON e2.ID_Emp = i.ID_Rec
+            LEFT JOIN aula a ON i.ID_Aula = a.ID_Aul 
+            LEFT JOIN tipoaula ta ON ta.ID_TipoAula = a.ID_TipoAula
+            LEFT JOIN tipoempleado te ON te.ID_TipEmp = e.ID_TipEmp
+            LEFT JOIN tipoempleado te2 ON te2.ID_TipEmp = e2.ID_TipEmp
+            LEFT JOIN equipo eq ON eq.ID_Aul = a.ID_Aul
+            LEFT JOIN tipoequipo teq ON teq.ID_TipEquipo = eq.ID_TipEquipo
+            WHERE i.Folio = ?
+            ORDER BY Folio`,
             [folio]
         );
 

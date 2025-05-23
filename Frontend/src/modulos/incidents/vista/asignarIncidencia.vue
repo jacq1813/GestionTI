@@ -20,6 +20,10 @@
                 <label>Periodo</label>
                 <input type="text" :placeholder="selectedIncident?.Periodo" disabled>
             </div>
+            <div class="grupo">
+                <label>Dispositivo</label>
+                <input type="text" :placeholder="selectedIncident?.TipoEquipo" disabled>
+            </div>
         </div>
 
         <div class="grupo">

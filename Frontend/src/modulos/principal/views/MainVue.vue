@@ -57,7 +57,7 @@
             </li>
         </ul>
 
-        <table class="table table-success table-striped">
+        <table class="table table-success">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -66,9 +66,10 @@
                     <th>Hora</th>
                     <th>Aula</th>
                     <th>Descripcion</th>
+                    <th>Dispositivo</th>
                     <th>Estado</th>
                     <th>Prioridad</th>
-                    <th>Acciones</th>
+                    <!-- <th>Acciones</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -82,9 +83,25 @@
                     <td>{{ incident.Hora }}</td>
                     <td>{{ incident.Aula }}</td>
                     <td>{{ incident.Descripcion }}</td>
-                    <td>{{ incident.Estado }}</td>
-                    <td>{{ incident.Prioridad }}</td>
-                    <td>Accion</td>
+                    <td>{{ incident.TipoEquipo }}</td>
+                    <td :class="{
+                            'estado-pendiente': !incident.Estado || incident.Estado === 'Pendiente',
+                            'estado-enproceso': incident.Estado === 'En proceso',
+                            'estado-terminada': incident.Estado === 'Terminada',
+                            'estado-liberada': incident.Estado === 'Liberada',
+                            'estado-rechazada': incident.Estado === 'Rechazada',
+                            'estado-aceptada': incident.Estado === 'Aceptada' || incident.Estado === 'Levantada',
+                        }">
+                            {{ incident.Estado }}
+                    </td>
+                    <td :class="{
+                            'prioridad-baja': incident.Prioridad === 'Baja',
+                            'prioridad-media': incident.Prioridad === 'Mediana' || incident.Prioridad === 'Media',
+                            'prioridad-alta': incident.Prioridad === 'Alta' || incident.Prioridad === 'Crítico',
+                        }">
+                            {{ incident.Prioridad }}
+                    </td>
+                    <!-- <td>Accion</td>-->
                 </tr>
             </tbody>
         </table>
@@ -291,6 +308,47 @@ td {
     padding: 0.75em;
     border-bottom: 1px solid #ddd;
     text-align: center;
+}
+
+.estado-pendiente {
+    color: #3498db;
+    font-weight: bold;
+}
+.estado-enproceso {
+    color:  #f39c12;
+    font-weight: bold;
+}
+.estado-terminada {
+    color:  #2ecc71;
+    font-weight: bold;
+}
+.estado-liberada {
+    color:  #2ecc71;
+    font-weight: bold;
+}
+.estado-rechazada {
+    color:  #e74c3c;
+    font-weight: bold;
+}
+.estado-aceptada {
+    color:  #8e44ad;
+    font-weight: bold;
+}
+
+.prioridad-baja {
+    color: #000000;
+    font-weight: bold;
+    background-color: #2ecc71;
+}
+.prioridad-media {
+    color: #000000;
+    font-weight: bold;
+    background-color: #f39c12;
+}
+.prioridad-alta {
+    color: #000000;
+    font-weight: bold;
+    background-color: #e74c3c;
 }
 
 tbody tr:hover {

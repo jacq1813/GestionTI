@@ -27,6 +27,10 @@
                     <label>Periodo</label>
                     <input type="text" :placeholder="selectedIncident?.Periodo" disabled>
                 </div>
+                <div class="grupo">
+                    <label>Dispositivo</label>
+                    <input type="text" :placeholder="selectedIncident?.TipoEquipo" disabled>
+                </div>
             </div>
 
             <div class="grupo">
@@ -40,10 +44,10 @@
                 <div class="grupo">
                     <label>Estado</label>
                     <select v-model="updatedState">
-                        <option value="Pendiente">En proceso</option>
-                        <option value="En Proceso">Aceptada</option>
-                        <option value="Resuelto">Liberada</option>
-                        <option value="Rechazado">Rechazada</option>
+                        <option value="En Proceso">En proceso</option>
+                        <option value="Aceptada">Aceptada</option>
+                        <option value="Liberada">Liberada</option>
+                        <option value="Rechazada">Rechazada</option>
                     </select>
                 </div>
 
@@ -104,6 +108,7 @@ const updateIncident = async () => {
     try {
 
         const estado = updatedState.value;
+        console.log('Estado actualizado:', estado);
         await updateEstadoIncident(selectedIncident.value.Folio, estado);
         alert('Incidencia actualizada con éxito');
 
