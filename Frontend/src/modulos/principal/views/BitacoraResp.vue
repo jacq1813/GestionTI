@@ -149,16 +149,16 @@ const submitForm = async () => {
         if (problemaActualizado.error) {
             throw new Error(problemaActualizado.error);
         }
+        router.push({name:'BitacoraProb'});
 
         console.log("Problema actualizado correctamente")
     } catch (error) {
         console.error('Error al guardar cambios:', error)
-        alert('Ocurrió un error al guardar los cambios')
     }
 }
 
 const goBack = () => {
-    router.push({ name: 'Problemas' })
+    router.push({ name: 'BitacoraProb' })
 }
 </script>
 

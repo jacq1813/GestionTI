@@ -57,6 +57,15 @@
                 </ul>
             </div>
 
+            <div class="grupoD">
+                <label for="tipo">Solucion Problemas referentes</label>
+                <select v-model="solucionProblemas.ID_Solucion">
+                    <option v-for="opcion in solucionProblemas" :key="opcion.ID_Solucion" :value="opcion.ID_Solucion">
+                        {{ opcion.Descripcion }}
+                    </option>
+                </select>
+            </div>
+
             <!-- Comparacion con otras incidencias -->
             <div class="grupo">
             </div>
@@ -75,12 +84,14 @@ import { useBuilding } from '../controladores/useBuilding'
 import { useClassroom } from '../controladores/useClassroom'
 import { useDevice } from '../controladores/useDevice'
 import { useIncidents } from '../controladores/useIncidents'
+import { useSolucionProblema } from '../controladores/usesolucionProblema'
 
 // Hooks personalizados
 const { buildings, getBuilding } = useBuilding()
 const { classrooms, getClassroom } = useClassroom()
 const { devices, getDevices } = useDevice()
 const { incidents,addIncidents, getIncidentsRecandEmi } = useIncidents()
+const { solucionProblemas, getSolucionProblemas } = useSolucionProblema()
 
 // Rol del usuario
 const rol = ref('')
@@ -176,6 +187,7 @@ onMounted(async () => {
     await getClassroom()
     await getDevices()
     await getIncidentsRecandEmi()
+    await getSolucionProblemas()
 
     if (Array.isArray(incidents.value)) {
       const descriptionsSet = new Set(incidents.value.map((i: any) => i.Descripcion))

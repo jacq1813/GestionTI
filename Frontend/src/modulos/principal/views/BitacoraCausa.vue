@@ -134,7 +134,7 @@ const submitForm = async () => {
         }
 
         console.log("Problema actualizado correctamente");
-
+        router.push({name:'BitacoraProb'});
 
     } catch (error) {
         console.error('Error al actualizar el problema:', error);
@@ -144,7 +144,7 @@ const submitForm = async () => {
 
 
 const goBack = () => {
-    router.push({ name: 'Problemas' })
+    router.push({ name: 'BitacoraProb' })
 }
 </script>
   

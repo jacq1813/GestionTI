@@ -20,7 +20,7 @@
                         <th>Folio del problema</th>
                         <th>Folio de incidencia</th>
                         <th>Descripción de incidencia</th>
-                        <th>Técnico de diagnóstico</th>
+                        <!-- <th>Técnico de diagnóstico</th> -->
                         <th>Causa del problema</th>
                         <th>Solución</th>
                         <th>Estado</th>
@@ -33,7 +33,7 @@
                         <td>{{ problema.ID_Problema }}</td>
                         <td>{{ problema.Folio }}</td>
                         <td>{{ problema['Descripcion de Incidencia'] }}</td>
-                        <td>{{ problema['Tecnico Diagnostico'] }}</td>
+                        <!-- <td>{{ problema['Tecnico Diagnostico'] }}</td> -->
                         <td>{{ problema['Causa del problema'] }}</td>
                         <td>{{ problema['Solucion del problema'] }}</td>
                         <td>{{ problema.Estado }}</td>
@@ -53,10 +53,10 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-primary btn-sm" @click="navigateToSolucion(problema.ID_Problema)"
+            <!-- <button class="btn btn-primary btn-sm" @click="navigateToSolucion(problema.ID_Problema)"
                 title="Actualizar estado" v-if="rol === 'Tecnico'">
                 Nueva
-            </button>
+            </button> -->
         </div>
     </div>
 </template>
